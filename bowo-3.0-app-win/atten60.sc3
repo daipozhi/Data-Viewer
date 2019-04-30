@@ -1,0 +1,18 @@
+
+
+
+
+
+
+    +--------------------------------------+
+    | Information Box                      |
+    +--------------------------------------+
+    | Please Select Data Base Type :       |
+    |                                      |
+    |  &(1 XBASE    &(2 Backup xbase       |
+    |  &(1 ORACLE                          |
+    |  &(1 SYBASE   &(2 No Backup xbase    |
+    |                                      |
+    |          &@a OK    &@b Cancel        |
+    +--------------------------------------+
+

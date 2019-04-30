@@ -1,0 +1,1 @@
+g++ -o gc_bowo-3.1.exe vc3_bmp.cpp vc3_buff.cpp vc3_edit.cpp vc3_font.cpp vc3_fstru.cpp vc3_getrd.cpp vc3_inkey.cpp vc3_link.cpp vc3_make1.cpp vc3_maint.cpp vc3_mbase.cpp vc3_menuv.cpp vc3_print.cpp vc3_user.cpp vc3_win.cpp vc3_xbase.cpp gc_win32simulator.cpp

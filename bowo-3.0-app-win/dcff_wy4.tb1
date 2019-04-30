@@ -1,0 +1,3 @@
+@a  button="[]"  com=exit
+@b  button="[]"  com=cancel
+@c  button="[]"  com=get_tab("dcf_wy4.sc3")

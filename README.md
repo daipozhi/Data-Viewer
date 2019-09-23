@@ -9,4 +9,4 @@ standerd DBF file ,it have a lot of examples , support link between database fil
 it can print data in order of a text model file , it support multiple users's operation 
 in same time .
 
-this is 3.1 version.
+this is 3.3 version.

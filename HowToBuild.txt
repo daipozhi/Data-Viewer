@@ -1,11 +1,11 @@
 Windows version:
   
   On Windows 7, open Visual studio 2008, open BOWO2.sln solution file in
-  bowo2 directory , build exe file , and copy this exe file to app dir .
+  bowo2 directory , build exe file , and copy this exe file (vc_bowo2.exe) to app dir .
   
 
 Linux version:
 
-  On Ubuntu 14.04 ,Open terminal , at bowo-3.1-src-linux directory , run make.bat .
-  and then , copy gc_bowo-3.1.exe to app directory , overwrite the old one ,
-  at app directory , run gc_bowo-3.1.exe .
+  On Ubuntu 14.04 ,Open terminal , at bowo-3.3-src-linux directory , run make.bat 
+  (need g++).  and then , copy gcc_bowo.exe to app directory , at app directory , 
+  in Terminal window, run gcc_bowo.exe .

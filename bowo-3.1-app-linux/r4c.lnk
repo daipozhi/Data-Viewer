@@ -1,4 +1,0 @@
-r1>r3  multi
-  r1.f1=r3.f1
-r3>r2  single
-  r3.f2=r2.f1

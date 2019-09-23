@@ -1,0 +1,9 @@
+@a  button="[]"  com=get_tab("dc_zc.sc4")     
+@b  button="[]"  com=get_tab("dc_gh.sc4")   
+@c  button="[]"  com=get_tab("dc_fw.sc4")    
+@d  button="[]"  com=get_tab("dc_sc.sc4")    
+@e  button="[]"  com=get_tab("dc_ss.sc4")      
+@f  button="[]"  com=get_tab("dc_hy.sc4")     
+@g  button="[]"  com=get_tab("bowo_wy.sc4")   
+@h  button="[]"  com=get_tab("atten12.sc4")         
+@i  button="[]"  com=exit

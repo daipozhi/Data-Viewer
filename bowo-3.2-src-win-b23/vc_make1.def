@@ -1,0 +1,10 @@
+NAME            BoWo
+
+DESCRIPTION     'BaseTools By Visual C++ 5.0 For Windows'
+
+CODE            MOVEABLE DISCARDABLE
+DATA            MOVEABLE MULTIPLE
+
+HEAPSIZE        8000
+STACKSIZE       30000
+

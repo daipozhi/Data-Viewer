@@ -36,6 +36,8 @@ extern class bw_fldstru      bw_fldstru1;
 extern long  /*PASCAL*/ w_menu_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp);
 extern long  /*PASCAL*/ w_tab_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp);
 
+extern int m_test1;
+
 /* should into class */
 
 HWND bw_win::get_ci_mhnd(HWND hwnd)
@@ -1842,6 +1844,7 @@ int bw_win::w_echo_win_cr(int p_pagecnt,int mark)
 //  char str[SMG_LEN];
   char s1[SMG_LEN];
   char s2[FLD_NAME_LEN];
+  char s3[SMG_LEN];
 
   win_mark=mark;
 
@@ -1927,13 +1930,15 @@ int bw_win::w_echo_win_cr(int p_pagecnt,int mark)
     if (bw_main1.win_cre_menu==1) p10a=i-p10+4;
     else p10a=i-p10+3;
 
-    if (p10a!=0) set_win_con(p_pagecnt,3,p10a);
+    if (p10a!=0) set_win_con(p_pagecnt,3,p10a);  //coner
     p4=0;
     p5=0;
     p6=0;
 
     for (j=p1;j<=p2;j++) 
     {
+      if (m_test1) printf("-%c-\n",bw_buff1.get_tmpc1(p_pagecnt,i,j));
+
       if (bw_buff1.get_tmpc1(p_pagecnt,i,j)=='&')
       {
 	if (p5==1)
@@ -1964,6 +1969,7 @@ int bw_win::w_echo_win_cr(int p_pagecnt,int mark)
 	state1=1;
         p6=j;      
 
+        if (m_test1) printf("==&==state1=%d,p5=%d,p4=%d,",state1,p5,p4);
       }
       else
       {
@@ -2028,6 +2034,13 @@ int bw_win::w_echo_win_cr(int p_pagecnt,int mark)
 	  {
 	    state1=0;
 	  }
+
+	  if (m_test1) 
+          {
+            s3[0]=0;
+	    get_1fldname(pp1,s3,SMG_LEN);
+            printf("==' ',0,chns,==state1=%d,p5=%d,p4=%d,fldname=%s,",state1,p5,p4,s3);
+          }
 	}
 	else
 	{
@@ -2077,6 +2090,13 @@ int bw_win::w_echo_win_cr(int p_pagecnt,int mark)
 	    set_1fldname1(pp1,p4+1,0);
 	    set_1fldtype(pp1,'c');
 	    p4++;
+
+	    if (m_test1) 
+            {
+              s3[0]=0;
+	      get_1fldname(pp1,s3,SMG_LEN);
+              printf("==abc==state1==1,state1=%d,p5=%d,p4=%d,fldname=%s,",state1,p5,p4,s3);
+            }
 	  }
 	  else
 	  {
@@ -2135,8 +2155,22 @@ int bw_win::w_echo_win_cr(int p_pagecnt,int mark)
 	      }
 	      p5=0;
 	    }
+
+            if (m_test1) 
+            {
+              s3[0]=0;
+	      get_1fldname(pp1,s3,SMG_LEN);
+              printf("==abc==state1==0,state1=%d,p5=%d,p4=%d,fldname=%s,",state1,p5,p4,s3);
+            }
 	  }
 	}
+      }
+
+      
+      if (m_test1) 
+      {
+        getchar();
+        printf("\n");
       }
     }
 
@@ -3221,11 +3255,15 @@ int bw_win::w_down_field(int p1)
   {
     pline=s_tmpn1;
     pfield=s_tmpn2;
+
+    //printf("000\n");
   }
   else
   {
     pline=i;
     pfield=j;
+
+    //printf("111\n");
   }
 
   return(0);
@@ -3666,6 +3704,8 @@ int bw_win::w_find_edit_field(int wpp)
       
 	if ((s2[0]==':')||(s2[0]=='%')||(s2[0]=='+')||(s2[0]=='-'))
 	{
+          if (m_test1) printf("fldname=%s,",s2);
+
 	  strcpy(s_tmpc2,s2);
 	  if ((s_tmpc2[0]=='%')||(s_tmpc2[0]=='-'))
 	  {
@@ -3699,8 +3739,13 @@ int bw_win::w_find_edit_field(int wpp)
             strcat(str4,s_fldname);
 	    set_1fldname(n,str4,strlen(str4)+1);
           }
+
+          if (m_test1) printf("1fldname=%s,",str4);
+
 	  pp1=w_fld_set_base(s_fldtable,SMG_LEN,pp1,wpp);
 	  set_1fldbase(n,pp1);
+
+          if (m_test1) printf("1fldbase=%d,",pp1);
 
 	  if (bw_inkey1.strempty(s_fldname)==0)
 	  {
@@ -3728,10 +3773,14 @@ int bw_win::w_find_edit_field(int wpp)
 	    set_1fldseri(n,get_fldseri_tmp(n));
 	  }
 
+          if (m_test1) printf("seri=%d,",get_1fldseri(n));
+
 	  if (s_tmpn1==1)
 	    set_1fldedt(n,1);
 	  else
 	    set_1fldedt(n,w_fld_set_fld(s_fldname,SMG_LEN));
+
+          if (m_test1) printf("1fldedit=%d,\n",get_1fldedt(n));
 
 	}
 	else set_1fldbase(n,pp1);

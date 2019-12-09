@@ -51,6 +51,8 @@ extern long  /*PASCAL*/ w_menu_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp);
 extern long  /*PASCAL*/ w_menu2_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp);
 extern long  /*PASCAL*/ w_tab_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp);
 
+int m_test1;
+
 long  /*PASCAL*/ w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 {
   HCURSOR hcursor;
@@ -1549,6 +1551,11 @@ int bw_main::get_view(char *p_str,int p_str_len,HWND hwnd,int pp5)
   if (bw_main1.win_lang==1) strcat(bw_main1.s_bs2,".sc3");
   else strcat(bw_main1.s_bs2,".sc4");
   //strcat(bw_main1.s_bs2,".sc3");
+
+  // for test
+  //printf("%s,\n",bw_main1.s_bs2);
+  //if (strcmp(bw_main1.s_bs2,"dc_hy.sc4")==0) m_test1=1;
+
   if (bw_inkey1.w_find_file(bw_main1.s_bs2)==1)
   {
     i=bw_win1.w_read_winfile(bw_main1.s_bs2,FN_SIZE);
@@ -1915,8 +1922,8 @@ int bw_main::w_set_focus(HWND hwnd)
     }
     else
     {
-//      MessageBox(bw_main1.win_hwnd,"bb","bb",MB_OK);
-//
+      //MessageBox(bw_main1.win_hwnd,"dd","dd",MB_OK);
+
       bw_win1.pline =bw_win1.get_win_linep(bw_main1.win_hnd_id,0);
       bw_win1.pfield=bw_win1.get_win_linep(bw_main1.win_hnd_id,1);
       bw_win1.w_find_winfname(bw_main1.win_hnd_id,bw_win1.pline,bw_win1.pfield,str,SMG_LEN);

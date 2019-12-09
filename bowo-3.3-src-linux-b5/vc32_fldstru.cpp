@@ -1130,6 +1130,8 @@ int bw_fldstru::w_fetch_rec(int p_fcnt,int wpp,int seri)
 
   recno=bw_xbase1.get_win_recno(p_fcnt,wpp,0);
 
+  //printf("cuseri=%d,seri=%d,\n",bw_xbase1.get_win_cuseri(p_fcnt,wpp),seri);
+
   if (bw_xbase1.get_win_cuseri(p_fcnt,wpp)==seri)
   {
     recno--;

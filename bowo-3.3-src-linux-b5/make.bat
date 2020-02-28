@@ -1,1 +1,0 @@
-g++ -o gcc_bowo.exe vc32_bmp.cpp vc32_buff.cpp vc32_edit.cpp vc32_font.cpp vc32_fldstru.cpp vc32_getread.cpp vc32_inkey.cpp vc32_link.cpp vc32_make1.cpp vc32_main.cpp vc32_mbase.cpp vc32_menuvar.cpp vc32_print.cpp vc32_user.cpp vc32_win.cpp vc32_xbase.cpp gcc_win32simulator.cpp

@@ -1,0 +1,1 @@
+g++ -o gcc_bowo.exe vc36_bmp.cpp vc36_buff.cpp vc36_edit.cpp vc36_font.cpp vc36_fldstru.cpp vc36_getread.cpp vc36_inkey.cpp vc36_link.cpp vc36_make1.cpp vc36_main.cpp vc36_mbase.cpp vc36_menuvar.cpp vc36_print.cpp vc36_user.cpp vc36_win.cpp vc36_xbase.cpp gcc_win32simulator.cpp

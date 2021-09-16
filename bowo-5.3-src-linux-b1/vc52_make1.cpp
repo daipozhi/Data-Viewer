@@ -1,19 +1,40 @@
+//-------------------------------------------
+// modify for linux gcc
+// 1,mark STRICT
+// 2,<windows.h> to "windows.h"
+// 3,mark other *.h
+// 4, class **   'far' to ' '
+// 5, 'FAR PASCAL' to ' '
+// 6, 'NULL' to '0'
+// 7,  'return bw_main1.msg.wParam;' to 'bw_main1.msg'
+// 8, mark   'GetTextMetrics(bw....'
+// 9, add 'break' at WM_CREATE
+// 10, set xchar ychar 
+// 11,add 'break' at WM_PAINT
+// 12,mark dlg
+// 13,mark   GetWindowRect(bw_
+//
+//-------------------------------------------
 
 /* error 1: WM_CREATE should have break/return */
 
 /* error 2: att to this func(char *s); s[n]=NULL;func(""); */
-
+/*
 #define  STRICT
-#include <windows.h>
+*/
+#include "windows.h"
+/*
 #include <commdlg.h>
-
+*/
 #include <stdio.h>
+/*
 #include <math.h>
 #include <direct.h>
 #include <dos.h>
 #include <io.h>
 #include <conio.h>
 #include <process.h>
+*/
 #include <string.h>
 
 #include "vc_bowo.h"
@@ -29,23 +50,23 @@ class bw_mbase        bw_mbase1;
 class bw_xbase        bw_xbase1;
 class bw_main         bw_main1;
 class bw_dialog       bw_dialog1;
-class bw_switch       bw_switch1;
-class bw_choose       bw_choose1;
+class bw_rabox        bw_rabox1;
+class bw_chkbox       bw_chkbox1;
 class bw_win          bw_win1;
 class bw_inkey        bw_inkey1;
 class bw_getread      bw_getread1;
 class bw_fldstru      bw_fldstru1;
-class bw_menuvar      bw_menuvar1;
+class bw_buttonvar    bw_buttonvar1;
 
-extern long  PASCAL w_main_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp);
-extern long  PASCAL w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp);
-extern long  PASCAL w_edit_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp);
-extern long  PASCAL w_menu_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp);
-extern long  PASCAL w_menu2_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp);
-extern long  PASCAL w_tab_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp);
+extern long   w_main_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp);
+extern long   w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp);
+extern long   w_edit_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp);
+extern long   w_menu_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp);
+extern long   w_menu2_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp);
+extern long   w_tab_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp);
 
 
-int pascal WinMain(HINSTANCE ins
+int  WinMain(HINSTANCE ins
 		  ,HINSTANCE pins
 		  ,LPSTR cl
 		  ,int show)
@@ -83,8 +104,8 @@ int pascal WinMain(HINSTANCE ins
 				      WS_OVERLAPPEDWINDOW,
 				      50,
 				      50,
-				      501,
-				      301,
+				      600,
+				      200,
 				      NULL,
 				      NULL,
 				      bw_main1.win_ins,
@@ -101,10 +122,11 @@ int pascal WinMain(HINSTANCE ins
 
   //bw_getread1.deb_record_close();   //test recorder
 
-  return bw_main1.msg.wParam;
+  //return bw_main1.msg.wParam;
+  return bw_main1.msg;
 }
 
-long  PASCAL w_main_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
+long   w_main_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 {
   int    i,j;
   char   sdir[FN_SIZE];
@@ -118,7 +140,7 @@ long  PASCAL w_main_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
   switch(msg)    
   {
     case WM_CREATE:
-
+/*
       bw_main1.hdc=GetDC(hwnd);
       GetTextMetrics(bw_main1.hdc,&bw_main1.tm);
       bw_main1.win_xchar=bw_main1.tm.tmAveCharWidth;
@@ -130,16 +152,22 @@ long  PASCAL w_main_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
       bw_main1.win_edit_ychar=(float)bw_main1.tm.tmHeight+(float)bw_main1.tm.tmExternalLeading;
       SelectObject(bw_main1.hdc,bw_main1.holdfont);
       ReleaseDC(hwnd,bw_main1.hdc);
+*/
+      bw_main1.win_xchar=25;
+      bw_main1.win_ychar=30;
+      
+      bw_main1.win_edit_xchar=25;
+      bw_main1.win_edit_ychar=30;
 
       if (bw_main1.win_ibm_s3==1)
       {
 	bw_main1.win_edit_xchar=(float)(bw_main1.win_edit_xchar-0.5);
       }
 
-      if ((bw_main1.win_main_xsize<=30000)&&(bw_main1.win_main_xsize>0))
-      {
-	MoveWindow(bw_main1.win_hwnd,bw_main1.win_main_xposi,bw_main1.win_main_yposi,bw_main1.win_main_xsize,bw_main1.win_main_ysize,(BOOL)0);
-      }
+      //if ((bw_main1.win_main_xsize<=30000)&&(bw_main1.win_main_xsize>0))
+      //{
+	//MoveWindow(bw_main1.win_hwnd,bw_main1.win_main_xposi,bw_main1.win_main_yposi,bw_main1.win_main_xsize,bw_main1.win_main_ysize,(BOOL)0);
+      //}
 
       SetTimer(hwnd,1,60000,NULL);
 
@@ -194,28 +222,32 @@ long  PASCAL w_main_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
       {
         if (bw_main1.win_key==274) // up arrow
         {
-          bw_fldstru1.tst_stru();
+          bw_getread1.deb_record("begin...");
+
+          bw_fldstru1.tst_stru2();
           bw_getread1.tst_getread();
-          bw_link1.tst_link1();
+          bw_link1.tst_link1_lkchar();
           bw_link1.tst_link2();
           bw_link1.tst_link4();
-          bw_link1.tst_link5();
-          bw_menuvar1.tst_menu();
-          bw_choose1.tst_choose();
-          bw_switch1.tst_switch();
+          bw_link1.tst_link5_svar();
+          bw_buttonvar1.tst_button2();
+          bw_chkbox1.tst_chkbox();
+          bw_rabox1.tst_rabox();
           bw_print1.tst_p1();
           bw_print1.tst_p2();
           bw_print1.tst_p3();
-          bw_win1.tst_win1();
-          bw_win1.tst_win2();
+          bw_win1.tst_win1_fld();
+          bw_win1.tst_win2_fld_in_win();
           bw_win1.tst_win3();
           bw_win1.tst_win4();
           bw_win1.tst_win5();
-          //bw_win1.tst_win6();
+          bw_win1.tst_win6_ci_ptr();
           bw_win1.tst_hptr3();
           bw_win1.tst_hptr4();
           bw_xbase1.tst_xbase1();
           bw_xbase1.tst_xbase2();
+
+          bw_getread1.deb_record("...end");
         }
       }
 
@@ -234,7 +266,7 @@ long  PASCAL w_main_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 
       if ((wp>=1126)&&(wp<=1135))
       {
-
+/*
 	if (bw_main1.win_lang==1)
 	{
 		if (wp==1126) strcpy(bw_main1.win_seaname,"*.sc1");
@@ -291,6 +323,12 @@ long  PASCAL w_main_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 
 	strcpy(bw_main1.win_m_ts7,bw_main1.dlg_f1.lpstrFile);
 	bw_main1.w_fetch_filename(bw_main1.win_m_ts7,FN_SIZE);
+*/
+  printf("Input File Name (For example-'bowo_main') :");
+  strcpy(bw_main1.win_seaname,"                                                                    ");
+  scanf("%251s",bw_main1.win_seaname);
+  printf("\n");
+  printf("\n");
 
 	if (bw_inkey1.w_fname_ok(bw_main1.win_seaname)==1)
 	{
@@ -357,9 +395,9 @@ long  PASCAL w_main_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 /*
       if (wp==1201) bw_dialog1.tst_mem();
       if (wp==1202) bw_win1.tst_hptr3();
-      if (wp==1203) bw_switch1.tst_switch();
-      if (wp==1204) bw_menuvar1.tst_menu();
-      if (wp==1205) bw_choose1.tst_choose();
+      if (wp==1203) bw_rabox1.tst_rabox();
+      if (wp==1204) bw_buttonvar1.tst_menu();
+      if (wp==1205) bw_chkbox1.tst_chkbox();
       if (wp==1206) bw_win1.tst_win1();
       if (wp==1207) bw_win1.tst_win2();
       if (wp==1208) bw_win1.tst_hptr4();
@@ -388,11 +426,12 @@ long  PASCAL w_main_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
       if (wp==1139) bw_main1.win_confirm=1;
       if (wp==1140)
       {
+/*
 	 bw_main1.dlg_f2.lStructSize=sizeof(PRINTDLG);
 	 bw_main1.dlg_f2.hwndOwner=hwnd;
 	 bw_main1.dlg_f2.hDevMode=NULL;
 
-	 PrintDlg(&bw_main1.dlg_f2);
+	 PrintDlg(&bw_main1.dlg_f2);*/
       }
 
       //if (wp==1141) bw_main1.get_xbase_open();
@@ -411,14 +450,14 @@ long  PASCAL w_main_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 
     case WM_MOVE:
     case WM_SIZE:
-
+/*
       GetWindowRect(bw_main1.win_hwnd,&bw_main1.rt);
 
       bw_main1.win_main_xposi=bw_main1.rt.left;
       bw_main1.win_main_yposi=bw_main1.rt.top;
       bw_main1.win_main_xsize=bw_main1.rt.right-bw_main1.rt.left+1;
       bw_main1.win_main_ysize=bw_main1.rt.bottom-bw_main1.rt.top+1;
-
+*/
       break;
 
     case WM_SYSCOMMAND:

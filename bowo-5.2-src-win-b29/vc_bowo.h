@@ -2,7 +2,7 @@
 
 #define  CPY_BSIZE    20000 /* copy file buffer size      */
 #define  FN_SIZE      256   /* file name size */
-#define  GET_NUM      2000  /*   get_read subroutine var number */
+#define  GET_NUM      200   /*   get_read subroutine var number */
 #define  SMG_SIZE     300   /*   get_read var max size */
 //#define  ATTE_LEN     50    /*   attention text array */
 #define  SUB_WIN_NUM  10
@@ -15,9 +15,9 @@
 #define  WIN_NUM      32   /* max windows number */
 #define  REC_SIZE      300000 /* one record max size */
 #define  STRU_NUM     10    /* structure number in one window     */
-#define  MENU_NUM_RA  200   /* radio button number */
-#define  MENU_NUM_CHS 200   /* choose button number */
-#define  MENU_NUM_MN  200   /* command button number */
+#define  BUTTON_NUM_RA  200   /* radio button number */
+#define  BUTTON_NUM_CHS 200   /* chkbox button number */
+#define  BUTTON_NUM_BTN  200   /* command button number */
 #define  FLD_IN_SCRN  10000 /* field number in one win */
 #define  FLD_NAME_SIZE 21    // field name size
 #define  FLD_IN_BASE  5000   /* field in database number */
@@ -82,7 +82,7 @@
 #define  FIND       317 /* start find  */
 #define  SELECT     318 /* open window */
 
-#define  HND_NUM       500 /* control item id number */
+#define  HND_NUM       5000 /* control item id number */
 #define  WIN_STYLE_NUM 20  /* control item style number */
 
 #define MEM_VAR_NUM  2000
@@ -245,8 +245,7 @@ class bw_print
 
   public:
 
-    //int w_out_win_print(void);
-    int w_out_linux_print(void);
+    int w_out_win_print(void);
     int w_close_opwin(void);
     int w_close_spwin(void);
     int w_open_print_file(char *p_s1,int p_s1_size);
@@ -471,8 +470,8 @@ class bw_link
 
   public:
 
-    int w_dele_link(int wp1,int wp2);
-    int w_dele_svar(int wp1,int wp2);
+    int w_dele_link(int wp1);
+    int w_dele_svar(int wp1);
     int w_read_link(char *fn,int fn_size,int p_wptr,int num);
     int w_find_link_tn(char *tmpc1,int tmpc1_size,int p_wptr,int i);
     int w_find_link_cd(char *tmpc1,int tmpc1_size,int i,int k);
@@ -497,10 +496,12 @@ class bw_link
     int w_keep_linkfld(int p_wptr,int p_dbptr,int dir);
 
     int tst_link1(void);
+    int tst_link1_lkchar(void);
     int tst_link2(void);
     int tst_link3(void);
     int tst_link4(void);
     int tst_link5(void);
+    int tst_link5_svar(void);
 /*
 };
 
@@ -971,7 +972,7 @@ class bw_dialog
 
   public:
 
-	 int      w_read_ddc(char *p_fn,int p_fn_size,int p_wptr);
+	 int      w_read_diadc(char *p_fn,int p_fn_size,int p_wptr);
 	 int      w_mv_save_mem(char *s1,int s1_size,int p_wptr,char *s2,int s2_size);
 	 int      w_dele_mem(char *s1,int p_wptr,char *s2);
          int      w_save_dialog(int p_wptr);
@@ -987,7 +988,7 @@ class bw_dialog
          int      w_mv_move_aft(int dd,int num);
 	 int      w_mv_move_bef(int dd,int num);
 	 int      w_echo_winrec_var(int p_wptr);
-	 int      w_mv_get_read_paint(char *s1,int s1_size,int p_wptr,char comm);
+	 //int      w_mv_get_read_paint(char *s1,int s1_size,int p_wptr,char comm);
 	 int      w_mv_get_read_g(char *s1,int s1_size,int p_wptr,char comm);
 	 int      w_mv_get_read_r(char *s1,int s1_size,int p_wptr,char comm);
 
@@ -1040,141 +1041,142 @@ class bw_dialog_bua
     int      set_c_win_mv_getv(int p_wptr,int ptr1,int val);
 };
 
-class bw_switch
+class bw_rabox
 {
 
   private:
 
-    int   win_switch_ptr1;
+    int   win_rabox_ptr1;
 
   public:
 
-    int w_switch_ini(void);
-    int w_read_sdc(char *p_fn1,int p_fn1_size,int p_wptr);
-    int w_save_switch(int p_wptr);
-    int w_dele_switch(int wp1,int wp2);
+    int w_rabox_ini(void);
+    int w_read_radc(char *p_fn1,int p_fn1_size,int p_wptr);
+    int w_save_rabox(int p_wptr);
+    int w_dele_rabox(int wp1,int wp2);
     int w_set_radio_var(int l,int c,int p,int p_wptr);
-    int w_echo_winrec_radio(int p_wptr);
-    int w_clr_recvar_radio(int p_wptr);
-    int tst_switch(void);
+    int w_echo_winrec_rabox(int p_wptr);
+    int w_clr_recvar_rabox(int p_wptr);
+    int tst_rabox(void);
 /*
 };
 
-class bw_switch_bua
+class bw_rabox_bua
 {
 */
   private:
 
-    int   win_switch[MENU_NUM_RA][4];  /* in use,pre val,seri number,window number */
-    char  win_switch_name[MENU_NUM_RA][11];
+    int   win_rabox[BUTTON_NUM_RA][4];  /* in use,pre val,seri number,window number */
+    char  win_rabox_name[BUTTON_NUM_RA][11];
 
   public:
 
-    int   get_win_switch(int mptr,int p03);
-    int   set_win_switch(int mptr,int p03,int val);
+    int   get_win_rabox(int mptr,int p03);
+    int   set_win_rabox(int mptr,int p03,int val);
 
-    int   get_win_switch_name(int mptr,char *s1,int s1_size);
-    int   set_win_switch_name(int mptr,char *s1,int s1_size);
-    int   set_c_win_switch_name(int mptr,int p0a,int val);
+    int   get_win_rabox_name(int mptr,char *s1,int s1_size);
+    int   set_win_rabox_name(int mptr,char *s1,int s1_size);
+    int   set_c_win_rabox_name(int mptr,int p0a,int val);
 };
 
-class bw_choose
+class bw_chkbox
 {
 
   private:
 
-    int      win_choose_ptr1;
+    int      win_chkbox_ptr1;
 
   public:
 
-    int w_choose_ini(void);
-    int w_read_cdc(char *p_fn1,int p_fn1_size,int p_wptr);
-    int w_save_choose(int p_wptr);
-    int w_dele_choose(int wp1,int wp2);
-    int w_echo_chs_change(int link,int p_wptr);
-    int w_echo_winrec_chs(int p_wptr);
-    int w_clr_recvar_chs(int p_wptr);
-    int tst_choose(void);
+    int w_chkbox_ini(void);
+    int w_read_chkdc(char *p_fn1,int p_fn1_size,int p_wptr);
+    int w_save_chkbox(int p_wptr);
+    int w_dele_chkbox(int wp1,int wp2);
+    int w_echo_chk_change(int link,int p_wptr);
+    int w_echo_winrec_chkbox(int p_wptr);
+    int w_clr_recvar_chkbox(int p_wptr);
+    int tst_chkbox(void);
 /*
 };
 
-class bw_choose_bua
+class bw_chkbox_bua
 {
 */
   private:
 
-    int      win_choose[MENU_NUM_CHS][4]; /* in use,pre val,seri number,window number */
-    char     win_choose_name[MENU_NUM_CHS][11];
+    int      win_chkbox[BUTTON_NUM_CHS][4]; /* in use,pre val,seri number,window number */
+    char     win_chkbox_name[BUTTON_NUM_CHS][11];
 
   public:
 
-    int      get_win_choose(int cptr,int p03);
-    int      set_win_choose(int cptr,int p03,int val);
+    int      get_win_chkbox(int cptr,int p03);
+    int      set_win_chkbox(int cptr,int p03,int val);
 
-    int      get_win_choose_name(int cptr,char *s1,int s1_size);
-    int      set_win_choose_name(int cptr,char *s1,int s1_size);
-    int      set_c_win_choose_name(int cptr,int p0a,int val);
+    int      get_win_chkbox_name(int cptr,char *s1,int s1_size);
+    int      set_win_chkbox_name(int cptr,char *s1,int s1_size);
+    int      set_c_win_chkbox_name(int cptr,int p0a,int val);
 };
 
-class bw_menuvar
+class bw_buttonvar
 {
 
   private:
 
-   int      t5_m_ptr1;
+   int      t5_btn_ptr1;
 
   public:
 
-   char     t5_m_com_str[SMG_SIZE];
-   int      t5_m_ptr3;
-   int      t5_m_ptr2;
+   char     t5_btn_com_str[SMG_SIZE];
+   int      t5_btn_ptr3;
+   int      t5_btn_ptr2;
 
   public:
 
-    int w_menu_find_seri(int ptr1);
-    int w_read_mdc(char *p_fn1,int p_fn1_size,int p_wptr);
-    int w_dele_menu(int wp1,int wp2);
-    int w_menu_comm(int p1,int state);
-    int w_menu_poin(char *s1,int s1_size,int p1);
-    int tst_menu(void);
+    int w_button_find_seri(int ptr1);
+    int w_read_btndc(char *p_fn1,int p_fn1_size,int p_wptr);
+    int w_dele_button(int wptr);
+    int w_button_comm(int p1,int state);
+    int w_button_poin(char *s1,int s1_size,int p1);
+    int tst_button(void);
+    int tst_button2(void);
 /*
 };
 
-class bw_menuvar_bua
+class bw_buttonvar_bua
 {
 */
   private:
 
-    int      t5_m_wind[MENU_NUM_MN];
-    int      t5_m_mcnt[MENU_NUM_MN];
-    char     t5_m_name[MENU_NUM_MN][11];
-    char     t5_m_button[MENU_NUM_MN][81];
-    char     t5_m_comm[MENU_NUM_MN][81];
-    char     t5_m_focus[MENU_NUM_MN][81];
+    int      t5_btn_wind[BUTTON_NUM_BTN];
+    int      t5_btn_mcnt[BUTTON_NUM_BTN];
+    char     t5_btn_name[BUTTON_NUM_BTN][11];
+    char     t5_btn_button[BUTTON_NUM_BTN][81];
+    char     t5_btn_comm[BUTTON_NUM_BTN][81];
+    char     t5_btn_focus[BUTTON_NUM_BTN][81];
 
   public:
 
-    int      get_t5_m_wind(int mptr);
-    int      get_t5_m_mcnt(int mptr);
+    int      get_t5_btn_wind(int mptr);
+    int      get_t5_btn_mcnt(int mptr);
 
-    int      set_t5_m_wind(int mptr,int val);
-    int      set_t5_m_mcnt(int mptr,int val);
+    int      set_t5_btn_wind(int mptr,int val);
+    int      set_t5_btn_mcnt(int mptr,int val);
 
-    int      get_t5_m_name(int mptr,char *s1,int s1_size);
-    int      set_t5_m_name(int mptr,char *s1,int s1_size);
-    int      set_c_t5_m_name(int mptr,int p0a,int val);
+    int      get_t5_btn_name(int mptr,char *s1,int s1_size);
+    int      set_t5_btn_name(int mptr,char *s1,int s1_size);
+    int      set_c_t5_btn_name(int mptr,int p0a,int val);
 
-    int      get_t5_m_button(int mptr,char *s1,int s1_size);
-    int      set_t5_m_button(int mptr,char *s1,int s1_size);
-    int      set_c_t5_m_button(int mptr,int ptr1,int val);
+    int      get_t5_btn_button(int mptr,char *s1,int s1_size);
+    int      set_t5_btn_button(int mptr,char *s1,int s1_size);
+    int      set_c_t5_btn_button(int mptr,int ptr1,int val);
 
-    int      get_t5_m_comm(int mptr,char *s1,int s1_size);
-    int      set_t5_m_comm(int mptr,char *s1,int s1_size);
-    int      set_c_t5_m_comm(int mptr,int ptr1,int val);
+    int      get_t5_btn_comm(int mptr,char *s1,int s1_size);
+    int      set_t5_btn_comm(int mptr,char *s1,int s1_size);
+    int      set_c_t5_btn_comm(int mptr,int ptr1,int val);
 
-    int      get_t5_m_focus(int mptr,char *s1,int s1_size);
-    int      set_t5_m_focus(int mptr,char *s1,int s1_size);
-    int      set_c_t5_m_focus(int mptr,int ptr1,int val);
+    int      get_t5_btn_focus(int mptr,char *s1,int s1_size);
+    int      set_t5_btn_focus(int mptr,char *s1,int s1_size);
+    int      set_c_t5_btn_focus(int mptr,int ptr1,int val);
 };
 
 class bw_fldstru
@@ -1201,7 +1203,7 @@ class bw_fldstru
 
     int w_echo_winrec(int p_wptr);
     int w_fetch_rec(int p_dbptr,int p_wptr,int seri);
-    int w_tv_get_read_paint(char *fn,int fn_size,int p_wptr,int l,int c,char comm);
+    //int w_tv_get_read_paint(char *fn,int fn_size,int p_wptr,int l,int c,char comm);
     int w_tv_get_read_g(char *fn,int fn_size,int p_wptr,int l,int c,char comm);
     int w_tv_get_read_r(char *fn,int fn_size,int p_wptr,int l,int c,char comm);
     int w_get_tab_var(char *fn,int fn_size,int p_dbptr,char *ca,int ca_size);
@@ -1232,6 +1234,7 @@ class bw_fldstru
     int w_wps_to_txt(char *fn1,int fn1_size,char *fn2,int fn2_size);
 
     int tst_stru(void);
+    int tst_stru2(void);
 /*
 };
 
@@ -1312,7 +1315,7 @@ class bw_win
     int       win_mark;
 
     int       win_h_ci_total_ptr;     /* ci counter & ptr */
-    int       win_h_ptr;              /* windows number for one group */
+    //int       win_h_ptr;              /* windows number for one group */
 
     //int       win_ptr21;   /* 1 should echo read var */
     //int       win_ptr22;   /* 1 should echo link var */
@@ -1320,7 +1323,7 @@ class bw_win
 
   public:
 
-    int       win_h_w_total_ptr,win_h_w_cur_ptr;     /* total hwnd ptr & current hwnd ptr */
+    //int       win_h_w_total_ptr,win_h_w_cur_ptr;     /* total hwnd ptr & current hwnd ptr */
 
     int       win_ptr_new_win;               /* empty array point */
     int       win_menu_cmd;
@@ -1334,10 +1337,10 @@ class bw_win
 
   public:
 
-    int w_cre_ci_button(int p_pagecnt,char *s1,int s1_size,int p6,int p7,int p8,int i,char*,int);
+    int w_cre_ci_button(int p_pagecnt,char *s1,int s1_size,int p6,int p7,int p8,int i);
     int w_cre_ci_edit(int p_pagecnt,int p6,int p7,int p8,int i);
-    int w_cre_ci_radio(int p_pagecnt,int p6,int p7,int p8,int i,char*,int);
-    int w_cre_ci_check(int p_pagecnt,int p6,int p7,int p8,int i,char*,int);
+    int w_cre_ci_radio(int p_pagecnt,int p6,int p7,int p8,int i);
+    int w_cre_ci_check(int p_pagecnt,int p6,int p7,int p8,int i);
 
     int w_first_grp(void);
     int w_ini_win(void);
@@ -1349,11 +1352,13 @@ class bw_win
     int w_dele_win_ptr_wins_dbf(int p_wptr);
     int w_dele_xbase_state(int p_wptr);
     int tst_win1(void);
+    int tst_win1_fld(void);
     int tst_win2(void);
+    int tst_win2_fld_in_win(void);
     int tst_win3(void);
     int tst_win4(void);
     int tst_win5(void);
-    int tst_win6(void);
+    int tst_win6_ci_ptr(void);
     int w_find_winhand(HWND hwnd);
     int w_mouse_infield(int p_wptr,int y,int x);
     int w_adjust_edit(int p_wptr);
@@ -1496,13 +1501,13 @@ class bw_win_bua
 
     int           win_h_w_ptr[WIN_NUM][9];   /* start,end,current,parent ptr ,parent focus*/
     int           win_h_ci_ptr[HND_NUM][5];  /* window number,x,y, hwnd number,parent hwnd */
-    int           win_h_up_ptr[WIN_NUM][2];  /* up scrn seg posi */
+    //int           win_h_up_ptr[WIN_NUM][2];  /* up scrn seg posi */
 
     HWND          win_phh[WIN_NUM];         /* win_ptr_grp_ptr's windows handle */
 
-    int           win_ptr_win_mark[WIN_NUM];          /* current table win point */
-    int           win_ptr_grp_id[WIN_NUM];            /* every table window's group number */
-    int           win_ptr_grp_ptr[WIN_NUM][5];         /* every table window's group number(0) and group's &first(0)&current(1)&last(2) tablewin number */
+    //int           win_ptr_win_mark[WIN_NUM];          /* current table window point */
+    int           win_ptr_grp_id[WIN_NUM];            /* window table in use */
+    //int           win_ptr_grp_ptr[WIN_NUM][5];         /* every table window's group number(0) and group's &first(0)&current(1)&last(2) tablewin number */
     int           win_ptr_wins_dbf[STRU_NUM][WIN_NUM];/* database file in buffer, point beg & end */
     int           win_ptr_get_rd[WIN_NUM];            /* get_read id */
 
@@ -1575,18 +1580,18 @@ class bw_win_bua
     int  set_win_ptr_fld_in_win(int p_wptr,int ptr,int val);
     int  get_win_h_w_ptr(int p_wptr,int ptr);  /*  start,end,current,parent ptr ,parent focus*/
     int  set_win_h_w_ptr(int p_wptr,int ptr,int val);
-    int  get_win_h_up_ptr(int p_wptr,int ptr);  /* up scrn segment posion */
-    int  set_win_h_up_ptr(int p_wptr,int ptr,int val);
+    //int  get_win_h_up_ptr(int p_wptr,int ptr);  /* up scrn segment posion */
+    //int  set_win_h_up_ptr(int p_wptr,int ptr,int val);
 
     HWND get_win_phh(int p_wptr);          /* win_ptr_grp_ptr's windows handle */
     int  set_win_phh(int p_wptr,HWND hwnd);
 
-    int get_win_ptr_win_mark(int p_wptr);
-    int set_win_ptr_win_mark(int p_wptr,int val);
+    //int get_win_ptr_win_mark(int p_wptr);
+    //int set_win_ptr_win_mark(int p_wptr,int val);
     int get_win_ptr_grp_id(int p_wptr);
     int set_win_ptr_grp_id(int p_wptr,int val);
-    int get_win_ptr_grp_ptr(int p_wptr,int ptr04);
-    int set_win_ptr_grp_ptr(int p_wptr,int ptr04,int val);
+    //int get_win_ptr_grp_ptr(int p_wptr,int ptr04);
+    //int set_win_ptr_grp_ptr(int p_wptr,int ptr04,int val);
     int get_win_ptr_wins_dbf(int p_dbptr,int p_wptr);
     int set_win_ptr_wins_dbf(int p_dbptr,int p_wptr,int val);
     int get_win_ptr_get_rd(int p_wptr);
@@ -1709,8 +1714,8 @@ class bw_getread
     int   smg_ptr2;
     int   smg_color1,smg_color2;
 
-    int   win_get_ptr;
-    int   win_get_link;
+    //int   win_get_ptr;
+    //int   win_get_link;
     int   win_chns_char;
     char  win_chns_str[3];
     int   win_cur1,win_cur2;
@@ -1767,19 +1772,20 @@ class bw_get_bua
 */
   private:
 
-    int   smg_line[GET_NUM];
-    int   smg_colu[GET_NUM];
-    char  smg_data[SMG_SIZE];
-    char  smg_string[GET_NUM][SMG_SIZE];
-    char  smg_type[GET_NUM];
-    int   smg_dlen[GET_NUM];
-    int   smg_dlen2[GET_NUM];
-    int   smg_ddec[GET_NUM];
-    char  smg_link[GET_NUM];
-    int   smg_color[GET_NUM];
+    int    smg_line[GET_NUM];
+    int    smg_colu[GET_NUM];
+    char   smg_data[SMG_SIZE];
+    char   smg_string[GET_NUM][SMG_SIZE];
+    char   smg_type[GET_NUM];
+    int    smg_dlen[GET_NUM];
+    int    smg_dlen2[GET_NUM];
+    int    smg_ddec[GET_NUM];
+    char   smg_link[GET_NUM];
+    int    smg_color[GET_NUM];
     int   *smg_posi[GET_NUM];
-    char  smg_atte[GET_NUM][SMG_SIZE];
-    int   smg_read_id[GET_NUM];
+    char   smg_atte[GET_NUM][SMG_SIZE];
+    int    smg_read_id[GET_NUM];
+    char   smg_modi[GET_NUM];
 
   public:
 
@@ -1798,6 +1804,7 @@ class bw_get_bua
     int   *get_smg_posi(int gptr);
     int   get_smg_atte(int gptr,char *s1,int s1_size);
     int   get_smg_read_id(int gptr);
+    int   get_smg_modi(int gptr);
 
   public:
 
@@ -1815,5 +1822,7 @@ class bw_get_bua
     int   set_smg_posi(int gptr,int *val);
     int   set_smg_atte(int gptr,char *s1,int s1_size);
     int   set_smg_read_id(int gptr,int val);
+    int   set_smg_modi(int gptr,int val);
 };
-        
+
+

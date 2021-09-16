@@ -230,6 +230,7 @@ int bw_fldstru::w_read_stru(char *p_fn1,int p_fn1_size,int p_dbptr)
 
   return(0);
 }
+
 int bw_fldstru::tst_stru()
 {
   //HDC  hdc;
@@ -265,6 +266,44 @@ int bw_fldstru::tst_stru()
   return(0);
 }
 
+int bw_fldstru::tst_stru2()
+{
+  //HDC  hdc;
+  int  i;
+  char str1[SMG_SIZE];
+  char sfn1[SMG_SIZE];
+
+  bw_getread1.deb_record("bw_fldstru::tst_stru2()");
+
+  for (i=0;i<100;i++)
+  {
+    get_t2_fldname(i,sfn1,20);
+
+    sprintf(str1,"ptr=%d,fldname=%s,type=%c,len=%d,dec=%d,posi=%d,"
+	       ,i
+               ,sfn1
+	       ,get_t2_fldtype(i)
+	       ,get_t2_fldlen(i)
+	       ,get_t2_flddec(i)
+	       ,get_t2_fldposi(i));
+
+    bw_getread1.deb_record(str1);
+  }
+
+  for (i=0;i<STRU_NUM;i++)
+  {
+    sprintf(str1,"STRU_NUM=%d,dbptr=%d,fldpoin01=%d,%d,"
+               ,STRU_NUM
+	       ,i
+               ,get_t2_fldpoin(i,0)
+	       ,get_t2_fldpoin(i,1));
+
+    bw_getread1.deb_record(str1);
+  }
+
+  return(0);
+}
+
 int bw_fldstru::w_dele_stru(int p_dbptr)
 {
   int  i,j;
@@ -274,15 +313,20 @@ int bw_fldstru::w_dele_stru(int p_dbptr)
   char sfn1[SMG_SIZE];
 
   n1=get_t2_fldpoin(p_dbptr,1)-get_t2_fldpoin(p_dbptr,0);
-  p1=get_t2_fldpoin(p_dbptr,1);
-  p4=0;
+  if (n1<0) n1=0;
 
-  while (1)
+  p1=get_t2_fldpoin(p_dbptr,1); // last current field
+  p4=get_t2_fldpoin(p_dbptr,1); // last field
+  i=(-1);
+
+  while (n1>0)
   {
     exist=0;
 
-    for (i=0;i<STRU_NUM;i++)
+    while (i<STRU_NUM)
     {
+      i++;
+
       if (get_t2_fldpoin(i,0)>=p1)
       {
 	exist=1;
@@ -292,8 +336,6 @@ int bw_fldstru::w_dele_stru(int p_dbptr)
     }
 
     if (exist==0) break;
-
-    //p1=get_t2_fldpoin(p3,1);
 
     if (p4<get_t2_fldpoin(p3,1)) p4=get_t2_fldpoin(p3,1);
 
@@ -312,11 +354,9 @@ int bw_fldstru::w_dele_stru(int p_dbptr)
     set_t2_fldpoin(p3,1,get_t2_fldpoin(p3,1)-n1);
   }
 
-  if (p4==0) p4=get_t2_fldpoin(p_dbptr,1);
-
   for (i=p4-n1;i<p4;i++)
   {
-    set_c_t2_fldname(i,0,0);;
+    set_c_t2_fldname(i,0,0);
     set_t2_fldtype(i,0);
     set_t2_fldlen(i,0);
     set_t2_flddec(i,0);
@@ -696,6 +736,7 @@ int bw_fldstru::w_echo_winrec(int p_wptr)
 
   return(0);
 }
+/*
 int bw_fldstru::w_tv_get_read_paint(char *p_str,int p_str_size,int p_wptr,int l,int c,char comm)
 {
   HWND hnd;
@@ -843,6 +884,7 @@ int bw_fldstru::w_tv_get_read_paint(char *p_str,int p_str_size,int p_wptr,int l,
 
   return(j);
 }
+*/
 int bw_fldstru::w_tv_get_read_g(char *p_str,int p_str_size,int p_wptr,int l,int c,char comm)
 {
   HWND hnd;
@@ -864,7 +906,14 @@ int bw_fldstru::w_tv_get_read_g(char *p_str,int p_str_size,int p_wptr,int l,int 
 
   if ((w_find_fldtype(s2,SMG_SIZE,j)=='n')||(w_find_fldtype(s2,SMG_SIZE,j)=='c'))
   {
-    w_get_tab_var(s2,SMG_SIZE,j,s1,SMG_SIZE);
+    if (bw_getread1.get_smg_modi(bw_win1.get_win_ptr_get_rd(p_wptr))==1)
+    {
+      bw_getread1.get_smg_string(bw_win1.get_win_ptr_get_rd(p_wptr),s1,SMG_SIZE);
+    }
+    else
+    {
+      w_get_tab_var(s2,SMG_SIZE,j,s1,SMG_SIZE);
+    }
 
     bw_xbase1.set_win_scrnvar(p_wptr,s1,SMG_SIZE);
 
@@ -1723,11 +1772,14 @@ int bw_fldstru::w_rollback_base(int p_dbptr,int p_wptr)
   bw_xbase1.w_rollback_xbase(/*s_fn3,FN_SIZE,*/bw_xbase1.get_win_base_backup(p_dbptr),p_dbptr);
 
   bw_xbase1.set_win_state_dbf_modi(p_dbptr,0);
-
+/*
   for (p1=bw_win1.get_win_ptr_grp_ptr(bw_win1.get_win_ptr_grp_id(p_wptr),0)
       ;p1<=bw_win1.get_win_ptr_grp_ptr(bw_win1.get_win_ptr_grp_id(p_wptr),2)
       ;p1++)
   {
+*/
+    p1=p_wptr;
+
     if (bw_xbase1.get_win_state_in_srch(p1,p_dbptr)==1)
     {
       close(bw_xbase1.win_fh2[p1]);
@@ -1745,8 +1797,9 @@ int bw_fldstru::w_rollback_base(int p_dbptr,int p_wptr)
 
       bw_inkey1.w_del_file(s_fn1);
     }
+/*
   }
-
+*/
   w_first_editposi(p_dbptr,p_wptr);
   bw_xbase1.set_win_cur_seri(p_dbptr,p_wptr,1);
   bw_xbase1.set_win_recno(p_dbptr,p_wptr,0,1);
@@ -1800,11 +1853,14 @@ int bw_fldstru::w_commit_base(int p_dbptr,int p_wptr)
   bw_xbase1.w_commit_xbase(bw_xbase1.get_win_base_backup(p_dbptr),p_dbptr);
 
   bw_xbase1.set_win_state_dbf_modi(p_dbptr,0);
-
+/*
   for (p1=bw_win1.get_win_ptr_grp_ptr(bw_win1.get_win_ptr_grp_id(p_wptr),0)
       ;p1<=bw_win1.get_win_ptr_grp_ptr(bw_win1.get_win_ptr_grp_id(p_wptr),2)
       ;p1++)
   {
+*/
+    p1=p_wptr;
+
     if (bw_xbase1.get_win_state_in_srch(p1,p_dbptr)==1)
     {
       close(bw_xbase1.win_fh2[p1]);
@@ -1822,8 +1878,9 @@ int bw_fldstru::w_commit_base(int p_dbptr,int p_wptr)
 
       bw_inkey1.w_del_file(s_fn1);
     }
+/*
   }
-
+*/
   w_first_editposi(p_dbptr,p_wptr);
   bw_xbase1.set_win_cur_seri(p_dbptr,p_wptr,1);
   bw_xbase1.set_win_recno(p_dbptr,p_wptr,0,1);
@@ -1852,7 +1909,7 @@ int bw_fldstru::w_link_window(int p_dbptr,int p_wptr)
 
   i=w_is_card(p_dbptr,p_wptr);
 
-  j=bw_win1.get_win_ptr_grp_ptr(bw_win1.get_win_ptr_grp_id(p_wptr),0);
+  j=p_wptr;//bw_win1.get_win_ptr_grp_ptr(bw_win1.get_win_ptr_grp_id(p_wptr),0);
 
   if (i==1) bw_xbase1.set_win_recno(p_dbptr,p_wptr,1,bw_xbase1.get_win_recno(p_dbptr,j,0));
   else bw_xbase1.set_win_recno(p_dbptr,p_wptr,1,bw_xbase1.get_win_recno(p_dbptr,j,1));
@@ -1899,7 +1956,7 @@ int bw_fldstru::w_find_cond(int p_dbptr,int p_wptr)
   bw_inkey1.w_set_dir(str1);
 
   bw_win1.get_win_find_name(p_wptr,sfn1,FN_SIZE);
-  bw_main1.get_view(sfn1,FN_SIZE,bw_main1.win_hwnd,bw_win1.get_win_ptr_grp_ptr(p_wptr,0));
+  bw_main1.get_view(sfn1,FN_SIZE,bw_main1.win_hwnd,p_wptr/*bw_win1.get_win_ptr_grp_ptr(p_wptr,0)*/);
 
   return(0);
 }
@@ -2088,11 +2145,14 @@ int bw_fldstru::w_find_exit(int p_wptr)
   char s_fn1[FN_SIZE];
   char str1[FN_SIZE];
   char s_ext[EXT_SIZE];
-
+/*
   for (p1=bw_win1.get_win_ptr_grp_ptr(bw_win1.get_win_ptr_grp_id(p_wptr),0)
       ;p1<=bw_win1.get_win_ptr_grp_ptr(bw_win1.get_win_ptr_grp_id(p_wptr),2)
       ;p1++)
   {
+*/
+    p1=p_wptr;
+
     for (p2=0;p2<STRU_NUM;p2++)
     {
       if (bw_xbase1.get_win_state_in_srch(p1,p2)==1)
@@ -2113,8 +2173,9 @@ int bw_fldstru::w_find_exit(int p_wptr)
 	bw_inkey1.w_del_file(s_fn1);
       }
     }
+/*
   }
-
+*/
   return(0);
 }
 
@@ -2139,8 +2200,6 @@ int bw_fldstru::w_find_cond_ok(int p_dbptr)
   {
     w_find_fldname(p_dbptr,i,str7,SMG_SIZE);
 
-    //MessageBox(0,"aa str7",str7,MB_OK);
-
     strcpy(str6,"?");
     strcat(str6,str7);
 
@@ -2153,14 +2212,10 @@ int bw_fldstru::w_find_cond_ok(int p_dbptr)
 
       bw_dialog1.w_mv_fet_val(str6,SMG_SIZE,zero,str1,SMG_SIZE);
 
-      //MessageBox(0,"bb str1",str1,MB_OK);
-
       bw_inkey1.strtrim(str1,SMG_SIZE);
       bw_inkey1.strltrim(str1,SMG_SIZE);
 
       w_get_tab_var(str7,SMG_SIZE,p_dbptr,str2,SMG_SIZE);
-
-      //MessageBox(0,"cc str2",str2,MB_OK);
 
       if (w_find_fldtype(str7,SMG_SIZE,p_dbptr)=='c')
       {
@@ -2211,10 +2266,6 @@ int bw_fldstru::w_find_cond_ok(int p_dbptr)
         bw_inkey1.strtrim(str1,SMG_SIZE);
 	while (1)
 	{
-
-		//sprintf(str5,"k=%d,str1=%s,",k,str1);
-		//MessageBox(0,"cc2",str5,MB_OK);
-
           exist=0;
 	  for (l=k;l<(int)strlen(str1);l++)
 	  {
@@ -2228,9 +2279,6 @@ int bw_fldstru::w_find_cond_ok(int p_dbptr)
 	  if (exist==0) break;
 	  else
 	  {
-
-        //MessageBox(0,"dd exist=1","dd",MB_OK);
-
             o=1;
 	    if (str1[l]=='>')
 	    {
@@ -2291,9 +2339,6 @@ int bw_fldstru::w_find_cond_ok(int p_dbptr)
 	      bw_inkey1.cut_string(str1,l+1+o,n-l-1-o,SMG_SIZE,str3,SMG_SIZE);
 
 	      f2=bw_inkey1.str2float(str3,SMG_SIZE);
-
-		  //sprintf(str5,"m=%d,str3=%s,f1=%f,f2=%f,",m,str3,f1,f2);
-		  //MessageBox(0,"ee",str5,MB_OK);
 
 	      if (m==0)
 	      {

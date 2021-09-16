@@ -1,40 +1,46 @@
-
+/*
 #define  STRICT
-#include <windows.h>
+*/
+#include "windows.h"
+/*
 #include <commdlg.h>
- 
+*/
 #include <stdio.h>
+/*
 #include <math.h>
 #include <direct.h>
 #include <dos.h>
 #include <io.h>
 #include <conio.h>
 #include <process.h>
+*/
 #include <string.h>
 
 #include <time.h>
 
+#include <sys/time.h>
+
 #include "vc_bowo.h"
 
 extern class bw_main         bw_main1;
-extern class bw_switch       bw_switch1;
+extern class bw_rabox       bw_rabox1;
 extern class bw_buff         bw_buff1;
 extern class bw_xbase        bw_xbase1;
 extern class bw_getread      bw_getread1;
 extern class bw_dialog       bw_dialog1;
-extern class bw_choose       bw_choose1;
+extern class bw_chkbox       bw_chkbox1;
 extern class bw_win          bw_win1;
 extern class bw_inkey        bw_inkey1;
-extern class bw_menuvar      bw_menuvar1;
+extern class bw_buttonvar    bw_buttonvar1;
 
 #define DEBUG_MV 0
 
-int bw_menuvar::w_menu_find_seri(int p1)
+int bw_buttonvar::w_button_find_seri(int p1)
 {
-  return(get_t5_m_wind(p1));
+  return(get_t5_btn_wind(p1));
 }
 
-int bw_menuvar::w_read_mdc(char *p_fn,int p_fn_size,int p_wptr)
+int bw_buttonvar::w_read_btndc(char *p_fn,int p_fn_size,int p_wptr)
 {
   int  i,j;
   int  p1,p2,p3,p4,p5,p6,p7,p8,same;
@@ -54,9 +60,9 @@ int bw_menuvar::w_read_mdc(char *p_fn,int p_fn_size,int p_wptr)
 
   exist=0;
 
-  for (i=0;i<MENU_NUM_MN;i++)
+  for (i=0;i<BUTTON_NUM_BTN;i++)
   {
-    if (get_t5_m_wind(i)==0)
+    if (get_t5_btn_wind(i)==0)
     {
       exist=1;
       break;
@@ -92,7 +98,7 @@ int bw_menuvar::w_read_mdc(char *p_fn,int p_fn_size,int p_wptr)
     if (i>=SMG_SIZE) break;
     p1=i;
 
-    for (i=i;i<SMG_SIZE;i++) if (tmps2[i]==' ') break; /* scan for menuname*/
+    for (i=i;i<SMG_SIZE;i++) if (tmps2[i]==' ') break; /* scan for buttonname*/
     if (i>=SMG_SIZE)
     {
       fclose(fp1);
@@ -100,7 +106,7 @@ int bw_menuvar::w_read_mdc(char *p_fn,int p_fn_size,int p_wptr)
       return(1);
     }
     p2=i-1;
-					 /* scan for space after menuname*/
+					 /* scan for space after buttonname*/
     for (i=i;i<SMG_SIZE;i++) if (tmps2[i]!=' ') break;
     if (i>=SMG_SIZE)
     {
@@ -146,18 +152,18 @@ int bw_menuvar::w_read_mdc(char *p_fn,int p_fn_size,int p_wptr)
     for (j=p1;j<=p2;j++)
     {
       if (tmps2[j]==' ') break;
-      set_c_t5_m_name(ptr1,j-p1+0,tmps2[j]);
-      set_c_t5_m_name(ptr1,j-p1+1,0);
+      set_c_t5_btn_name(ptr1,j-p1+0,tmps2[j]);
+      set_c_t5_btn_name(ptr1,j-p1+1,0);
     }
 
     for (j=p3;j<=p4;j++)
     {
       if (tmps2[j]==' ') break;
-      set_c_t5_m_button(ptr1,j-p3+0,tmps2[j]);
-      set_c_t5_m_button(ptr1,j-p3+1,0);
+      set_c_t5_btn_button(ptr1,j-p3+0,tmps2[j]);
+      set_c_t5_btn_button(ptr1,j-p3+1,0);
     }
 
-    get_t5_m_button(ptr1,sb1,SMG_SIZE);
+    get_t5_btn_button(ptr1,sb1,SMG_SIZE);
 
     same=0;
     if (strncmp("button=",sb1,7)==0) same=1;
@@ -172,11 +178,11 @@ int bw_menuvar::w_read_mdc(char *p_fn,int p_fn_size,int p_wptr)
     for (j=p5;j<=p6;j++)
     {
       if (tmps2[j]==' ') break;
-      set_c_t5_m_comm(ptr1,j-p5+0,tmps2[j]);
-      set_c_t5_m_comm(ptr1,j-p5+1,0);
+      set_c_t5_btn_comm(ptr1,j-p5+0,tmps2[j]);
+      set_c_t5_btn_comm(ptr1,j-p5+1,0);
     }
 
-    get_t5_m_comm(ptr1,so1,SMG_SIZE);
+    get_t5_btn_comm(ptr1,so1,SMG_SIZE);
 
     same=0;
     if (strncmp("com=",so1,4)==0) same=1;
@@ -191,33 +197,33 @@ int bw_menuvar::w_read_mdc(char *p_fn,int p_fn_size,int p_wptr)
     for (j=p7;j<=p8;j++)
     {
       if (tmps2[j]==' ') break;
-      set_c_t5_m_focus(ptr1,j-p7,tmps2[j]);
-      set_c_t5_m_focus(ptr1,j-p7+1,0);
+      set_c_t5_btn_focus(ptr1,j-p7,tmps2[j]);
+      set_c_t5_btn_focus(ptr1,j-p7+1,0);
     }
 
-    set_t5_m_wind(ptr1,p_wptr);
+    set_t5_btn_wind(ptr1,p_wptr);
 
     ptr1++;
   }
 
-  t5_m_ptr1=ptr1;
+  t5_btn_ptr1=ptr1;
 
   fclose(fp1);
 /*
-  for (i=0;i<t5_m_ptr1;i++)
+  for (i=0;i<t5_btn_ptr1;i++)
   {
     loc(i+1,1);
     printf("%s,%s,%s,"
-	   ,t5_m_name[i]
-	   ,t5_m_button[i]
-	   ,t5_m_comm[i]);
+	   ,t5_btn_name[i]
+	   ,t5_btn_button[i]
+	   ,t5_btn_comm[i]);
   }
   inkey();
 */
   return(0);
 }
 
-int bw_menuvar::tst_menu()
+int bw_buttonvar::tst_button()
 {
   //HDC  hdc;
   int  i;
@@ -227,19 +233,19 @@ int bw_menuvar::tst_menu()
   char so1[SMG_SIZE];
   char sf1[SMG_SIZE];
 
-  bw_getread1.deb_record("bw_menuvar::tst_menu()");
+  bw_getread1.deb_record("bw_buttonvar::tst_button()");
 
   for (i=0;i<60;i++)
   {
-    get_t5_m_name(i,sm1,SMG_SIZE);
-    get_t5_m_button(i,sb1,SMG_SIZE);
-    get_t5_m_comm(i,so1,SMG_SIZE);
-    get_t5_m_focus(i,sf1,SMG_SIZE);
+    get_t5_btn_name(i,sm1,SMG_SIZE);
+    get_t5_btn_button(i,sb1,SMG_SIZE);
+    get_t5_btn_comm(i,so1,SMG_SIZE);
+    get_t5_btn_focus(i,sf1,SMG_SIZE);
 
     sprintf(str,"ptr=%d,wind=%d,mcnt=%d,ptr1=%d,name=%s,button=%s,comm=%s,focus=%s,"
-				 ,i,get_t5_m_wind(i)
-                                 ,get_t5_m_mcnt(i)
-				 ,t5_m_ptr1
+				 ,i,get_t5_btn_wind(i)
+                                 ,get_t5_btn_mcnt(i)
+				 ,t5_btn_ptr1
 				 ,sm1
 			         ,sb1
 				 ,so1
@@ -252,7 +258,7 @@ int bw_menuvar::tst_menu()
   return(0);
 }
 
-int bw_menuvar::w_dele_menu(int wp1,int wp2)
+int bw_buttonvar::w_dele_button(int wptr)
 {
   int  i;
   int  p1,p2,p3,p4,p5,p6;
@@ -268,9 +274,9 @@ int bw_menuvar::w_dele_menu(int wp1,int wp2)
   p5=0;
   p6=0;
 
-  for (i=0;i<t5_m_ptr1;i++)
+  for (i=0;i<t5_btn_ptr1;i++)
   {
-    if ((get_t5_m_wind(i)>=wp1)&&(get_t5_m_wind(i)<=wp2))
+    if (get_t5_btn_wind(i)==wptr)
     {
       if (p5==0)
       {
@@ -279,22 +285,20 @@ int bw_menuvar::w_dele_menu(int wp1,int wp2)
       }
       p4++;
     }
-    if (get_t5_m_wind(i)>wp2)
+    if (get_t5_btn_wind(i)>wptr)
     {
       if (p6==0)
       {
 	p2=i;
 	p6=1;
       }
-    }
-    if (get_t5_m_wind(i)>wp2)
-    {
       p3=i;
     }
   }
+
   if (p2<0)
   {
-    p2=t5_m_ptr1;
+    p2=t5_btn_ptr1;
     p3=p2-1;
   }
 
@@ -302,7 +306,7 @@ int bw_menuvar::w_dele_menu(int wp1,int wp2)
   {
     for (i=p2;i<=p3;i++)
     {
-      set_t5_m_wind(i,get_t5_m_wind(i)-wp2+wp1-1);
+      set_t5_btn_wind(i,get_t5_btn_wind(i)-1);
     }
   }
   else
@@ -311,54 +315,91 @@ int bw_menuvar::w_dele_menu(int wp1,int wp2)
     {
       for (i=p2;i<=p3;i++)
       {
-	get_t5_m_name(i,sm1,SMG_SIZE);
-        set_t5_m_name(p1+i-p2,sm1,SMG_SIZE);
+	get_t5_btn_name(i,sm1,SMG_SIZE);
+        set_t5_btn_name(p1+i-p2,sm1,SMG_SIZE);
 
-	get_t5_m_button(i,sb1,SMG_SIZE);
-	set_t5_m_button(p1+i-p2,sb1,SMG_SIZE);
+	get_t5_btn_button(i,sb1,SMG_SIZE);
+	set_t5_btn_button(p1+i-p2,sb1,SMG_SIZE);
 
-	get_t5_m_comm(i,so1,SMG_SIZE);
-	set_t5_m_comm(p1+i-p2,so1,SMG_SIZE);
+	get_t5_btn_comm(i,so1,SMG_SIZE);
+	set_t5_btn_comm(p1+i-p2,so1,SMG_SIZE);
 
-	get_t5_m_focus(i,sf1,SMG_SIZE);
-	set_t5_m_focus(p1+i-p2,sf1,SMG_SIZE);
+	get_t5_btn_focus(i,sf1,SMG_SIZE);
+	set_t5_btn_focus(p1+i-p2,sf1,SMG_SIZE);
 
-	set_t5_m_mcnt(p1+i-p2,get_t5_m_mcnt(i));
-	set_t5_m_wind(p1+i-p2,get_t5_m_wind(i)-wp2+wp1-1);
+	set_t5_btn_mcnt(p1+i-p2,get_t5_btn_mcnt(i));
+	set_t5_btn_wind(p1+i-p2,get_t5_btn_wind(i)-1);
       }
 
-      for (i=p1+p3-p2+1;i<t5_m_ptr1;i++)
+      for (i=p1+p3-p2+1;i<t5_btn_ptr1;i++)
       {
-	set_c_t5_m_name(i,0,0);
-	set_c_t5_m_button(i,0,0);
-	set_c_t5_m_comm(i,0,0);
-	set_c_t5_m_focus(i,0,0);
-	set_t5_m_mcnt(i,0);
-	set_t5_m_wind(i,0);
+	set_c_t5_btn_name(i,0,0);
+	set_c_t5_btn_button(i,0,0);
+	set_c_t5_btn_comm(i,0,0);
+	set_c_t5_btn_focus(i,0,0);
+	set_t5_btn_mcnt(i,0);
+	set_t5_btn_wind(i,0);
       }
 
-      t5_m_ptr1=p1+p3-p2+1;
+      t5_btn_ptr1=p1+p3-p2+1;
     }
     else
     {
-      for (i=p1;i<t5_m_ptr1;i++)
+      for (i=p1;i<t5_btn_ptr1;i++)
       {
-	set_c_t5_m_name(i,0,0);
-        set_c_t5_m_button(i,0,0);
-	set_c_t5_m_comm(i,0,0);
-	set_c_t5_m_focus(i,0,0);
-	set_t5_m_mcnt(i,0);
-	set_t5_m_wind(i,0);
+	set_c_t5_btn_name(i,0,0);
+        set_c_t5_btn_button(i,0,0);
+	set_c_t5_btn_comm(i,0,0);
+	set_c_t5_btn_focus(i,0,0);
+	set_t5_btn_mcnt(i,0);
+	set_t5_btn_wind(i,0);
       }
 
-      t5_m_ptr1=p1;
+      t5_btn_ptr1=p1;
     }
   }
 
   return(0);
 }
 
-int bw_menuvar::w_menu_comm(int p1,int state)
+int bw_buttonvar::tst_button2()
+{
+  int  i;
+  char str[3000];
+  char sm1[SMG_SIZE];
+  char sb1[SMG_SIZE];
+  char so1[SMG_SIZE];
+  char sf1[SMG_SIZE];
+
+  bw_getread1.deb_record("bw_buttonvar::tst_button2()");
+
+  sprintf(str,"t5_btn_ptr1=%d,BUTTON_NUM_BTN=%d,",t5_btn_ptr1,BUTTON_NUM_BTN);
+  bw_getread1.deb_record(str);
+
+  for (i=0;i<100;i++)
+  {
+    get_t5_btn_name(i,sm1,SMG_SIZE);
+    get_t5_btn_button(i,sb1,SMG_SIZE);
+    get_t5_btn_comm(i,so1,SMG_SIZE);
+    get_t5_btn_focus(i,sf1,SMG_SIZE);
+
+    sprintf(str,"ptr=%d,wind=%d,mcnt=%d,name=%s,button=%s,comm=%s,focus=%s,"
+				 ,i
+                                 ,get_t5_btn_wind(i)
+                                 ,get_t5_btn_mcnt(i)
+				 ,sm1
+			         ,sb1
+				 ,so1
+                                 ,sf1
+				 );
+
+    bw_getread1.deb_record(str);
+  }
+
+  return(0);
+}
+
+int bw_buttonvar::w_button_comm(int p1,int state)
 {
   int  i;
   int  exist;
@@ -370,17 +411,17 @@ int bw_menuvar::w_menu_comm(int p1,int state)
 
   if (p1<0)
   {
-    t5_m_com_str[0]=0;
-    t5_m_ptr2=0;
+    t5_btn_com_str[0]=0;
+    t5_btn_ptr2=0;
     return(1);
   }
 
   strcpy(s3[ 0],"get_tab(");
   strcpy(s3[ 1],"get_edit(");
   strcpy(s3[ 2],"get_menu(");
-  strcpy(s3[ 3],"get_choose(");
-  strcpy(s3[ 4],"get_switch(");
-  strcpy(s3[ 5],"get_mchoose(");
+  strcpy(s3[ 3],"get_chkbox(");
+  strcpy(s3[ 4],"get_rabox(");
+  strcpy(s3[ 5],"get_mchkbox(");
   strcpy(s3[ 6],"setup_sys(");
   strcpy(s3[ 7],"return(");
   strcpy(s3[ 8],"setup(");
@@ -407,10 +448,10 @@ int bw_menuvar::w_menu_comm(int p1,int state)
 
 
   chs=28;
-  t5_m_ptr2=0;
-  t5_m_com_str[0]=0;
-  if (state==0) get_t5_m_comm(p1,s1,SMG_SIZE);
-  else get_t5_m_focus(p1,s1,SMG_SIZE);
+  t5_btn_ptr2=0;
+  t5_btn_com_str[0]=0;
+  if (state==0) get_t5_btn_comm(p1,s1,SMG_SIZE);
+  else get_t5_btn_focus(p1,s1,SMG_SIZE);
 
   if (strncmp("com=",s1,4)==0)
   {
@@ -429,7 +470,7 @@ int bw_menuvar::w_menu_comm(int p1,int state)
 
     if (exist==1)
     {
-      t5_m_ptr2=i+1;
+      t5_btn_ptr2=i+1;
       bw_inkey1.cut_string(s2,strlen(s3[i]),strlen(s2)-strlen(s3[i]),SMG_SIZE,s4,SMG_SIZE);
       if (s4[0]=='"')
       {
@@ -444,32 +485,32 @@ int bw_menuvar::w_menu_comm(int p1,int state)
 	}
 	if (exist==0)
 	{
-	  t5_m_ptr2=0;
-	  t5_m_com_str[0]=0;
+	  t5_btn_ptr2=0;
+	  t5_btn_com_str[0]=0;
 	}
 	else
 	{
-	  bw_inkey1.cut_string(s4,1,i-1,SMG_SIZE,t5_m_com_str,SMG_SIZE);
+	  bw_inkey1.cut_string(s4,1,i-1,SMG_SIZE,t5_btn_com_str,SMG_SIZE);
 	}
       }
-      else t5_m_com_str[0]=0; /* mem var */
+      else t5_btn_com_str[0]=0; /* mem var */
     }
     else
     {
-      t5_m_ptr2=0;
-      t5_m_com_str[0]=0;
+      t5_btn_ptr2=0;
+      t5_btn_com_str[0]=0;
     }
   }
   else
   {
-    t5_m_ptr2=0;
-    t5_m_com_str[0]=0;
+    t5_btn_ptr2=0;
+    t5_btn_com_str[0]=0;
   }
 
   return(0);
 }
 
-int bw_menuvar::w_menu_poin(char *p_str,int p_str_size,int p1)
+int bw_buttonvar::w_button_poin(char *p_str,int p_str_size,int p1)
 {
   int  i;
   int  exist;
@@ -477,11 +518,11 @@ int bw_menuvar::w_menu_poin(char *p_str,int p_str_size,int p1)
 
   exist=0;
 
-  for (i=0;i<t5_m_ptr1;i++)
+  for (i=0;i<t5_btn_ptr1;i++)
   {
-    get_t5_m_name(i,sm1,SMG_SIZE);
+    get_t5_btn_name(i,sm1,SMG_SIZE);
 
-    if ((strcmp(p_str,sm1)==0)&&(p1==w_menu_find_seri(i)))
+    if ((strcmp(p_str,sm1)==0)&&(p1==w_button_find_seri(i)))
     {
       exist=1;
       break;
@@ -490,32 +531,32 @@ int bw_menuvar::w_menu_poin(char *p_str,int p_str_size,int p1)
 
   if (exist==1)
   {
-    t5_m_ptr3=i;
+    t5_btn_ptr3=i;
     return(0);
   }
   else
   {
-    t5_m_ptr3=(-1);
+    t5_btn_ptr3=(-1);
     return(1);
   }
 }
 
-int bw_choose::w_choose_ini()
+int bw_chkbox::w_chkbox_ini()
 {
   int i;
 
-  for (i=0;i<MENU_NUM_CHS;i++)
+  for (i=0;i<BUTTON_NUM_CHS;i++)
   {
-    bw_choose1.set_win_choose(i,0,0);
-    bw_choose1.set_c_win_choose_name(i,0,0);
+    bw_chkbox1.set_win_chkbox(i,0,0);
+    bw_chkbox1.set_c_win_chkbox_name(i,0,0);
   }
 
-  win_choose_ptr1=0;
+  win_chkbox_ptr1=0;
 
   return(0);
 }
 
-int bw_choose::w_read_cdc(char *p_fn,int p_fn_size,int p_wptr)
+int bw_chkbox::w_read_chkdc(char *p_fn,int p_fn_size,int p_wptr)
 {
   int  i,j,k,l,o;
   int  p1,p2,p3,p4,p5,p6;
@@ -536,9 +577,9 @@ int bw_choose::w_read_cdc(char *p_fn,int p_fn_size,int p_wptr)
 
   exist=0;
 
-  for (i=0;i<MENU_NUM_CHS;i++)
+  for (i=0;i<BUTTON_NUM_CHS;i++)
   {
-    if (bw_choose1.get_win_choose(i,0)==0)
+    if (bw_chkbox1.get_win_chkbox(i,0)==0)
     {
       exist=1;
       break;
@@ -621,59 +662,59 @@ int bw_choose::w_read_cdc(char *p_fn,int p_fn_size,int p_wptr)
     bw_inkey1.cut_string(tmps2,p1+1,p2-p1-1+1,SMG_SIZE,str2,SMG_SIZE);
     o=bw_inkey1.str2int(str2,SMG_SIZE);
 //    k=ptr1;
-    bw_choose1.set_win_choose(ptr1,0,1);
-    bw_choose1.set_win_choose(ptr1,2,o);
-    bw_choose1.set_win_choose(ptr1,3,p_wptr);
+    bw_chkbox1.set_win_chkbox(ptr1,0,1);
+    bw_chkbox1.set_win_chkbox(ptr1,2,o);
+    bw_chkbox1.set_win_chkbox(ptr1,3,p_wptr);
 
     for (j=p3;j<=p4;j++)
     {
       if (tmps2[j]==' ') break;
-      bw_choose1.set_c_win_choose_name(ptr1,j-p3+0,tmps2[j]);
-      bw_choose1.set_c_win_choose_name(ptr1,j-p3+1,0);
+      bw_chkbox1.set_c_win_chkbox_name(ptr1,j-p3+0,tmps2[j]);
+      bw_chkbox1.set_c_win_chkbox_name(ptr1,j-p3+1,0);
     }
 
     bw_inkey1.cut_string(tmps2,p5,p6-p5+1,SMG_SIZE,str2,SMG_SIZE);
     l=bw_inkey1.str2int(str2,SMG_SIZE);
-    bw_choose1.set_win_choose(ptr1,1,l);
+    bw_chkbox1.set_win_chkbox(ptr1,1,l);
 
-    bw_choose1.get_win_choose_name(ptr1,str3,SMG_SIZE);
+    bw_chkbox1.get_win_chkbox_name(ptr1,str3,SMG_SIZE);
 
     if (bw_dialog1.w_mv_exist(str3,SMG_SIZE,p_wptr)==1)
     {
       bw_dialog1.w_mv_fet_val(str3,SMG_SIZE,0,str1,SMG_SIZE);
       //bw_inkey1.cut_string(str1,0,strlen(str1)-1-0+1,SMG_SIZE,str2,SMG_SIZE);
-      bw_choose1.set_win_choose(ptr1,1,bw_inkey1.str2int(str1,SMG_SIZE));
+      bw_chkbox1.set_win_chkbox(ptr1,1,bw_inkey1.str2int(str1,SMG_SIZE));
     }
 
     ptr1++;
   }
 
-  win_choose_ptr1=ptr1;
+  win_chkbox_ptr1=ptr1;
 
   fclose(fp1);
 
   return(0);
 }
 
-int bw_choose::tst_choose()
+int bw_chkbox::tst_chkbox()
 {
   //HDC  hdc;
   int  i;
   char str2[SMG_SIZE];
   char str1[SMG_SIZE];
 
-  bw_getread1.deb_record("bw_choose::tst_choose()");
+  bw_getread1.deb_record("bw_chkbox::tst_chkbox()");
 
   for (i=0;i<60;i++)
   {
-    bw_choose1.get_win_choose_name(i,str1,SMG_SIZE);
+    bw_chkbox1.get_win_chkbox_name(i,str1,SMG_SIZE);
 
-    sprintf(str2,"ptr=%d,choose0123,name,ptr1=%d,%d,%d,%d,%s,%d,",i,bw_choose1.get_win_choose(i,0)
-				    ,bw_choose1.get_win_choose(i,1)
-				    ,bw_choose1.get_win_choose(i,2)
-				    ,bw_choose1.get_win_choose(i,3)
+    sprintf(str2,"ptr=%d,chkbox0123,name,ptr1=%d,%d,%d,%d,%s,%d,",i,bw_chkbox1.get_win_chkbox(i,0)
+				    ,bw_chkbox1.get_win_chkbox(i,1)
+				    ,bw_chkbox1.get_win_chkbox(i,2)
+				    ,bw_chkbox1.get_win_chkbox(i,3)
 				    ,str1
-				    ,win_choose_ptr1);
+				    ,win_chkbox_ptr1);
 
     bw_getread1.deb_record(str2);
   }
@@ -682,7 +723,7 @@ int bw_choose::tst_choose()
 }
 
 
-int bw_choose::w_dele_choose(int wp1,int wp2)
+int bw_chkbox::w_dele_chkbox(int wp1,int wp2)
 {
   int  i;
   int  p1,p2,p3,p4,p5,p6;
@@ -695,9 +736,9 @@ int bw_choose::w_dele_choose(int wp1,int wp2)
   p5=0;
   p6=0;
 
-  for (i=0;i<=win_choose_ptr1;i++)
+  for (i=0;i<=win_chkbox_ptr1;i++)
   {
-    if ((bw_choose1.get_win_choose(i,3)>=wp1)&&(bw_choose1.get_win_choose(i,3)<=wp2))
+    if ((bw_chkbox1.get_win_chkbox(i,3)>=wp1)&&(bw_chkbox1.get_win_chkbox(i,3)<=wp2))
     {
       if (p5==0)
       {
@@ -706,7 +747,7 @@ int bw_choose::w_dele_choose(int wp1,int wp2)
       }
       p4++;
     }
-    if (bw_choose1.get_win_choose(i,3)>wp2)
+    if (bw_chkbox1.get_win_chkbox(i,3)>wp2)
     {
       if (p6==0)
       {
@@ -714,14 +755,14 @@ int bw_choose::w_dele_choose(int wp1,int wp2)
 	p6=1;
       }
     }
-    if (bw_choose1.get_win_choose(i,3)>wp2)
+    if (bw_chkbox1.get_win_chkbox(i,3)>wp2)
     {
       p3=i;
     }
   }
   if (p2<0)
   {
-    p2=win_choose_ptr1+1;
+    p2=win_chkbox_ptr1+1;
     p3=p2-1;
   }
 
@@ -729,7 +770,7 @@ int bw_choose::w_dele_choose(int wp1,int wp2)
   {
     for (i=p2;i<=p3;i++)
     {
-      bw_choose1.set_win_choose(i,3,bw_choose1.get_win_choose(i,3)-wp2+wp1-1);
+      bw_chkbox1.set_win_chkbox(i,3,bw_chkbox1.get_win_chkbox(i,3)-wp2+wp1-1);
     }
   }
   else
@@ -738,68 +779,68 @@ int bw_choose::w_dele_choose(int wp1,int wp2)
     {
       for (i=p2;i<=p3;i++)
       {
-	bw_choose1.get_win_choose_name(i,str1,SMG_SIZE);
-	bw_choose1.set_win_choose_name(p1+i-p2,str1,SMG_SIZE);
+	bw_chkbox1.get_win_chkbox_name(i,str1,SMG_SIZE);
+	bw_chkbox1.set_win_chkbox_name(p1+i-p2,str1,SMG_SIZE);
 
-	bw_choose1.set_win_choose(p1+i-p2,0,bw_choose1.get_win_choose(i,0));
-	bw_choose1.set_win_choose(p1+i-p2,1,bw_choose1.get_win_choose(i,1));
-	bw_choose1.set_win_choose(p1+i-p2,2,bw_choose1.get_win_choose(i,2));
-	bw_choose1.set_win_choose(p1+i-p2,3,bw_choose1.get_win_choose(i,3)-wp2+wp1-1);
+	bw_chkbox1.set_win_chkbox(p1+i-p2,0,bw_chkbox1.get_win_chkbox(i,0));
+	bw_chkbox1.set_win_chkbox(p1+i-p2,1,bw_chkbox1.get_win_chkbox(i,1));
+	bw_chkbox1.set_win_chkbox(p1+i-p2,2,bw_chkbox1.get_win_chkbox(i,2));
+	bw_chkbox1.set_win_chkbox(p1+i-p2,3,bw_chkbox1.get_win_chkbox(i,3)-wp2+wp1-1);
       }
 
-      for (i=p1+p3-p2+1;i<=win_choose_ptr1;i++)
+      for (i=p1+p3-p2+1;i<=win_chkbox_ptr1;i++)
       {
-	bw_choose1.set_c_win_choose_name(i,0,0);
-	bw_choose1.set_win_choose(i,0,0);
-	bw_choose1.set_win_choose(i,1,0);
-	bw_choose1.set_win_choose(i,2,0);
-	bw_choose1.set_win_choose(i,3,0);
+	bw_chkbox1.set_c_win_chkbox_name(i,0,0);
+	bw_chkbox1.set_win_chkbox(i,0,0);
+	bw_chkbox1.set_win_chkbox(i,1,0);
+	bw_chkbox1.set_win_chkbox(i,2,0);
+	bw_chkbox1.set_win_chkbox(i,3,0);
       }
-      win_choose_ptr1=p1+p3-p2+1;
+      win_chkbox_ptr1=p1+p3-p2+1;
     }
     else
     {
-      for (i=p1;i<=win_choose_ptr1;i++)
+      for (i=p1;i<=win_chkbox_ptr1;i++)
       {
-	bw_choose1.set_c_win_choose_name(i,0,0);
-	bw_choose1.set_win_choose(i,0,0);
-	bw_choose1.set_win_choose(i,1,0);
-	bw_choose1.set_win_choose(i,2,0);
-	bw_choose1.set_win_choose(i,3,0);
+	bw_chkbox1.set_c_win_chkbox_name(i,0,0);
+	bw_chkbox1.set_win_chkbox(i,0,0);
+	bw_chkbox1.set_win_chkbox(i,1,0);
+	bw_chkbox1.set_win_chkbox(i,2,0);
+	bw_chkbox1.set_win_chkbox(i,3,0);
       }
-      win_choose_ptr1=p1;
+      win_chkbox_ptr1=p1;
     }
   }
 */
   return(0);
 
 }
-int bw_choose::w_save_choose(int p_wptr)
+int bw_chkbox::w_save_chkbox(int p_wptr)
 {
   int  i,j;
   char str1[SMG_SIZE];
   char str2[SMG_SIZE];
 
-  for (i=0;i<win_choose_ptr1;i++)
+  for (i=0;i<win_chkbox_ptr1;i++)
   {
-    bw_inkey1.int2str(bw_choose1.get_win_choose(i,1),str2,SMG_SIZE);
-    bw_choose1.get_win_choose_name(i,str1,SMG_SIZE);
+    bw_inkey1.int2str(bw_chkbox1.get_win_chkbox(i,1),str2,SMG_SIZE);
+    bw_chkbox1.get_win_chkbox_name(i,str1,SMG_SIZE);
     bw_dialog1.w_mv_save_mem(str1,SMG_SIZE,p_wptr,str2,strlen(str2));
   }
 
   return(0);
 }
 
-int bw_choose::w_echo_chs_change(int link,int p_wptr)
+int bw_chkbox::w_echo_chk_change(int link,int p_wptr)
 {
   int i;
   int exist;
 
   exist=0;
 
-  for (i=0;i<MENU_NUM_CHS;i++)
+  for (i=0;i<BUTTON_NUM_CHS;i++)
   {
-    if ((bw_choose1.get_win_choose(i,2)==link)&&(bw_choose1.get_win_choose(i,3)==p_wptr))
+    if ((bw_chkbox1.get_win_chkbox(i,2)==link)&&(bw_chkbox1.get_win_chkbox(i,3)==p_wptr))
     {
       exist=1;
       break;
@@ -808,30 +849,30 @@ int bw_choose::w_echo_chs_change(int link,int p_wptr)
 
   if (exist==1)
   {
-    if (bw_choose1.get_win_choose(i,1)==1) bw_choose1.set_win_choose(i,1,0);
-    else bw_choose1.set_win_choose(i,1,1);
+    if (bw_chkbox1.get_win_chkbox(i,1)==1) bw_chkbox1.set_win_chkbox(i,1,0);
+    else bw_chkbox1.set_win_chkbox(i,1,1);
 
     return(i);
   }
   else return(-1);
 }
 
-int bw_choose::w_clr_recvar_chs(int p_wptr)
+int bw_chkbox::w_clr_recvar_chkbox(int p_wptr)
 {
   int i;
 
-  for (i=0;i<MENU_NUM_CHS;i++)
+  for (i=0;i<BUTTON_NUM_CHS;i++)
   {
-    bw_choose1.set_win_choose(i,0,0);
-    bw_choose1.set_c_win_choose_name(i,0,0);
+    bw_chkbox1.set_win_chkbox(i,0,0);
+    bw_chkbox1.set_c_win_chkbox_name(i,0,0);
   }
 
-  win_choose_ptr1=0;
+  win_chkbox_ptr1=0;
 
   return(0);
 }
 
-int bw_choose::w_echo_winrec_chs(int p_wptr)
+int bw_chkbox::w_echo_winrec_chkbox(int p_wptr)
 {
   int i,j,k,l,n,o;
   char str1[SMG_SIZE];
@@ -856,11 +897,11 @@ int bw_choose::w_echo_winrec_chs(int p_wptr)
       bw_inkey1.cut_string(str1,1,strlen(str1)-1-1+1,SMG_SIZE,str2,SMG_SIZE);
       n=bw_inkey1.str2int(str2,SMG_SIZE);
 
-      for (k=0;k<MENU_NUM_CHS;k++)
+      for (k=0;k<BUTTON_NUM_CHS;k++)
       {
-	if ((bw_choose1.get_win_choose(k,2)==n)&&(bw_choose1.get_win_choose(k,3)==p_wptr))
+	if ((bw_chkbox1.get_win_chkbox(k,2)==n)&&(bw_chkbox1.get_win_chkbox(k,3)==p_wptr))
         {
-	  l=bw_choose1.get_win_choose(k,1);
+	  l=bw_chkbox1.get_win_chkbox(k,1);
 
 	  o=bw_win1.w_find_hnd(p_wptr,bw_win1.pfield,bw_win1.pline);
 
@@ -881,22 +922,22 @@ int bw_choose::w_echo_winrec_chs(int p_wptr)
   return(0);
 }
 
-int bw_switch::w_switch_ini()
+int bw_rabox::w_rabox_ini()
 {
   int i;
 
-  for (i=0;i<MENU_NUM_RA;i++)
+  for (i=0;i<BUTTON_NUM_RA;i++)
   {
-    set_win_switch(i,0,0);
-    set_c_win_switch_name(i,0,0);
+    set_win_rabox(i,0,0);
+    set_c_win_rabox_name(i,0,0);
   }
 
-  win_switch_ptr1=0;
+  win_rabox_ptr1=0;
 
   return(0);
 }
 
-int bw_switch::w_read_sdc(char *p_fn,int p_fn_size,int p_wptr)
+int bw_rabox::w_read_radc(char *p_fn,int p_fn_size,int p_wptr)
 {
   int  i,j,k,l,o;
   int  p1,p2,p3,p4,p5,p6;
@@ -917,9 +958,9 @@ int bw_switch::w_read_sdc(char *p_fn,int p_fn_size,int p_wptr)
 
   exist=0;
 
-  for (i=0;i<MENU_NUM_RA;i++)
+  for (i=0;i<BUTTON_NUM_RA;i++)
   {
-    if (get_win_switch(i,0)==0)
+    if (get_win_rabox(i,0)==0)
     {
       exist=1;
       break;
@@ -1002,75 +1043,75 @@ int bw_switch::w_read_sdc(char *p_fn,int p_fn_size,int p_wptr)
     //k=ptr1;
     bw_inkey1.cut_string(tmps2,p1+1,p2-p1-1+1,SMG_SIZE,str2,SMG_SIZE);
     o=bw_inkey1.str2int(str2,SMG_SIZE);
-    set_win_switch(ptr1,0,1);
-    set_win_switch(ptr1,2,o);
-    set_win_switch(ptr1,3,p_wptr);
+    set_win_rabox(ptr1,0,1);
+    set_win_rabox(ptr1,2,o);
+    set_win_rabox(ptr1,3,p_wptr);
 
     for (j=p3;j<=p4;j++)
     {
       if (tmps2[j]==' ') break;
-      set_c_win_switch_name(ptr1,j-p3+0,tmps2[j]);
-      set_c_win_switch_name(ptr1,j-p3+1,0);
+      set_c_win_rabox_name(ptr1,j-p3+0,tmps2[j]);
+      set_c_win_rabox_name(ptr1,j-p3+1,0);
     }
 
     bw_inkey1.cut_string(tmps2,p5,p6-p5+1,SMG_SIZE,str2,SMG_SIZE);
     l=bw_inkey1.str2int(str2,SMG_SIZE);
-    set_win_switch(ptr1,1,l);
+    set_win_rabox(ptr1,1,l);
 
-    get_win_switch_name(ptr1,st1,SMG_SIZE);
+    get_win_rabox_name(ptr1,st1,SMG_SIZE);
 
     if (bw_dialog1.w_mv_exist(st1,SMG_SIZE,p_wptr)==1)
     {
       bw_dialog1.w_mv_fet_val(st1,SMG_SIZE,0,str1,SMG_SIZE);
       //bw_inkey1.cut_string(str1,0,strlen(str1)-1-0+1,SMG_SIZE,str2,SMG_SIZE);
-      set_win_switch(ptr1,1,bw_inkey1.str2int(str1,SMG_SIZE));
+      set_win_rabox(ptr1,1,bw_inkey1.str2int(str1,SMG_SIZE));
     }
 
     ptr1++;
   }
 
-  win_switch_ptr1=ptr1;
+  win_rabox_ptr1=ptr1;
 
   fclose(fp1);
 
   return(0);
 }
 
-int bw_switch::w_save_switch(int p_wptr)
+int bw_rabox::w_save_rabox(int p_wptr)
 {
   int  i,j;
   char str1[SMG_SIZE];
   char str2[SMG_SIZE];
 
-  for (i=0;i<win_switch_ptr1;i++)
+  for (i=0;i<win_rabox_ptr1;i++)
   {
-    bw_inkey1.int2str(get_win_switch(i,1),str2,SMG_SIZE);
-    get_win_switch_name(i,str1,SMG_SIZE);
+    bw_inkey1.int2str(get_win_rabox(i,1),str2,SMG_SIZE);
+    get_win_rabox_name(i,str1,SMG_SIZE);
     bw_dialog1.w_mv_save_mem(str1,SMG_SIZE,p_wptr,str2,strlen(str2));
   }
 
   return(0);
 }
 
-int bw_switch::tst_switch()
+int bw_rabox::tst_rabox()
 {
   //HDC  hdc;
   int  i;
   char str1[SMG_SIZE];
   char str2[SMG_SIZE];
 
-  bw_getread1.deb_record("bw_switch::tst_switch()");
+  bw_getread1.deb_record("bw_rabox::tst_rabox()");
 
   for (i=0;i<60;i++)
   {
-    get_win_switch_name(i,str1,SMG_SIZE);
+    get_win_rabox_name(i,str1,SMG_SIZE);
 
-    sprintf(str2,"ptr=%d,switch0123,name,ptr1=%d,%d,%d,%d,%s,%d,",i,get_win_switch(i,0)
-				    ,get_win_switch(i,1)
-				    ,get_win_switch(i,2)
-				    ,get_win_switch(i,3)
+    sprintf(str2,"ptr=%d,rabox0123,name,ptr1=%d,%d,%d,%d,%s,%d,",i,get_win_rabox(i,0)
+				    ,get_win_rabox(i,1)
+				    ,get_win_rabox(i,2)
+				    ,get_win_rabox(i,3)
 				    ,str1
-				    ,win_switch_ptr1);
+				    ,win_rabox_ptr1);
 
     bw_getread1.deb_record(str2);
   }
@@ -1078,7 +1119,7 @@ int bw_switch::tst_switch()
   return(0);
 }
 
-int bw_switch::w_dele_switch(int wp1,int wp2)
+int bw_rabox::w_dele_rabox(int wp1,int wp2)
 {
   int  i;
   int  p1,p2,p3,p4,p5,p6;
@@ -1091,9 +1132,9 @@ int bw_switch::w_dele_switch(int wp1,int wp2)
   p5=0;
   p6=0;
 
-  for (i=0;i<=win_switch_ptr1;i++)
+  for (i=0;i<=win_rabox_ptr1;i++)
   {
-    if ((get_win_switch(i,3)>=wp1)&&(get_win_switch(i,3)<=wp2))
+    if ((get_win_rabox(i,3)>=wp1)&&(get_win_rabox(i,3)<=wp2))
     {
       if (p5==0)
       {
@@ -1102,7 +1143,7 @@ int bw_switch::w_dele_switch(int wp1,int wp2)
       }
       p4++;
     }
-    if (get_win_switch(i,3)>wp2)
+    if (get_win_rabox(i,3)>wp2)
     {
       if (p6==0)
       {
@@ -1110,14 +1151,14 @@ int bw_switch::w_dele_switch(int wp1,int wp2)
 	p6=1;
       }
     }
-    if (get_win_switch(i,3)>wp2)
+    if (get_win_rabox(i,3)>wp2)
     {
       p3=i;
     }
   }
   if (p2<0)
   {
-    p2=win_switch_ptr1+1;
+    p2=win_rabox_ptr1+1;
     p3=p2-1;
   }
 
@@ -1125,52 +1166,52 @@ int bw_switch::w_dele_switch(int wp1,int wp2)
   {
     for (i=p2;i<=p3;i++)
     {
-      set_win_switch(i,3,get_win_switch(i,3)-wp2+wp1-1);
+      set_win_rabox(i,3,get_win_rabox(i,3)-wp2+wp1-1);
     }
   }
   else
   {
     for (i=p2;i<=p3;i++)
     {
-      get_win_switch_name(i,str1,SMG_SIZE);
-      set_win_switch_name(p1+i-p2,str1,SMG_SIZE);
+      get_win_rabox_name(i,str1,SMG_SIZE);
+      set_win_rabox_name(p1+i-p2,str1,SMG_SIZE);
       
-      set_win_switch(p1+i-p2,0,get_win_switch(i,0));
-      set_win_switch(p1+i-p2,1,get_win_switch(i,1));
-      set_win_switch(p1+i-p2,2,get_win_switch(i,2));
-      set_win_switch(p1+i-p2,3,get_win_switch(i,3)-wp2+wp1-1);
+      set_win_rabox(p1+i-p2,0,get_win_rabox(i,0));
+      set_win_rabox(p1+i-p2,1,get_win_rabox(i,1));
+      set_win_rabox(p1+i-p2,2,get_win_rabox(i,2));
+      set_win_rabox(p1+i-p2,3,get_win_rabox(i,3)-wp2+wp1-1);
     }
 
     if (p3>=p2)
     {
-      for (i=p1+p3-p2+1;i<=win_switch_ptr1;i++)
+      for (i=p1+p3-p2+1;i<=win_rabox_ptr1;i++)
       {
-	set_c_win_switch_name(i,0,0);
-	set_win_switch(i,0,0);
-	set_win_switch(i,1,0);
-	set_win_switch(i,2,0);
-	set_win_switch(i,3,0);
+	set_c_win_rabox_name(i,0,0);
+	set_win_rabox(i,0,0);
+	set_win_rabox(i,1,0);
+	set_win_rabox(i,2,0);
+	set_win_rabox(i,3,0);
       }
-      win_switch_ptr1=p1+p3-p2+1;
+      win_rabox_ptr1=p1+p3-p2+1;
     }
     else
     {
-      for (i=p1;i<=win_switch_ptr1;i++)
+      for (i=p1;i<=win_rabox_ptr1;i++)
       {
-	set_c_win_switch_name(i,0,0);
-	set_win_switch(i,0,0);
-	set_win_switch(i,1,0);
-	set_win_switch(i,2,0);
-	set_win_switch(i,3,0);
+	set_c_win_rabox_name(i,0,0);
+	set_win_rabox(i,0,0);
+	set_win_rabox(i,1,0);
+	set_win_rabox(i,2,0);
+	set_win_rabox(i,3,0);
       }
-      win_switch_ptr1=p1;
+      win_rabox_ptr1=p1;
     }
   }
 */
   return(0);
 }
 
-int bw_switch::w_set_radio_var(int l,int c,int p,int p_wptr)
+int bw_rabox::w_set_radio_var(int l,int c,int p,int p_wptr)
 {
   int  i,j,k,m,o,t1,t2;
   int  t3;
@@ -1206,11 +1247,11 @@ int bw_switch::w_set_radio_var(int l,int c,int p,int p_wptr)
 	k++;
 	if ((bw_win1.pline==l)&&(bw_win1.pfield==c))
         {
-          for (m=0;m<MENU_NUM_RA;m++)
+          for (m=0;m<BUTTON_NUM_RA;m++)
           {
-	    if ((get_win_switch(m,2)==p)&&(get_win_switch(m,3)==p_wptr))
+	    if ((get_win_rabox(m,2)==p)&&(get_win_rabox(m,3)==p_wptr))
 	    {
-	      set_win_switch(m,1,k);
+	      set_win_rabox(m,1,k);
               t3=m;
 	      break;
 	    }
@@ -1233,14 +1274,14 @@ int bw_switch::w_set_radio_var(int l,int c,int p,int p_wptr)
   return(t3);
 }
 
-int bw_switch::w_echo_winrec_radio(int p_wptr)
+int bw_rabox::w_echo_winrec_rabox(int p_wptr)
 {
   int  i,j,o,m;
-  int  arr[MENU_NUM_RA];
+  int  arr[BUTTON_NUM_RA];
   char str1[SMG_SIZE];
   char str2[SMG_SIZE];
 
-  for (i=0;i<MENU_NUM_RA;i++) arr[i]=0;
+  for (i=0;i<BUTTON_NUM_RA;i++) arr[i]=0;
 
   bw_win1.pline=1;
   bw_win1.pfield=1;
@@ -1265,12 +1306,12 @@ int bw_switch::w_echo_winrec_radio(int p_wptr)
       o=bw_inkey1.str2int(str2,SMG_SIZE);
       arr[o]++;
 
-      for (m=0;m<MENU_NUM_RA;m++)
+      for (m=0;m<BUTTON_NUM_RA;m++)
       {
 
-	if ((get_win_switch(m,2)==o)&&(get_win_switch(m,3)==p_wptr))
+	if ((get_win_rabox(m,2)==o)&&(get_win_rabox(m,3)==p_wptr))
 	{
-	  if (get_win_switch(m,1)==arr[o])
+	  if (get_win_rabox(m,1)==arr[o])
           {
             o=bw_win1.w_find_hnd(p_wptr,bw_win1.pfield,bw_win1.pline);
 	    SendMessage(bw_win1.get_win_hnd(o),BM_SETCHECK,11,(LPARAM)0);
@@ -1289,22 +1330,22 @@ int bw_switch::w_echo_winrec_radio(int p_wptr)
   return(0);
 }
 
-int bw_switch::w_clr_recvar_radio(int p_wptr)
+int bw_rabox::w_clr_recvar_rabox(int p_wptr)
 {
   int i;
 
-  for (i=0;i<MENU_NUM_RA;i++)
+  for (i=0;i<BUTTON_NUM_RA;i++)
   {
-    set_win_switch(i,0,0);
-    set_c_win_switch_name(i,0,0);
+    set_win_rabox(i,0,0);
+    set_c_win_rabox_name(i,0,0);
   }
 
-  win_switch_ptr1=0;
+  win_rabox_ptr1=0;
 
   return(0);
 }
 
-int bw_dialog::w_read_ddc(char *p_fn,int p_fn_size,int p_wptr)
+int bw_dialog::w_read_diadc(char *p_fn,int p_fn_size,int p_wptr)
 {
   int  i,j,k,l;
   int  p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12;
@@ -2331,7 +2372,7 @@ int bw_dialog::w_echo_winrec_var(int p_wptr)
 
   return(0);
 }
-
+/*
 int bw_dialog::w_mv_get_read_paint(char *p_str,int p_str_size,int p_wptr,char comm)
 {
   HWND hnd;
@@ -2376,7 +2417,7 @@ int bw_dialog::w_mv_get_read_paint(char *p_str,int p_str_size,int p_wptr,char co
 
   return(j);
 }
-
+*/
 int bw_dialog::w_mv_get_read_g(char *p_str,int p_str_size,int p_wptr,char comm)
 {
   HWND hnd;
@@ -2387,7 +2428,15 @@ int bw_dialog::w_mv_get_read_g(char *p_str,int p_str_size,int p_wptr,char comm)
 
   if (w_mv_exist(p_str,p_str_size,p_wptr)!=1) return(1);
 
-  w_mv_get_var(p_str,p_str_size,p_wptr);
+  if (bw_getread1.get_smg_modi(bw_win1.get_win_ptr_get_rd(p_wptr))==1)
+  {
+    bw_getread1.get_smg_string(bw_win1.get_win_ptr_get_rd(p_wptr),sm1,SMG_SIZE);
+    set_win_mv_getv(p_wptr,sm1,SMG_SIZE);
+  }
+  else
+  {
+    w_mv_get_var(p_str,p_str_size,p_wptr);
+  }
 
   i=w_mv_seri(p_str,p_str_size,p_wptr);
 
@@ -2907,327 +2956,327 @@ int bw_dialog::set_c_win_mv_getv(int p_wptr,int ptr1,int val)
   return(0);
 }
 
-int bw_switch::get_win_switch(int mptr,int p03)
+int bw_rabox::get_win_rabox(int mptr,int p03)
 {
-  if ((mptr<0)||(mptr>=MENU_NUM_RA)) return(0);
+  if ((mptr<0)||(mptr>=BUTTON_NUM_RA)) return(0);
   if ((p03<0)||(p03>3)) return(0);
-  return(win_switch[mptr][p03]);
+  return(win_rabox[mptr][p03]);
 }
-int bw_switch::set_win_switch(int mptr,int p03,int val)
+int bw_rabox::set_win_rabox(int mptr,int p03,int val)
 {
-  if ((mptr<0)||(mptr>=MENU_NUM_RA)) return(0);
+  if ((mptr<0)||(mptr>=BUTTON_NUM_RA)) return(0);
   if ((p03<0)||(p03>3)) return(0);
-  win_switch[mptr][p03]=val;
+  win_rabox[mptr][p03]=val;
   return(0);
 }
-int bw_switch::get_win_switch_name(int mptr,char *p_s1,int p_s1_size)
+int bw_rabox::get_win_rabox_name(int mptr,char *p_s1,int p_s1_size)
 {
   int i,j;
 
   p_s1[0]=0;
 
-  if ((mptr<0)||(mptr>=MENU_NUM_RA)) return(0);
+  if ((mptr<0)||(mptr>=BUTTON_NUM_RA)) return(0);
 
   if (p_s1_size>11) i=11;
   else i=p_s1_size;
 
   for (j=0;j<i-1;j++)
   {
-    p_s1[j+0]=win_switch_name[mptr][j];
+    p_s1[j+0]=win_rabox_name[mptr][j];
     p_s1[j+1]=0;
   }
 
   return(0);
 }
-int bw_switch::set_win_switch_name(int mptr,char *p_s1,int p_s1_size)
+int bw_rabox::set_win_rabox_name(int mptr,char *p_s1,int p_s1_size)
 {
   int i,j;
 
-  if ((mptr<0)||(mptr>=MENU_NUM_RA)) return(0);
+  if ((mptr<0)||(mptr>=BUTTON_NUM_RA)) return(0);
 
   if (p_s1_size>11) i=11;
   else i=p_s1_size;
 
-  win_switch_name[mptr][0]=0;
+  win_rabox_name[mptr][0]=0;
 
   for (j=0;j<i-1;j++)
   {
-    win_switch_name[mptr][j+0]=p_s1[j];
-    win_switch_name[mptr][j+1]=0;
+    win_rabox_name[mptr][j+0]=p_s1[j];
+    win_rabox_name[mptr][j+1]=0;
   }
 
   return(0);
 }
-int bw_switch::set_c_win_switch_name(int mptr,int p0a,int val)
+int bw_rabox::set_c_win_rabox_name(int mptr,int p0a,int val)
 {
-  if ((mptr<0)||(mptr>=MENU_NUM_RA)) return(0);
+  if ((mptr<0)||(mptr>=BUTTON_NUM_RA)) return(0);
   if ((p0a<0)||(p0a>10)) return(0);
-  win_switch_name[mptr][p0a]=val;
+  win_rabox_name[mptr][p0a]=val;
   return(0);
 }
 
-int bw_choose::get_win_choose(int cptr,int p03)
+int bw_chkbox::get_win_chkbox(int cptr,int p03)
 {
-  if ((cptr<0)||(cptr>=MENU_NUM_CHS)) return(0);
+  if ((cptr<0)||(cptr>=BUTTON_NUM_CHS)) return(0);
   if ((p03<0)||(p03>3)) return(0);
-  return(win_choose[cptr][p03]);
+  return(win_chkbox[cptr][p03]);
 }
-int bw_choose::set_win_choose(int cptr,int p03,int val)
+int bw_chkbox::set_win_chkbox(int cptr,int p03,int val)
 {
-  if ((cptr<0)||(cptr>=MENU_NUM_CHS)) return(0);
+  if ((cptr<0)||(cptr>=BUTTON_NUM_CHS)) return(0);
   if ((p03<0)||(p03>3)) return(0);
-  win_choose[cptr][p03]=val;
+  win_chkbox[cptr][p03]=val;
   return(0);
 }
-int bw_choose::get_win_choose_name(int cptr,char *p_s1,int p_s1_size)
+int bw_chkbox::get_win_chkbox_name(int cptr,char *p_s1,int p_s1_size)
 {
   int i,j;
 
   p_s1[0]=0;
 
-  if ((cptr<0)||(cptr>=MENU_NUM_CHS)) return(0);
+  if ((cptr<0)||(cptr>=BUTTON_NUM_CHS)) return(0);
 
   if (p_s1_size>11) i=11;
   else i=p_s1_size;
 
   for (j=0;j<i-1;j++)
   {
-    p_s1[j+0]=win_choose_name[cptr][j];
+    p_s1[j+0]=win_chkbox_name[cptr][j];
     p_s1[j+1]=0;
   }
 
   return(0);
 }
-int bw_choose::set_win_choose_name(int cptr,char *p_s1,int p_s1_size)
+int bw_chkbox::set_win_chkbox_name(int cptr,char *p_s1,int p_s1_size)
 {
   int i,j;
 
-  if ((cptr<0)||(cptr>=MENU_NUM_CHS)) return(0);
+  if ((cptr<0)||(cptr>=BUTTON_NUM_CHS)) return(0);
 
   if (p_s1_size>11) i=11;
   else i=p_s1_size;
 
-  win_choose_name[cptr][0]=0;
+  win_chkbox_name[cptr][0]=0;
 
   for (j=0;j<i-1;j++)
   {
-    win_choose_name[cptr][j+0]=p_s1[j];
-    win_choose_name[cptr][j+1]=0;
+    win_chkbox_name[cptr][j+0]=p_s1[j];
+    win_chkbox_name[cptr][j+1]=0;
   }
 
   return(0);
 }
-int bw_choose::set_c_win_choose_name(int cptr,int p0a,int val)
+int bw_chkbox::set_c_win_chkbox_name(int cptr,int p0a,int val)
 {
-  if ((cptr<0)||(cptr>=MENU_NUM_CHS)) return(0);
+  if ((cptr<0)||(cptr>=BUTTON_NUM_CHS)) return(0);
   if ((p0a<0)||(p0a>10)) return(0);
-  win_choose_name[cptr][p0a]=val;
+  win_chkbox_name[cptr][p0a]=val;
   return(0);
 }
 
-int bw_menuvar::get_t5_m_wind(int mptr)
+int bw_buttonvar::get_t5_btn_wind(int mptr)
 {
-  if ((mptr<0)||(mptr>=MENU_NUM_MN)) return(0);
-  return(t5_m_wind[mptr]);
+  if ((mptr<0)||(mptr>=BUTTON_NUM_BTN)) return(0);
+  return(t5_btn_wind[mptr]);
 }
-int bw_menuvar::get_t5_m_mcnt(int mptr)
+int bw_buttonvar::get_t5_btn_mcnt(int mptr)
 {
-  if ((mptr<0)||(mptr>=MENU_NUM_MN)) return(0);
-  return(t5_m_mcnt[mptr]);
+  if ((mptr<0)||(mptr>=BUTTON_NUM_BTN)) return(0);
+  return(t5_btn_mcnt[mptr]);
 }
-int bw_menuvar::set_t5_m_wind(int mptr,int val)
+int bw_buttonvar::set_t5_btn_wind(int mptr,int val)
 {
-  if ((mptr<0)||(mptr>=MENU_NUM_MN)) return(0);
-  t5_m_wind[mptr]=val;
+  if ((mptr<0)||(mptr>=BUTTON_NUM_BTN)) return(0);
+  t5_btn_wind[mptr]=val;
   return(0);
 }
-int bw_menuvar::set_t5_m_mcnt(int mptr,int val)
+int bw_buttonvar::set_t5_btn_mcnt(int mptr,int val)
 {
-  if ((mptr<0)||(mptr>=MENU_NUM_MN)) return(0);
-  t5_m_mcnt[mptr]=val;
+  if ((mptr<0)||(mptr>=BUTTON_NUM_BTN)) return(0);
+  t5_btn_mcnt[mptr]=val;
   return(0);
 }
-int bw_menuvar::get_t5_m_name(int mptr,char *p_s1,int p_s1_size)
+int bw_buttonvar::get_t5_btn_name(int mptr,char *p_s1,int p_s1_size)
 {
   int i,j;
 
   p_s1[0]=0;
 
-  if ((mptr<0)||(mptr>=MENU_NUM_MN)) return(0);
+  if ((mptr<0)||(mptr>=BUTTON_NUM_BTN)) return(0);
 
   if (p_s1_size>11) i=11;
   else i=p_s1_size;
 
   for (j=0;j<i-1;j++)
   {
-    p_s1[j+0]=t5_m_name[mptr][j];
+    p_s1[j+0]=t5_btn_name[mptr][j];
     p_s1[j+1]=0;
   }
 
   return(0);
 }
-int bw_menuvar::set_t5_m_name(int mptr,char *p_s1,int p_s1_size)
+int bw_buttonvar::set_t5_btn_name(int mptr,char *p_s1,int p_s1_size)
 {
   int i,j;
 
-  if ((mptr<0)||(mptr>=MENU_NUM_MN)) return(0);
+  if ((mptr<0)||(mptr>=BUTTON_NUM_BTN)) return(0);
 
   if (p_s1_size>11) i=11;
   else i=p_s1_size;
 
-  t5_m_name[mptr][0]=0;
+  t5_btn_name[mptr][0]=0;
 
   for (j=0;j<i-1;j++)
   {
-    t5_m_name[mptr][j+0]=p_s1[j];
-    t5_m_name[mptr][j+1]=0;
+    t5_btn_name[mptr][j+0]=p_s1[j];
+    t5_btn_name[mptr][j+1]=0;
   }
 
   return(0);
 }
-int bw_menuvar::set_c_t5_m_name(int mptr,int p0a,int val)
+int bw_buttonvar::set_c_t5_btn_name(int mptr,int p0a,int val)
 {
-  if ((mptr<0)||(mptr>=MENU_NUM_MN)) return(0);
+  if ((mptr<0)||(mptr>=BUTTON_NUM_BTN)) return(0);
   if ((p0a<0)||(p0a>10)) return(0);
-  t5_m_name[mptr][p0a]=val;
+  t5_btn_name[mptr][p0a]=val;
   return(0);
 }
 
-int bw_menuvar::get_t5_m_button(int mptr,char *p_s1,int p_s1_size)
+int bw_buttonvar::get_t5_btn_button(int mptr,char *p_s1,int p_s1_size)
 {
   int i,j;
 
   p_s1[0]=0;
 
-  if ((mptr<0)||(mptr>=MENU_NUM_MN)) return(0);
+  if ((mptr<0)||(mptr>=BUTTON_NUM_BTN)) return(0);
 
   if (p_s1_size>81) i=81;
   else i=p_s1_size;
 
   for (j=0;j<i-1;j++)
   {
-    p_s1[j+0]=t5_m_button[mptr][j];
+    p_s1[j+0]=t5_btn_button[mptr][j];
     p_s1[j+1]=0;
   }
 
   return(0);
 }
-int bw_menuvar::set_t5_m_button(int mptr,char *p_s1,int p_s1_size)
+int bw_buttonvar::set_t5_btn_button(int mptr,char *p_s1,int p_s1_size)
 {
   int i,j;
 
-  if ((mptr<0)||(mptr>=MENU_NUM_MN)) return(0);
+  if ((mptr<0)||(mptr>=BUTTON_NUM_BTN)) return(0);
 
   if (p_s1_size>81) i=81;
   else i=p_s1_size;
 
-  t5_m_button[mptr][0]=0;
+  t5_btn_button[mptr][0]=0;
 
   for (j=0;j<i-1;j++)
   {
-    t5_m_button[mptr][j+0]=p_s1[j];
-    t5_m_button[mptr][j+1]=0;
+    t5_btn_button[mptr][j+0]=p_s1[j];
+    t5_btn_button[mptr][j+1]=0;
   }
 
   return(0);
 }
-int bw_menuvar::set_c_t5_m_button(int mptr,int ptr1,int val)
+int bw_buttonvar::set_c_t5_btn_button(int mptr,int ptr1,int val)
 {
-  if ((mptr<0)||(mptr>=MENU_NUM_MN)) return(0);
+  if ((mptr<0)||(mptr>=BUTTON_NUM_BTN)) return(0);
   if ((ptr1<0)||(ptr1>80)) return(0);
-  t5_m_button[mptr][ptr1]=val;
+  t5_btn_button[mptr][ptr1]=val;
   return(0);
 }
 
-int bw_menuvar::get_t5_m_comm(int mptr,char *p_s1,int p_s1_size)
+int bw_buttonvar::get_t5_btn_comm(int mptr,char *p_s1,int p_s1_size)
 {
   int i,j;
 
   p_s1[0]=0;
 
-  if ((mptr<0)||(mptr>=MENU_NUM_MN)) return(0);
+  if ((mptr<0)||(mptr>=BUTTON_NUM_BTN)) return(0);
 
   if (p_s1_size>81) i=81;
   else i=p_s1_size;
 
   for (j=0;j<i-1;j++)
   {
-    p_s1[j+0]=t5_m_comm[mptr][j];
+    p_s1[j+0]=t5_btn_comm[mptr][j];
     p_s1[j+1]=0;
   }
 
   return(0);
 }
-int bw_menuvar::set_t5_m_comm(int mptr,char *p_s1,int p_s1_size)
+int bw_buttonvar::set_t5_btn_comm(int mptr,char *p_s1,int p_s1_size)
 {
   int i,j;
 
-  if ((mptr<0)||(mptr>=MENU_NUM_MN)) return(0);
+  if ((mptr<0)||(mptr>=BUTTON_NUM_BTN)) return(0);
 
   if (p_s1_size>81) i=81;
   else i=p_s1_size;
 
-  t5_m_comm[mptr][0]=0;
+  t5_btn_comm[mptr][0]=0;
 
   for (j=0;j<i-1;j++)
   {
-    t5_m_comm[mptr][j+0]=p_s1[j];
-    t5_m_comm[mptr][j+1]=0;
+    t5_btn_comm[mptr][j+0]=p_s1[j];
+    t5_btn_comm[mptr][j+1]=0;
   }
 
   return(0);
 }
-int bw_menuvar::set_c_t5_m_comm(int mptr,int ptr1,int val)
+int bw_buttonvar::set_c_t5_btn_comm(int mptr,int ptr1,int val)
 {
-  if ((mptr<0)||(mptr>=MENU_NUM_MN)) return(0);
+  if ((mptr<0)||(mptr>=BUTTON_NUM_BTN)) return(0);
   if ((ptr1<0)||(ptr1>80)) return(0);
-  t5_m_comm[mptr][ptr1]=val;
+  t5_btn_comm[mptr][ptr1]=val;
   return(0);
 }
 
-int bw_menuvar::get_t5_m_focus(int mptr,char *p_s1,int p_s1_size)
+int bw_buttonvar::get_t5_btn_focus(int mptr,char *p_s1,int p_s1_size)
 {
   int i,j;
 
   p_s1[0]=0;
 
-  if ((mptr<0)||(mptr>=MENU_NUM_MN)) return(0);
+  if ((mptr<0)||(mptr>=BUTTON_NUM_BTN)) return(0);
 
   if (p_s1_size>81) i=81;
   else i=p_s1_size;
 
   for (j=0;j<i-1;j++)
   {
-    p_s1[j+0]=t5_m_focus[mptr][j];
+    p_s1[j+0]=t5_btn_focus[mptr][j];
     p_s1[j+1]=0;
   }
 
   return(0);
 }
-int bw_menuvar::set_t5_m_focus(int mptr,char *p_s1,int p_s1_size)
+int bw_buttonvar::set_t5_btn_focus(int mptr,char *p_s1,int p_s1_size)
 {
   int i,j;
 
-  if ((mptr<0)||(mptr>=MENU_NUM_MN)) return(0);
+  if ((mptr<0)||(mptr>=BUTTON_NUM_BTN)) return(0);
 
   if (p_s1_size>81) i=81;
   else i=p_s1_size;
 
-  t5_m_focus[mptr][0]=0;
+  t5_btn_focus[mptr][0]=0;
 
   for (j=0;j<i-1;j++)
   {
-    t5_m_focus[mptr][j+0]=p_s1[j];
-    t5_m_focus[mptr][j+1]=0;
+    t5_btn_focus[mptr][j+0]=p_s1[j];
+    t5_btn_focus[mptr][j+1]=0;
   }
 
   return(0);
 }
-int bw_menuvar::set_c_t5_m_focus(int mptr,int ptr1,int val)
+int bw_buttonvar::set_c_t5_btn_focus(int mptr,int ptr1,int val)
 {
-  if ((mptr<0)||(mptr>=MENU_NUM_MN)) return(0);
+  if ((mptr<0)||(mptr>=BUTTON_NUM_BTN)) return(0);
   if ((ptr1<0)||(ptr1>80)) return(0);
-  t5_m_focus[mptr][ptr1]=val;
+  t5_btn_focus[mptr][ptr1]=val;
   return(0);
 }
 

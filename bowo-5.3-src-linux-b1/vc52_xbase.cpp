@@ -300,7 +300,7 @@ int bw_xbase::w_open_xbase(char *p_fn1,int p_fn1_size,int backup,int p_dbptr)
 
 long bw_xbase::w_read_recno(int p_fh)
 {
-  unsigned char str1[SMG_SIZE];  // bug ??? // char* to unsigned char* ??? // ok now
+  unsigned char str1[SMG_SIZE];
   int  c1,c2,c3,c4;
   long rn;
 
@@ -1015,7 +1015,7 @@ int bw_xbase::w_append_sdf(char *p_fn,int p_fn_size,int p_dbptr)
 {
   long recno;
   int  i,j;
-//  char s_tmpc1[SMG_SIZE];
+  //char s_tmpc1[SMG_SIZE];
   //char s_fn4[FN_SIZE];
   FILE *s_fh;
 
@@ -1050,8 +1050,8 @@ int bw_xbase::w_copy_sdf(char *p_fn,int p_fn_size,int p_dbptr)
 {
   long  i;
   int   j;
-//  int   exist;
-//  char  s_tmpc1[SMG_SIZE];
+  //int   exist;
+  //char  s_tmpc1[SMG_SIZE];
   //char  s_fn4[FN_SIZE];
   FILE *s_fp1;
 
@@ -1764,68 +1764,29 @@ int bw_xbase::get_win_state_bff_in_use(int p_dbptr)
   if ((p_dbptr<0)||(p_dbptr>=STRU_NUM)) return(0);
   return(win_state_bff_in_use[p_dbptr]);
 }
-/*
-int bw_xbase::get_win_state4(int p_dbptr)
-{
-  if ((p_dbptr<0)||(p_dbptr>=STRU_NUM)) return(0);
-  return(win_state4[p_dbptr]);
-}
-*/
 int bw_xbase::get_win_state_dbf_modi(int p_dbptr)
 {
   if ((p_dbptr<0)||(p_dbptr>=STRU_NUM)) return(0);
   return(win_state_dbf_modi[p_dbptr]);
 }
-/*
-int bw_xbase::get_win_state7(int p_dbptr,int p_wptr)
-{
-  if ((p_dbptr<0)||(p_dbptr>=STRU_NUM)) return(0);
-  if ((p_wptr<0)||(p_wptr>=WIN_NUM)) return(0);
-  return(win_state7[p_dbptr][p_wptr]);
-}
-*/
 int bw_xbase::get_win_state_in_srch(int p_wptr,int p_dbptr)
 {
   if ((p_dbptr<0)||(p_dbptr>=STRU_NUM)) return(0);
   if ((p_wptr<0)||(p_wptr>=WIN_NUM)) return(0);
   return(win_state_in_srch[p_wptr][p_dbptr]);
 }
-/*
-int bw_xbase::get_win_state10(int p_dbptr)
-{
-  if ((p_dbptr<0)||(p_dbptr>=STRU_NUM)) return(0);
-  return(win_state10[pp]);
-}
-*/
 int bw_xbase::set_win_state_bff_in_use(int p_dbptr,int val)
 {
   if ((p_dbptr<0)||(p_dbptr>=STRU_NUM)) return(0);
   win_state_bff_in_use[p_dbptr]=val;
   return(0);
 }
-/*
-int bw_xbase::set_win_state4(int p_dbptr,int val)
-{
-  if ((p_dbptr<0)||(p_dbptr>=STRU_NUM)) return(0);
-  win_state4[p_dbptr]=val;
-  return(0);
-}
-*/
 int bw_xbase::set_win_state_dbf_modi(int p_dbptr,int val)
 {
   if ((p_dbptr<0)||(p_dbptr>=STRU_NUM)) return(0);
   win_state_dbf_modi[p_dbptr]=val;
   return(0);
 }
-/*
-int bw_xbase::set_win_state7(int p_dbptr,int p_wptr,int val)
-{
-  if ((p_dbptr<0)||(p_dbptr>=STRU_NUM)) return(0);
-  if ((p_wptr<0)||(p_wptr>=WIN_NUM)) return(0);
-  win_state7[p_dbptr][p_wptr]=val;
-  return(0);
-}
-*/
 int bw_xbase::set_win_state_in_srch(int p_wptr,int p_dbptr,int val)
 {
   if ((p_dbptr<0)||(p_dbptr>=STRU_NUM)) return(0);
@@ -1833,14 +1794,6 @@ int bw_xbase::set_win_state_in_srch(int p_wptr,int p_dbptr,int val)
   win_state_in_srch[p_wptr][p_dbptr]=val;
   return(0);
 }
-/*
-int bw_xbase::set_win_state10(int p_dbptr,int val)
-{
-  if ((p_dbptr<0)||(p_dbptr>=STRU_NUM)) return(0);
-  win_state10[p_dbptr]=val;
-  return(0);
-}
-*/
 long bw_xbase::get_win_recno(int p_dbptr,int p_wptr,int p02)
 {
   if ((p_dbptr<0)||(p_dbptr>=STRU_NUM)) return(0);

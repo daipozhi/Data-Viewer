@@ -2,22 +2,18 @@
 /* error 1: WM_CREATE should have break/return */
 
 /* error 2: att to this function_a(char *s); s[n]=NULL; function_a(""); */
-/* 
+ 
 #define  STRICT
-*/
-#include "windows.h"
-/*
+#include <windows.h>
 #include <commdlg.h>
-*/
+
 #include <stdio.h>
-/*
 #include <math.h>
 #include <direct.h>
 #include <dos.h>
 #include <io.h>
 #include <conio.h>
 #include <process.h>
-*/
 #include <string.h>
 
 #include "vc_bowo.h"
@@ -33,25 +29,25 @@ extern class bw_mbase        bw_mbase1;
 extern class bw_xbase        bw_xbase1;
 extern class bw_main         bw_main1;
 extern class bw_dialog       bw_dialog1;
-extern class bw_switch       bw_switch1;
-extern class bw_choose       bw_choose1;
+extern class bw_rabox       bw_rabox1;
+extern class bw_chkbox       bw_chkbox1;
 extern class bw_win          bw_win1;
 extern class bw_inkey        bw_inkey1;
 extern class bw_getread      bw_getread1;
 extern class bw_fldstru      bw_fldstru1;
-extern class bw_menuvar      bw_menuvar1;
+extern class bw_buttonvar      bw_buttonvar1;
 
-extern long   w_bmp_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp);
-extern long   w_main_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp);
-extern long   w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp);
-extern long   w_edit_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp);
-extern long   w_savep_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp);
-extern long   w_outp_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp);
-extern long   w_menu_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp);
-extern long   w_menu2_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp);
-extern long   w_tab_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp);
+extern long  PASCAL w_bmp_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp);
+extern long  PASCAL w_main_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp);
+extern long  PASCAL w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp);
+extern long  PASCAL w_edit_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp);
+extern long  PASCAL w_savep_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp);
+extern long  PASCAL w_outp_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp);
+extern long  PASCAL w_menu_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp);
+extern long  PASCAL w_menu2_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp);
+extern long  PASCAL w_tab_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp);
 
-long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
+long  PASCAL w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 {
   HCURSOR hcursor;
   HWND    hnd;
@@ -145,7 +141,7 @@ long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 
       /* notice set dir */     // get link condition
       bw_win1.get_win_window_name(bw_main1.win_hnd_id,s_fn1,FN_SIZE);
-      k=bw_link1.w_read_link(s_fn1,FN_SIZE,bw_main1.win_hnd_id,bw_main1.win_hnd_id-bw_win1.get_win_ptr_grp_ptr(bw_win1.get_win_ptr_grp_id(bw_main1.win_hnd_id),1)+1);
+      k=bw_link1.w_read_link(s_fn1,FN_SIZE,bw_main1.win_hnd_id,1/*bw_main1.win_hnd_id-bw_win1.get_win_ptr_grp_ptr(bw_win1.get_win_ptr_grp_id(bw_main1.win_hnd_id),1)+1*/);
       l=0;
 
       if (k==0)
@@ -199,7 +195,7 @@ long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
       }
 
 
-
+/*
       bw_main1.win_hnd_id=bw_win1.w_find_winhand(hwnd);
 
       if (bw_win1.get_win_switch_bmp(bw_main1.win_hnd_id)==1)
@@ -215,7 +211,7 @@ long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
         bw_win1.pline=i;
 	bw_win1.pfield=j;
       }
-
+*/
       break;
 
     case WM_SETFOCUS:
@@ -230,57 +226,27 @@ long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 
 
 
-//      if (bw_main1.get_win_caret_cre(bw_main1.win_hnd_id)==0)
-//      {
       CreateCaret(hwnd,NULL,NULL,(int)bw_main1.win_edit_ychar);
-//	bw_main1.set_win_caret_cre(bw_main1.win_hnd_id,1);
-//      }
       ShowCaret(hwnd);
 /*
-      bw_win1.pline =bw_win1.get_win_linep(bw_main1.win_hnd_id,0);
-      bw_win1.pfield=bw_win1.get_win_linep(bw_main1.win_hnd_id,1);
+	if (bw_win1.get_win_linep(bw_main1.win_hnd_id,0)<=0) // adjust cursor
+	  bw_win1.set_win_linep(bw_main1.win_hnd_id,0,1);
 
-      bw_win1.w_find_winfname(bw_main1.win_hnd_id,bw_win1.pline,bw_win1.pfield,str1,SMG_SIZE);
-*/
-/*
-      if (str1[0]=='@')
-      {
-        i=bw_win1.w_find_hnd(bw_main1.win_hnd_id,bw_win1.pfield,bw_win1.pline);
-        SetFocus(bw_win1.get_win_hnd(i));
-      }
+	if (bw_win1.get_win_linep(bw_main1.win_hnd_id,1)<=0)
+	  bw_win1.set_win_linep(bw_main1.win_hnd_id,1,2);
 
-      if (str1[0]=='[')
-      {
-        i=bw_win1.w_find_hnd(bw_main1.win_hnd_id,bw_win1.pfield,bw_win1.pline);
-        SetFocus(bw_win1.get_win_hnd(i));
-      }
+	bw_win1.set_win_linep(bw_main1.win_hnd_id,1,bw_win1.get_win_linep(bw_main1.win_hnd_id,1)-1);
 
-      if (str1[0]=='(')
-      {
-        i=bw_win1.w_find_hnd(bw_main1.win_hnd_id,bw_win1.pfield,bw_win1.pline);
-        SetFocus(bw_win1.get_win_hnd(i));
-      }
-*/
-/*
-      if ((str1[0]=='?')||(str1[0]=='-'))
-      {
-        bw_dialog1.w_mv_get_read_g(str1,SMG_SIZE,bw_main1.win_hnd_id,'g');
-        ShowCaret(hwnd);
-      }
+	bw_win1.pline =bw_win1.get_win_linep(bw_main1.win_hnd_id,0);
+	bw_win1.pfield=bw_win1.get_win_linep(bw_main1.win_hnd_id,1);
 
-      if ((str1[0]==':')||(str1[0]=='+'))
-      {
-        i=bw_buff1.get_t3_linecol(bw_main1.win_hnd_id,bw_win1.pline,bw_win1.pfield);
-        j=bw_win1.get_t_fldseri(i);
-        k=bw_win1.get_t_fldbase(i);
-        l=bw_fldstru1.w_fetch_rec(k,bw_main1.win_hnd_id,j);
+	bw_win1.w_next_field(bw_main1.win_hnd_id);
 
-        if (l==0)
-        {
-          bw_fldstru1.w_tv_get_read_g(str1,SMG_SIZE,bw_main1.win_hnd_id,bw_win1.pline,bw_win1.pfield,'g');
-          ShowCaret(hwnd);
-        }
-      }
+	bw_win1.set_win_linep(bw_main1.win_hnd_id,0,bw_win1.pline);
+	bw_win1.set_win_linep(bw_main1.win_hnd_id,1,bw_win1.pfield);
+
+
+      bw_main1.w_set_focus(hwnd);
 */
       break;
 
@@ -298,15 +264,13 @@ long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 
       if (wp==0)
       {
-        //SetFocus(hwnd);
-
 	bw_main1.win_hnd_id=bw_win1.w_find_winhand(hwnd);
 
 	bw_win1.w_echo_winrec_paint(bw_main1.win_hnd_id,1);  // paint window ,table line ,text
 
-	bw_choose1.w_echo_winrec_chs(bw_main1.win_hnd_id);   // paint window ci
+	bw_chkbox1.w_echo_winrec_chkbox(bw_main1.win_hnd_id);   // paint window ci
 
-	bw_switch1.w_echo_winrec_radio(bw_main1.win_hnd_id);
+	bw_rabox1.w_echo_winrec_rabox(bw_main1.win_hnd_id);
 
 	bw_dialog1.w_echo_winrec_var(bw_main1.win_hnd_id);
 
@@ -347,7 +311,7 @@ long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 	bw_dialog1.w_echo_winrec_read(j,bw_main1.win_hnd_id,11);
 
                                                             // set cursor
-        if ((str1[0]=='@')||(str1[0]=='[')||(str1[0]=='(')) // button,radio,choose
+        if ((str1[0]=='@')||(str1[0]=='[')||(str1[0]=='(')) // button,rabox,chkbox
         {
           HideCaret(bw_main1.win_hwnd);
         }
@@ -372,6 +336,7 @@ long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
           }
         }
 
+        //bw_main1.w_set_focus(hwnd);
       }
 
       break;
@@ -402,12 +367,7 @@ long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 	  bw_main1.win_key=bw_main1.win_key-5000;
 	  i=1;
 	}
-        else
-        {
-          bw_main1.win_key=wp;
-          i=1;
-        }
-	//else i=bw_inkey1.inkey();
+	else i=bw_inkey1.inkey();
       }
 
       if (i==1)
@@ -447,9 +407,9 @@ long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 	  if ((bw_main1.win_key==401)||(bw_main1.win_key==32))
 	  {
 	    bw_main1.w_set_lbutton(hwnd,bw_main1.win_hnd_id);
-	    if ((bw_menuvar1.t5_m_ptr2==14)||(bw_menuvar1.t5_m_ptr2==15))
+	    if ((bw_buttonvar1.t5_btn_ptr2==14)||(bw_buttonvar1.t5_btn_ptr2==15))
 	    {
-	      bw_menuvar1.t5_m_ptr2=0;
+	      bw_buttonvar1.t5_btn_ptr2=0;
 	      return(0);
             }
 	  }
@@ -467,7 +427,7 @@ long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 
 /*	  return(0);*/
 	}
-	if (str1[0]=='[') // choose ci
+	if (str1[0]=='[') // chkbox ci
 	{
 	  bw_win1.pline =bw_win1.get_win_linep(bw_main1.win_hnd_id,0);
 	  bw_win1.pfield=bw_win1.get_win_linep(bw_main1.win_hnd_id,1);
@@ -488,16 +448,16 @@ long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 	  if ((bw_main1.win_key==32)||(bw_main1.win_key==401))
 	  {
 	    bw_main1.w_set_lbutton(hwnd,bw_main1.win_hnd_id);
-	    if ((bw_menuvar1.t5_m_ptr2==14)||(bw_menuvar1.t5_m_ptr2==15))
+	    if ((bw_buttonvar1.t5_btn_ptr2==14)||(bw_buttonvar1.t5_btn_ptr2==15))
 	    {
-	      bw_menuvar1.t5_m_ptr2=0;
+	      bw_buttonvar1.t5_btn_ptr2=0;
 	      return(0);
             }
 	  }
 	  if (bw_main1.win_key==CTRL_E)
 	  {
-	    bw_choose1.w_clr_recvar_chs(bw_main1.win_hnd_id);
-	    bw_choose1.w_echo_winrec_chs(bw_main1.win_hnd_id);
+	    bw_chkbox1.w_clr_recvar_chkbox(bw_main1.win_hnd_id);
+	    bw_chkbox1.w_echo_winrec_chkbox(bw_main1.win_hnd_id);
 	    return(0);
 	  }
 	  if (bw_main1.win_key==ESC_KEY)
@@ -535,16 +495,16 @@ long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 	  if ((bw_main1.win_key==32)||(bw_main1.win_key==401))
 	  {
 	    bw_main1.w_set_lbutton(hwnd,bw_main1.win_hnd_id);
-	    if ((bw_menuvar1.t5_m_ptr2==14)||(bw_menuvar1.t5_m_ptr2==15))
+	    if ((bw_buttonvar1.t5_btn_ptr2==14)||(bw_buttonvar1.t5_btn_ptr2==15))
 	    {
-	      bw_menuvar1.t5_m_ptr2=0;
+	      bw_buttonvar1.t5_btn_ptr2=0;
 	      return(0);
 	    }
 	  }
 	  if (bw_main1.win_key==CTRL_E)
 	  {
-	    bw_switch1.w_clr_recvar_radio(bw_main1.win_hnd_id);
-	    bw_switch1.w_echo_winrec_radio(bw_main1.win_hnd_id);
+	    bw_rabox1.w_clr_recvar_rabox(bw_main1.win_hnd_id);
+	    bw_rabox1.w_echo_winrec_rabox(bw_main1.win_hnd_id);
 	    return(0);
 	  }
 	  if (bw_main1.win_key==ESC_KEY)
@@ -621,9 +581,9 @@ long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 	    if ((bw_main1.win_key==401)||(bw_main1.win_key==32))
 	    {
 	      bw_main1.w_set_lbutton(hwnd,bw_main1.win_hnd_id);
-	      if ((bw_menuvar1.t5_m_ptr2==14)||(bw_menuvar1.t5_m_ptr2==15))
+	      if ((bw_buttonvar1.t5_btn_ptr2==14)||(bw_buttonvar1.t5_btn_ptr2==15))
 	      {
-	        bw_menuvar1.t5_m_ptr2=0;
+	        bw_buttonvar1.t5_btn_ptr2=0;
 	        return(0);
               }
 	    }
@@ -676,6 +636,7 @@ long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 	    if (str1[0]==':')
             {
 	      bw_getread1.get_smg_string(bw_win1.get_win_ptr_get_rd(bw_main1.win_hnd_id),str4,SMG_SIZE);
+
 	      bw_xbase1.set_win_scrnvar(bw_main1.win_hnd_id,str4,SMG_SIZE);
 	      bw_xbase1.get_win_scrnvar(bw_main1.win_hnd_id,fldvar,SMG_SIZE);
 	    }
@@ -688,6 +649,7 @@ long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 		GetWindowText(hnd,fldvar,SMG_SIZE);
 	      }
               else fldvar[0]=0;
+
 	      bw_xbase1.set_win_scrnvar(bw_main1.win_hnd_id,fldvar,SMG_SIZE);
 	    }
 
@@ -837,9 +799,9 @@ long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 	    if ((bw_main1.win_key==401)||(bw_main1.win_key==32))
 	    {
 	      bw_main1.w_set_lbutton(hwnd,bw_main1.win_hnd_id);
-	      if ((bw_menuvar1.t5_m_ptr2==14)||(bw_menuvar1.t5_m_ptr2==15))
+	      if ((bw_buttonvar1.t5_btn_ptr2==14)||(bw_buttonvar1.t5_btn_ptr2==15))
 	      {
-	        bw_menuvar1.t5_m_ptr2=0;
+	        bw_buttonvar1.t5_btn_ptr2=0;
 		return(0);
 	      }
 	    }
@@ -1048,6 +1010,7 @@ long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 
         // set field roll to 0
         bw_getread1.win_p1=0;
+        bw_getread1.set_smg_modi(bw_win1.get_win_ptr_get_rd(bw_main1.win_hnd_id),0);
 
 	i=LOWORD(lp);
 	j=HIWORD(lp);
@@ -1127,32 +1090,6 @@ long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 
 	  break;
 
-    case WM_PROGRAM1:
-
-      get_win_ci_text(str2);
-      
-      bw_getread1.set_smg_string(bw_win1.get_win_ptr_get_rd(bw_main1.win_hnd_id),str2,SMG_SIZE);
-
-      break;
-    
-    case WM_PROGRAM2:
-
-      bw_win1.set_win_linep(bw_main1.win_hnd_id,0,lp-1+bw_win1.get_win_con(bw_main1.win_hnd_id,1));
-      bw_win1.set_win_linep(bw_main1.win_hnd_id,1,wp-1+bw_win1.get_win_con(bw_main1.win_hnd_id,0));
-
-      break;
-
-    case WM_PROGRAM3:
-
-	bw_main1.win_hnd_id=bw_win1.w_find_winhand(hwnd);
-
-	bw_win1.pline =bw_win1.get_win_linep(bw_main1.win_hnd_id,0);
-	bw_win1.pfield=bw_win1.get_win_linep(bw_main1.win_hnd_id,1);
-
-        set_cursor(hwnd,bw_win1.pline+1-bw_win1.get_win_con(bw_main1.win_hnd_id,1),bw_win1.pfield+1-bw_win1.get_win_con(bw_main1.win_hnd_id,0));
-      
-      break;
-
     case WM_SYSCOMMAND:
 
 //         sprintf(str4,"%d,",wp);
@@ -1185,7 +1122,7 @@ long  w_menu_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
   return DefWindowProc(hwnd,msg,wp,lp);
 }
 // _export
-long   w_menu_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp)
+long  PASCAL w_menu_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp)
 {
   int  i,j,k;
   char str1[SMG_SIZE];
@@ -1236,7 +1173,7 @@ long   w_menu_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp)
   }
   return (CallWindowProc((WNDPROC)bw_win1.get_win_proc(j),hwnd,msg,wp,lp));
 }
-long   w_tab_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp)
+long  PASCAL w_tab_ci_wp(HWND hwnd,WORD msg,WORD wp,LONG lp)
 {
   int  i,j,k;
   char str1[SMG_SIZE];
@@ -1450,12 +1387,12 @@ int bw_main::get_view(char *p_str,int p_str_size,HWND hwnd,int ptr)
   m=1;
   strcpy(bw_main1.win_m_bs2,bw_main1.win_m_bs1);
   strcat(bw_main1.win_m_bs2,".tb1");
-  if (bw_inkey1.w_find_file(bw_main1.win_m_bs2)==1) m=bw_menuvar1.w_read_mdc(bw_main1.win_m_bs2,FN_SIZE,bw_main1.win_hnd_id);
+  if (bw_inkey1.w_find_file(bw_main1.win_m_bs2)==1) m=bw_buttonvar1.w_read_btndc(bw_main1.win_m_bs2,FN_SIZE,bw_main1.win_hnd_id);
   else
   {
     bw_inkey1.w_get_dir(win_work_dir,FN_SIZE);
     bw_inkey1.w_set_dir(win_home_dir);
-    if (bw_inkey1.w_find_file(bw_main1.win_m_bs2)==1) m=bw_menuvar1.w_read_mdc(bw_main1.win_m_bs2,FN_SIZE,bw_main1.win_hnd_id);
+    if (bw_inkey1.w_find_file(bw_main1.win_m_bs2)==1) m=bw_buttonvar1.w_read_btndc(bw_main1.win_m_bs2,FN_SIZE,bw_main1.win_hnd_id);
     bw_inkey1.w_set_dir(win_work_dir);
   }
   if (m==0) n=1;
@@ -1477,12 +1414,12 @@ int bw_main::get_view(char *p_str,int p_str_size,HWND hwnd,int ptr)
   m=1;
   strcpy(bw_main1.win_m_bs2,bw_main1.win_m_bs1);
   strcat(bw_main1.win_m_bs2,".tb6");
-  if (bw_inkey1.w_find_file(bw_main1.win_m_bs2)==1) m=bw_choose1.w_read_cdc(bw_main1.win_m_bs2,FN_SIZE,bw_main1.win_hnd_id);
+  if (bw_inkey1.w_find_file(bw_main1.win_m_bs2)==1) m=bw_chkbox1.w_read_chkdc(bw_main1.win_m_bs2,FN_SIZE,bw_main1.win_hnd_id);
   else
   {
     bw_inkey1.w_get_dir(win_work_dir,FN_SIZE);
     bw_inkey1.w_set_dir(win_home_dir);
-    if (bw_inkey1.w_find_file(bw_main1.win_m_bs2)==1) m=bw_choose1.w_read_cdc(bw_main1.win_m_bs2,FN_SIZE,bw_main1.win_hnd_id);
+    if (bw_inkey1.w_find_file(bw_main1.win_m_bs2)==1) m=bw_chkbox1.w_read_chkdc(bw_main1.win_m_bs2,FN_SIZE,bw_main1.win_hnd_id);
     bw_inkey1.w_set_dir(win_work_dir);
   }
   if (m==0) n=1;
@@ -1493,12 +1430,12 @@ int bw_main::get_view(char *p_str,int p_str_size,HWND hwnd,int ptr)
   m=1;
   strcpy(bw_main1.win_m_bs2,bw_main1.win_m_bs1);
   strcat(bw_main1.win_m_bs2,".tb5");
-  if (bw_inkey1.w_find_file(bw_main1.win_m_bs2)==1) m=bw_switch1.w_read_sdc(bw_main1.win_m_bs2,FN_SIZE,bw_main1.win_hnd_id);
+  if (bw_inkey1.w_find_file(bw_main1.win_m_bs2)==1) m=bw_rabox1.w_read_radc(bw_main1.win_m_bs2,FN_SIZE,bw_main1.win_hnd_id);
   else
   {
     bw_inkey1.w_get_dir(win_work_dir,FN_SIZE);
     bw_inkey1.w_set_dir(win_home_dir);
-    if (bw_inkey1.w_find_file(bw_main1.win_m_bs2)==1) m=bw_switch1.w_read_sdc(bw_main1.win_m_bs2,FN_SIZE,bw_main1.win_hnd_id);
+    if (bw_inkey1.w_find_file(bw_main1.win_m_bs2)==1) m=bw_rabox1.w_read_radc(bw_main1.win_m_bs2,FN_SIZE,bw_main1.win_hnd_id);
     bw_inkey1.w_set_dir(win_work_dir);
   }
   if (m==0) n=1;
@@ -1509,12 +1446,12 @@ int bw_main::get_view(char *p_str,int p_str_size,HWND hwnd,int ptr)
   m=1;
   strcpy(bw_main1.win_m_bs2,bw_main1.win_m_bs1);
   strcat(bw_main1.win_m_bs2,".tb2");
-  if (bw_inkey1.w_find_file(bw_main1.win_m_bs2)==1) m=bw_dialog1.w_read_ddc(bw_main1.win_m_bs2,FN_SIZE,bw_main1.win_hnd_id);
+  if (bw_inkey1.w_find_file(bw_main1.win_m_bs2)==1) m=bw_dialog1.w_read_diadc(bw_main1.win_m_bs2,FN_SIZE,bw_main1.win_hnd_id);
   else
   {
     bw_inkey1.w_get_dir(win_work_dir,FN_SIZE);
     bw_inkey1.w_set_dir(win_home_dir);
-    if (bw_inkey1.w_find_file(bw_main1.win_m_bs2)==1) m=bw_dialog1.w_read_ddc(bw_main1.win_m_bs2,FN_SIZE,bw_main1.win_hnd_id);
+    if (bw_inkey1.w_find_file(bw_main1.win_m_bs2)==1) m=bw_dialog1.w_read_diadc(bw_main1.win_m_bs2,FN_SIZE,bw_main1.win_hnd_id);
     bw_inkey1.w_set_dir(win_work_dir);
   }
   if (m==0) n=1;
@@ -1673,15 +1610,17 @@ int bw_main::get_view(char *p_str,int p_str_size,HWND hwnd,int ptr)
     bw_win1.set_win_create_menu(m,o);
   }
 
-  j=bw_win1.win_h_w_total_ptr;
+  j=bw_win1.win_h_ci_total_ptr;
 
   bw_win1.w_login_wwin(bw_main1.win_hnd_id);
-
+/*
   l=bw_win1.get_win_ptr_grp_id(bw_main1.win_hnd_id);
 
   for (k=bw_win1.get_win_ptr_grp_ptr(l,0);k<=bw_win1.get_win_ptr_grp_ptr(l,2);k++)
   {
     bw_main1.win_hnd_id=k;
+*/
+    k=bw_main1.win_hnd_id;
 
     hwnd2=CreateWindow ("bowo_menu",
 			"Date Viewer Sub Window",
@@ -1692,16 +1631,17 @@ int bw_main::get_view(char *p_str,int p_str_size,HWND hwnd,int ptr)
 			50,
 			50,
 			50,
-			hwnd,
+			0,
 			hm1,
 			win_ins,
 			NULL);
 
    bw_win1.set_win_phh(k,hwnd2);
-   bw_win1.set_win_hnd(j+k-bw_win1.get_win_ptr_grp_ptr(l,0),bw_win1.get_win_phh(k));
+   bw_win1.set_win_hnd(j/*+k-bw_win1.get_win_ptr_grp_ptr(l,0)*/,hwnd2);
 
+/*
   }
-
+*/
   return(0);
 }
 int bw_main::w_set_focus(HWND hwnd)
@@ -1725,14 +1665,14 @@ int bw_main::w_set_focus(HWND hwnd)
     i=bw_win1.w_find_hnd(bw_main1.win_hnd_id,bw_win1.pfield,bw_win1.pline);
     SetFocus(bw_win1.get_win_hnd(i));
 
-    bw_menuvar1.w_menu_poin(str1,SMG_SIZE,bw_main1.win_hnd_id);
-    bw_menuvar1.w_menu_comm(bw_menuvar1.t5_m_ptr3,1);
+    bw_buttonvar1.w_button_poin(str1,SMG_SIZE,bw_main1.win_hnd_id);
+    bw_buttonvar1.w_button_comm(bw_buttonvar1.t5_btn_ptr3,1);
 
-    if (bw_menuvar1.t5_m_ptr2==26)
+    if (bw_buttonvar1.t5_btn_ptr2==26)
     {
-      bw_bmp1.echo_bmp(hwnd,bw_menuvar1.t5_m_com_str,SMG_SIZE,bw_menuvar1.get_t5_m_mcnt(bw_menuvar1.t5_m_ptr3),bw_main1.win_hnd_id);
+      bw_bmp1.echo_bmp(hwnd,bw_buttonvar1.t5_btn_com_str,SMG_SIZE,bw_buttonvar1.get_t5_btn_mcnt(bw_buttonvar1.t5_btn_ptr3),bw_main1.win_hnd_id);
 
-      bw_menuvar1.set_t5_m_mcnt(bw_menuvar1.t5_m_ptr3,bw_menuvar1.get_t5_m_mcnt(bw_menuvar1.t5_m_ptr3)+1);
+      bw_buttonvar1.set_t5_btn_mcnt(bw_buttonvar1.t5_btn_ptr3,bw_buttonvar1.get_t5_btn_mcnt(bw_buttonvar1.t5_btn_ptr3)+1);
     }
   }
   if (str1[0]=='[')
@@ -1795,14 +1735,14 @@ int bw_main::w_set_focus_timer(HWND hwnd)
 
   if (str1[0]=='@')
   {
-    bw_menuvar1.w_menu_poin(str1,SMG_SIZE,bw_main1.win_hnd_id);
-    bw_menuvar1.w_menu_comm(bw_menuvar1.t5_m_ptr3,1);
+    bw_buttonvar1.w_button_poin(str1,SMG_SIZE,bw_main1.win_hnd_id);
+    bw_buttonvar1.w_button_comm(bw_buttonvar1.t5_btn_ptr3,1);
 
-    if (bw_menuvar1.t5_m_ptr2==26)
+    if (bw_buttonvar1.t5_btn_ptr2==26)
     {
-      bw_bmp1.echo_bmp(hwnd,bw_menuvar1.t5_m_com_str,SMG_SIZE,bw_menuvar1.get_t5_m_mcnt(bw_menuvar1.t5_m_ptr3),bw_main1.win_hnd_id);
+      bw_bmp1.echo_bmp(hwnd,bw_buttonvar1.t5_btn_com_str,SMG_SIZE,bw_buttonvar1.get_t5_btn_mcnt(bw_buttonvar1.t5_btn_ptr3),bw_main1.win_hnd_id);
 
-      bw_menuvar1.set_t5_m_mcnt(bw_menuvar1.t5_m_ptr3,bw_menuvar1.get_t5_m_mcnt(bw_menuvar1.t5_m_ptr3)+1);
+      bw_buttonvar1.set_t5_btn_mcnt(bw_buttonvar1.t5_btn_ptr3,bw_buttonvar1.get_t5_btn_mcnt(bw_buttonvar1.t5_btn_ptr3)+1);
     }
   }
 
@@ -1886,19 +1826,19 @@ int bw_main::w_set_lbutton(HWND hwnd,int hnd_id)
 
   if (str1[0]=='@')
   {
-    bw_menuvar1.w_menu_poin(str1,SMG_SIZE,hnd_id);
-    bw_menuvar1.w_menu_comm(bw_menuvar1.t5_m_ptr3,0);
+    bw_buttonvar1.w_button_poin(str1,SMG_SIZE,hnd_id);
+    bw_buttonvar1.w_button_comm(bw_buttonvar1.t5_btn_ptr3,0);
 
-    if (bw_menuvar1.t5_m_ptr2==1)
+    if (bw_buttonvar1.t5_btn_ptr2==1)
     {
-      bw_main1.get_view(bw_menuvar1.t5_m_com_str,SMG_SIZE,bw_main1.win_hwnd,bw_win1.get_win_ptr_grp_ptr(hnd_id,0));
+      bw_main1.get_view(bw_buttonvar1.t5_btn_com_str,SMG_SIZE,bw_main1.win_hwnd,hnd_id/*bw_win1.get_win_ptr_grp_ptr(hnd_id,0)*/);
       return(0);
     }
 
-    if (bw_menuvar1.t5_m_ptr2==14)
+    if (bw_buttonvar1.t5_btn_ptr2==14)
     {
-      if (bw_win1.get_win_style(hnd_id,2)==1) bw_switch1.w_save_switch(hnd_id);
-      if (bw_win1.get_win_style(hnd_id,3)==1) bw_choose1.w_save_choose(hnd_id);
+      if (bw_win1.get_win_style(hnd_id,2)==1) bw_rabox1.w_save_rabox(hnd_id);
+      if (bw_win1.get_win_style(hnd_id,3)==1) bw_chkbox1.w_save_chkbox(hnd_id);
       if (bw_win1.get_win_style(hnd_id,8)==1) bw_dialog1.w_save_dialog(hnd_id);
       if (bw_win1.get_win_style(hnd_id,9)==1) bw_dialog1.w_save_dialog(hnd_id);
 
@@ -1919,7 +1859,7 @@ int bw_main::w_set_lbutton(HWND hwnd,int hnd_id)
 
       return(0);
     }
-    if (bw_menuvar1.t5_m_ptr2==15)
+    if (bw_buttonvar1.t5_btn_ptr2==15)
     {
       bw_fldstru1.w_find_exit(hnd_id);
       bw_win1.w_close_win(hnd_id);
@@ -1930,7 +1870,7 @@ int bw_main::w_set_lbutton(HWND hwnd,int hnd_id)
     if (i>0) j=bw_win1.get_t_fldbase(i);
     else j=0;
 
-    if (bw_menuvar1.t5_m_ptr2==16)
+    if (bw_buttonvar1.t5_btn_ptr2==16)
     {
       p=bw_link1.w_link_type(hnd_id,j);
       if (p>0)
@@ -1951,7 +1891,7 @@ int bw_main::w_set_lbutton(HWND hwnd,int hnd_id)
 	bw_win1.set_win_state_link_modi(hnd_id,0);
       }
     }
-    if (bw_menuvar1.t5_m_ptr2==17)
+    if (bw_buttonvar1.t5_btn_ptr2==17)
     {
       p=bw_link1.w_link_type(hnd_id,j);
       if (p>0)
@@ -1972,16 +1912,16 @@ int bw_main::w_set_lbutton(HWND hwnd,int hnd_id)
 	bw_win1.set_win_state_link_modi(hnd_id,0);
       }
     }
-    if (bw_menuvar1.t5_m_ptr2==18) bw_fldstru1.w_insert_rec(j,hnd_id);
-    if (bw_menuvar1.t5_m_ptr2==27) bw_fldstru1.w_add_rec(j,hnd_id);
-    if (bw_menuvar1.t5_m_ptr2==28) bw_fldstru1.w_up_line2(j,hnd_id);
-    if (bw_menuvar1.t5_m_ptr2==29) bw_fldstru1.w_down_line2(j,hnd_id);
-    if (bw_menuvar1.t5_m_ptr2==19) bw_fldstru1.w_delete_rec(j,hnd_id);
-    if (bw_menuvar1.t5_m_ptr2==20) bw_fldstru1.w_rollback_base(j,hnd_id);
-    if (bw_menuvar1.t5_m_ptr2==21) bw_fldstru1.w_commit_base(j,hnd_id);
-    if (bw_menuvar1.t5_m_ptr2==22) bw_fldstru1.w_link_window(j,hnd_id);
-    if (bw_menuvar1.t5_m_ptr2==23) bw_fldstru1.w_find_cond(j,hnd_id);
-    if (bw_menuvar1.t5_m_ptr2==24)
+    if (bw_buttonvar1.t5_btn_ptr2==18) bw_fldstru1.w_insert_rec(j,hnd_id);
+    if (bw_buttonvar1.t5_btn_ptr2==27) bw_fldstru1.w_add_rec(j,hnd_id);
+    if (bw_buttonvar1.t5_btn_ptr2==28) bw_fldstru1.w_up_line2(j,hnd_id);
+    if (bw_buttonvar1.t5_btn_ptr2==29) bw_fldstru1.w_down_line2(j,hnd_id);
+    if (bw_buttonvar1.t5_btn_ptr2==19) bw_fldstru1.w_delete_rec(j,hnd_id);
+    if (bw_buttonvar1.t5_btn_ptr2==20) bw_fldstru1.w_rollback_base(j,hnd_id);
+    if (bw_buttonvar1.t5_btn_ptr2==21) bw_fldstru1.w_commit_base(j,hnd_id);
+    if (bw_buttonvar1.t5_btn_ptr2==22) bw_fldstru1.w_link_window(j,hnd_id);
+    if (bw_buttonvar1.t5_btn_ptr2==23) bw_fldstru1.w_find_cond(j,hnd_id);
+    if (bw_buttonvar1.t5_btn_ptr2==24)
     {
       p=bw_link1.w_link_type(hnd_id,j);
       if (p>0)
@@ -2002,7 +1942,7 @@ int bw_main::w_set_lbutton(HWND hwnd,int hnd_id)
 	bw_win1.set_win_state_link_modi(hnd_id,0);
       }
     }
-    if (bw_menuvar1.t5_m_ptr2==25)
+    if (bw_buttonvar1.t5_btn_ptr2==25)
     {
       p=bw_link1.w_link_type(hnd_id,j);
       if (p>0)
@@ -2029,7 +1969,7 @@ int bw_main::w_set_lbutton(HWND hwnd,int hnd_id)
   {
     bw_inkey1.cut_string(str1,1,strlen(str1)-1-1+1,SMG_SIZE,str2,SMG_SIZE);
     k=bw_inkey1.str2int(str2,strlen(str2)+1);
-    i=bw_choose1.w_echo_chs_change(k,hnd_id);
+    i=bw_chkbox1.w_echo_chk_change(k,hnd_id);
     j=bw_win1.w_find_hnd(hnd_id,bw_win1.pfield,bw_win1.pline);
     i=SendMessage(bw_win1.get_win_hnd(j),BM_GETCHECK,11,(LPARAM)0);
     if (i==0) SendMessage(bw_win1.get_win_hnd(j),BM_SETCHECK,11,(LPARAM)0);
@@ -2056,7 +1996,7 @@ int bw_main::w_set_lbutton(HWND hwnd,int hnd_id)
   {
     bw_inkey1.cut_string(str1,1,strlen(str1)-1-1+1,SMG_SIZE,str2,SMG_SIZE);
     k=bw_inkey1.str2int(str2,strlen(str2)+1);
-    i=bw_switch1.w_set_radio_var(bw_win1.pline,bw_win1.pfield,k,hnd_id);
+    i=bw_rabox1.w_set_radio_var(bw_win1.pline,bw_win1.pfield,k,hnd_id);
 
     // user app interface
 
@@ -2066,7 +2006,7 @@ int bw_main::w_set_lbutton(HWND hwnd,int hnd_id)
     s_win[l]=0;
     strcpy(s_msg,"WM_LBUTTON");
     bw_win1.w_find_winfname(hnd_id,bw_win1.pline,bw_win1.pfield,s_itm,SMG_SIZE);
-    sprintf(s_stt,"%d",bw_switch1.get_win_switch(i,1));
+    sprintf(s_stt,"%d",bw_rabox1.get_win_rabox(i,1));
 
     bw_user1.w_user_triger(s_win,SMG_SIZE,s_msg,SMG_SIZE,s_itm,SMG_SIZE,s_stt,SMG_SIZE);
 
@@ -2100,6 +2040,7 @@ int bw_main::get_ci_save(int hnd_id)
     if (str1[0]=='?')
     {
       bw_getread1.get_smg_string(bw_win1.get_win_ptr_get_rd(hnd_id),str2,SMG_SIZE);
+
       bw_xbase1.set_win_scrnvar(hnd_id,str2,SMG_SIZE);
       bw_dialog1.set_win_mv_getv(hnd_id,str2,SMG_SIZE);
     }
@@ -2520,7 +2461,6 @@ int bw_main::get_setup_save()
 */
 int bw_main::w_ini_main(HINSTANCE p_pins)
 {
-/*
   WNDCLASS wndclass;
 
   if (!p_pins)
@@ -2578,7 +2518,7 @@ int bw_main::w_ini_main(HINSTANCE p_pins)
 
     wndclass.lpszClassName = "bowo_edit";
     if (!RegisterClass(&wndclass)) return(1);
-	*//*
+	/*
     wndclass.style         = CS_HREDRAW|CS_VREDRAW;
     wndclass.lpfnWndProc   = (WNDPROC)w_savep_wp;
     wndclass.cbClsExtra    = 0;
@@ -2608,38 +2548,7 @@ int bw_main::w_ini_main(HINSTANCE p_pins)
 
     wndclass.lpszClassName = "bowo_outp";
     if (!RegisterClass(&wndclass)) return(1);
-	*//*
-  }
-*/
-  if (bw_main1.win_lang==1)
-  {
-    reg_win_class("asm_main",   1,"asm_py_menu");
-    reg_win_class("acm_main",   2,"acm_menu");
-    reg_win_class("acm_fun",    3,"acm_fun_menu");
-    reg_win_class("acm_calc",   4," ");
-    reg_win_class("sdsc_main",  5,"sdsc_menu");
-    reg_win_class("bowo_bmp",   6," ");
-    reg_win_class("sdsc_fun",   7,"sdsc_fun_menu");
-    reg_win_class("bowo_main",  8,"bowo_main");
-    reg_win_class("bowo_menu",  9,"tab_menu");
-    reg_win_class("bowo_edit", 10,"edit_menu");
-    reg_win_class("bowo_savep",11,"saveprint_menu");
-    reg_win_class("bowo_outp", 12,"outprint_menu");
-  }
-  else
-  {
-    reg_win_class("asm_main",   1,"asm_py_menu");
-    reg_win_class("acm_main",   2,"acm_menu");
-    reg_win_class("acm_fun",    3,"acm_fun_menu");
-    reg_win_class("acm_calc",   4," ");
-    reg_win_class("sdsc_main",  5,"sdsc_menu");
-    reg_win_class("bowo_bmp",   6," ");
-    reg_win_class("sdsc_fun",   7,"sdsc_fun_menu");
-    reg_win_class("bowo_main",  8,"bowo_cmain");
-    reg_win_class("bowo_menu",  9,"ctab_menu");
-    reg_win_class("bowo_edit", 10,"edit_menu");
-    reg_win_class("bowo_savep",11,"saveprint_menu");
-    reg_win_class("bowo_outp", 12,"outprint_menu");
+	*/
   }
 
   return(0);

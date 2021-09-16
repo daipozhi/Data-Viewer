@@ -35,7 +35,7 @@ int bw_font::w_read_fdc(char *p_fn1,int p_fn1_size,int p_win)
   exist=0;
   for (i=0;i<FONT_NUM;i++)
   {
-    if (t5_m_wind[i]==0)
+    if (t5_btn_wind[i]==0)
     {
       exist=1;
       break;
@@ -120,19 +120,19 @@ int bw_font::w_read_fdc(char *p_fn1,int p_fn1_size,int p_win)
     for (j=p1;j<=p2;j++)
     {
       if (tmpc2[j]==' ') break;
-      t5_m_name[ptr1][j-p1]=tmpc2[j];
-      t5_m_name[ptr1][j-p1+1]=0;
+      t5_btn_name[ptr1][j-p1]=tmpc2[j];
+      t5_btn_name[ptr1][j-p1+1]=0;
     }
 
     for (j=p3;j<=p4;j++)
     {
       if (tmpc2[j]==' ') break;
-      t5_m_butt[ptr1][j-p3]=tmpc2[j];
-      t5_m_butt[ptr1][j-p3+1]=0;
+      t5_btn_butt[ptr1][j-p3]=tmpc2[j];
+      t5_btn_butt[ptr1][j-p3+1]=0;
     }
     same=0;
-    if (strncmp("button=",t5_m_butt[ptr1],7)==0) same=1;
-    if (strncmp("bitmap=",t5_m_butt[ptr1],7)==0) same=1;
+    if (strncmp("button=",t5_btn_butt[ptr1],7)==0) same=1;
+    if (strncmp("bitmap=",t5_btn_butt[ptr1],7)==0) same=1;
     if (same==0)
     {
       fclose(fp1);
@@ -143,12 +143,12 @@ int bw_font::w_read_fdc(char *p_fn1,int p_fn1_size,int p_win)
     for (j=p5;j<=p6;j++)
     {
       if (tmpc2[j]==' ') break;
-      t5_m_comm[ptr1][j-p5]=tmpc2[j];
-      t5_m_comm[ptr1][j-p5+1]=0;
+      t5_btn_comm[ptr1][j-p5]=tmpc2[j];
+      t5_btn_comm[ptr1][j-p5+1]=0;
     }
     same=0;
-    if (strncmp("com=",t5_m_comm[ptr1],4)==0) same=1;
-    if (strncmp("do=",t5_m_comm[ptr1],3)==0) same=1;
+    if (strncmp("com=",t5_btn_comm[ptr1],4)==0) same=1;
+    if (strncmp("do=",t5_btn_comm[ptr1],3)==0) same=1;
     if (same==0)
     {
       fclose(fp1);
@@ -159,26 +159,26 @@ int bw_font::w_read_fdc(char *p_fn1,int p_fn1_size,int p_win)
     for (j=p7;j<=p8;j++)
     {
       if (tmpc2[j]==' ') break;
-      t5_m_focus[ptr1][j-p7]=tmpc2[j];
-      t5_m_focus[ptr1][j-p7+1]=0;
+      t5_btn_focus[ptr1][j-p7]=tmpc2[j];
+      t5_btn_focus[ptr1][j-p7+1]=0;
     }
 
-    t5_m_wind[ptr1]=p_win;
+    t5_btn_wind[ptr1]=p_win;
 
     ptr1++;
   }
 
-  t5_m_ptr1=ptr1-1;
+  t5_btn_ptr1=ptr1-1;
 
   fclose(fp1);
 
-  for (i=0;i<=t5_m_ptr1;i++)
+  for (i=0;i<=t5_btn_ptr1;i++)
   {
     loc(i+1,1);
     printf("%s,%s,%s,"
-	   ,t5_m_name[i]
-	   ,t5_m_butt[i]
-	   ,t5_m_comm[i]);
+	   ,t5_btn_name[i]
+	   ,t5_btn_butt[i]
+	   ,t5_btn_comm[i]);
   }
   inkey();
 */

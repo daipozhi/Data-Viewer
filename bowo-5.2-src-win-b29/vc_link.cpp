@@ -37,13 +37,70 @@ int bw_link::tst_link1()
   for (i=0;i<60;i++)
   {
     sprintf(str1,"ptr=%d,win_lkpoin0,1=%d,%d,lkmodi=%d,lkseri=%d,lkbase=%d,lkrecn=%d,lkwind=%d,"
-    ,i,get_win_lkpoin(i,0)
+    ,i
+    ,get_win_lkpoin(i,0)
     ,get_win_lkpoin(i,1)
     ,get_win_lkmodi(i)
     ,get_win_lkseri(i)
     ,get_win_lkbase(i)
     ,get_win_lkrecn(i)
     ,get_win_lkwind(i));
+
+    bw_getread1.deb_record(str1);
+  }
+
+  return(0);
+}
+
+int bw_link::tst_link1_lkchar()
+{
+  int  i,j;
+  char str1[3000];
+  char str2[300];
+  char str3[300];
+
+  bw_getread1.deb_record("bw_link::tst_link_lkchar()");
+
+  for (i=0;i<60;i++)
+  {
+    sprintf(str1,"ptr=%d,win_lkpoin0=%d,lkpoin1=%d,lkmodi=%d,lkseri=%d,lkbase=%d,lkrecn=%d,lkwind=%d,"
+    ,i
+    ,get_win_lkpoin(i,0)
+    ,get_win_lkpoin(i,1)
+    ,get_win_lkmodi(i)
+    ,get_win_lkseri(i)
+    ,get_win_lkbase(i)
+    ,get_win_lkrecn(i)
+    ,get_win_lkwind(i));
+
+    bw_getread1.deb_record(str1);
+  }
+
+  for (i=0;i<60;i++)
+  {
+    if (get_win_bslink(i,2)!=0)
+    {
+      for (j=get_win_bspoin(i,0);j<=get_win_bspoin(i,1);j++)
+      {
+	str3[j-get_win_bspoin(i,0)+0]=get_win_chlink(j);
+	str3[j-get_win_bspoin(i,0)+1]=0;
+      }
+    }
+    else str3[0]=0;
+
+    if (i<STRU_NUM) sprintf(str2,"%d",bw_xbase1.get_win_lnktab(i));
+    else str2[0]=0;
+
+    sprintf(str1,"ptr=%d,win_bslink0,1,2=%d,%d,%d,bspoin0,1=%d,%d,win_lnktab=%s,win_chlink=%s,"
+    ,i
+    ,get_win_bslink(i,0)
+    ,get_win_bslink(i,1)
+    ,get_win_bslink(i,2)
+    ,get_win_bspoin(i,0)
+    ,get_win_bspoin(i,1)
+    ,str2
+    ,str3
+    );
 
     bw_getread1.deb_record(str1);
   }
@@ -180,9 +237,47 @@ int bw_link::tst_link5()
   return(0);
 }
 
-int bw_link::w_dele_link(int wp1,int wp2)
+int bw_link::tst_link5_svar()
 {
-  int  i,j,k,l,m,n,p,o,q,r,s,t,u,v,w,x;
+  int  i,j;
+  char str1[SMG_SIZE];
+  char str3[3000];
+
+  bw_getread1.deb_record("bw_link::tst_link_svar()");
+
+  sprintf(str3,"COND_NUM=%d,",COND_NUM);
+  bw_getread1.deb_record(str3);
+
+  for (i=0;i<60;i++)
+  {
+    str1[0]=0;
+
+    for (j=get_win_svpoin(i,0);j<get_win_svpoin(i,1);j++)
+    {
+      str1[j-get_win_svpoin(i,0)]=get_win_svar(j);
+      str1[j-get_win_svpoin(i,0)+1]=0;
+    }
+
+    sprintf(str3,"ptr=%d,win_svpoin0,1=%d,%d,svused=%d,svseri=%d,svbase=%d,svrecn=%d,svwind=%d,svar=%s,"
+    ,i
+    ,get_win_svpoin(i,0)
+    ,get_win_svpoin(i,1)
+    ,get_win_svused(i)
+    ,get_win_svseri(i)
+    ,get_win_svbase(i)
+    ,get_win_svrecn(i)
+    ,get_win_svwind(i)
+    ,str1);
+
+    bw_getread1.deb_record(str3);
+  }
+
+  return(0);
+}
+
+int bw_link::w_dele_link(int wptr)
+{
+  int  i,j,k,l,m,n,p,o,q,r,s,t,u,v,w,x,y;
 
   i=(-1);
   j=(-1);
@@ -191,7 +286,7 @@ int bw_link::w_dele_link(int wp1,int wp2)
 
   for (k=0;k<COND_NUM;k++)
   {
-    if ((get_win_bslink(k,2)>=wp1)&&(get_win_bslink(k,2)<=wp2))
+    if ((get_win_bslink(k,2)==wptr))
     {
       if (i<0) i=k;
       if (j<k) j=k;
@@ -200,13 +295,13 @@ int bw_link::w_dele_link(int wp1,int wp2)
     {
       if (n<k) n=k;
     }
-    if ((get_win_bslink(k,2)<wp1)&&(get_win_bslink(k,2)>0))
+    if ((get_win_bslink(k,2)>0)&&(get_win_bslink(k,2)<wptr))
     {
       if (w<k) w=k;
     }
   }
 
-  if ((i>=0)&&(j>=0))
+  if (i>=0)
   {
     l=get_win_lkpoin(i,0);
     m=get_win_lkpoin(j,1);
@@ -255,7 +350,7 @@ int bw_link::w_dele_link(int wp1,int wp2)
 	     ,i,j,n,w,u,o,v);
   MessageBox(bw_main1.win_hwnd1,str,"Aa",MB_OK);
 */
-  if ((i>=0)&&(j>=0))
+  if (i>=0)
   {
     for (k=j+1;k<=n;k++)
     {
@@ -281,25 +376,25 @@ int bw_link::w_dele_link(int wp1,int wp2)
 
       set_win_bslink(k-u,0,get_win_bslink(k,0));
       set_win_bslink(k-u,1,get_win_bslink(k,1));
-      if (get_win_bslink(k,2)-wp2+wp1-1>0)
-	set_win_bslink(k-u,2,get_win_bslink(k,2)-wp2+wp1-1);
+
+      if (get_win_bslink(k,2)-1>0)
+	set_win_bslink(k-u,2,get_win_bslink(k,2)-1);
       else
 	set_win_bslink(k-u,2,1);
     }
 
-    for (k=m+1;k<=p;k++)
+    for (y=m+1;y<=p;y++)
     {
-      set_win_lkmodi(k-o,get_win_lkmodi(k));
-      set_win_lkseri(k-o,get_win_lkseri(k));
-      set_win_lkrecn(k-o,get_win_lkrecn(k));
-      set_win_lkbase(k-o,get_win_lkbase(k));
+      set_win_lkmodi(y-o,get_win_lkmodi(y));
+      set_win_lkseri(y-o,get_win_lkseri(y));
+      set_win_lkrecn(y-o,get_win_lkrecn(y));
+      set_win_lkbase(y-o,get_win_lkbase(y));
 
-      if (get_win_lkwind(k)-wp2+wp1-1>0)
-	set_win_lkwind(k-o,get_win_lkwind(k)-wp2+wp1-1);
+      if (get_win_lkwind(y)-1>0)
+	set_win_lkwind(y-o,get_win_lkwind(y)-1);
       else
-	set_win_lkwind(k-o,1);
+	set_win_lkwind(y-o,1);
     }
-
   }
   else
   {
@@ -327,32 +422,32 @@ int bw_link::w_dele_link(int wp1,int wp2)
 
       set_win_bslink(k-u,0,get_win_bslink(k,0));
       set_win_bslink(k-u,1,get_win_bslink(k,1));
-      if (get_win_bslink(k,2)-wp2+wp1-1>0)
-	set_win_bslink(k-u,2,get_win_bslink(k,2)-wp2+wp1-1);
+
+      if (get_win_bslink(k,2)-1>0)
+	set_win_bslink(k-u,2,get_win_bslink(k,2)-1);
       else
 	set_win_bslink(k-u,2,1);
     }
 
-    for (k=x+1;k<=p;k++)
+    for (y=x+1;y<=p;y++)
     {
-      set_win_lkmodi(k-o,get_win_lkmodi(k));
-      set_win_lkseri(k-o,get_win_lkseri(k));
-      set_win_lkrecn(k-o,get_win_lkrecn(k));
-      set_win_lkbase(k-o,get_win_lkbase(k));
+      set_win_lkmodi(y-o,get_win_lkmodi(y));
+      set_win_lkseri(y-o,get_win_lkseri(y));
+      set_win_lkrecn(y-o,get_win_lkrecn(y));
+      set_win_lkbase(y-o,get_win_lkbase(y));
 
-      if (get_win_lkwind(k)-wp2+wp1-1>0)
-	set_win_lkwind(k-o,get_win_lkwind(k)-wp2+wp1-1);
+      if (get_win_lkwind(y)-1>0)
+	set_win_lkwind(y-o,get_win_lkwind(y)-1);
       else
-	set_win_lkwind(k-o,1);
+	set_win_lkwind(y-o,1);
     }
   }
 
-  if ((i>=0)&&(j>=0))
+  if (i>=0)
   {
     if (n-j>=0)
     {
-      if (n-j>0) q=i+n-j;
-      else q=i;
+      q=i+n-j;
        
       for (k=q;k<=n;k++)
       {
@@ -370,9 +465,8 @@ int bw_link::w_dele_link(int wp1,int wp2)
 
     if (p-m>=0)
     {
-      if (p-m>0) q=l+p-m;
-      else q=l;
-       
+      q=l+p-m;
+              
       for (k=q;k<=p;k++)
       {
 	set_win_lkmodi(k,0);
@@ -385,7 +479,7 @@ int bw_link::w_dele_link(int wp1,int wp2)
 
   }
 
-  if ((i>=0)&&(j>=0)&&(v>0))
+  if ((i>=0)&&(v>0))
   {
     for (k=s+1;k<=t;k++)
     {
@@ -398,7 +492,7 @@ int bw_link::w_dele_link(int wp1,int wp2)
   return(0);
 }
 
-int bw_link::w_dele_svar(int wp1,int wp2)
+int bw_link::w_dele_svar(int wptr)
 {
   int  i,j,k,l,m,n,p,o,q,r;
 
@@ -409,7 +503,7 @@ int bw_link::w_dele_svar(int wp1,int wp2)
 
   for (k=0;k<WIN_VAR_NUM;k++)
   {
-    if ((get_win_svwind(k)>=wp1)&&(get_win_svwind(k)<=wp2))
+    if (get_win_svwind(k)==wptr)
     {
       if (i<0) i=k;
       if (j<k) j=k;
@@ -418,13 +512,13 @@ int bw_link::w_dele_svar(int wp1,int wp2)
     {
       if (n<k) n=k;
     }
-    if ((get_win_svwind(k)<wp1)&&(get_win_svwind(k)>0))
+    if ((get_win_svwind(k)>0)&&(get_win_svwind(k)<wptr))
     {
       if (r<k) r=k;
     }
   }
 
-  if ((i>=0)&&(j>=0))
+  if (i>=0)
   {
     l=get_win_svpoin(i,0);
     m=get_win_svpoin(j,1);
@@ -455,36 +549,34 @@ int bw_link::w_dele_svar(int wp1,int wp2)
   o=m-l;
   if (o<0) o=0;
 
-  if ((i>=0)&&(j>=0))
+  if (i>=0)
   {
     for (k=j+1;k<=n;k++)
     {
       set_win_svused(i+k-j-1,get_win_svused(k));
-      if (get_win_svpoin(k,0)-o>=0) set_win_svpoin(i+k-j-1,0,get_win_svpoin(k,0)-o);
-      else set_win_svpoin(i+k-j-1,0,0);
-      if (get_win_svpoin(k,1)-o>=0) set_win_svpoin(i+k-j-1,1,get_win_svpoin(k,1)-o);
-      else set_win_svpoin(i+k-j-1,1,0);
       set_win_svseri(i+k-j-1,get_win_svseri(k));
       set_win_svrecn(i+k-j-1,get_win_svrecn(k));
       set_win_svbase(i+k-j-1,get_win_svbase(k));
-      if (get_win_svwind(k)-wp2+wp1-1>0) set_win_svwind(i+k-j-1,get_win_svwind(k)-wp2+wp1-1);
-      else set_win_svwind(i+k-j-1,1);
+      set_win_svwind(i+k-j-1,get_win_svwind(k)-1);
+
+      set_win_svpoin(i+k-j-1,0,get_win_svpoin(k,0)-o);
+      set_win_svpoin(i+k-j-1,1,get_win_svpoin(k,1)-o);
     }
 
     if (n-j>=0)
     {
-      if (n-j>0) q=i+n-j;
-      else q=i;
+      q=i+n-j;
        
       for (k=q;k<=n;k++)
       {
 	set_win_svused(k,0);
-	set_win_svpoin(k,0,0);
-	set_win_svpoin(k,1,0);
 	set_win_svseri(k,0);
 	set_win_svrecn(k,0);
 	set_win_svbase(k,0);
 	set_win_svwind(k,0);
+
+	set_win_svpoin(k,0,0);
+	set_win_svpoin(k,1,0);
       }
     }
 
@@ -493,14 +585,11 @@ int bw_link::w_dele_svar(int wp1,int wp2)
   {
     for (k=r+1;k<=n;k++)
     {
-      if (get_win_svwind(k)-wp2+wp1-1>0)
-	set_win_svwind(k,get_win_svwind(k)-wp2+wp1-1);
-      else
-	set_win_svwind(k,1);
+      set_win_svwind(k,get_win_svwind(k)-1);
     }
   }
 
-  if ((i>=0)&&(j>=0)&&(o>0))
+  if ((i>=0)&&(o>0))
   {
     for (k=m;k<=p;k++)
     {
@@ -512,6 +601,7 @@ int bw_link::w_dele_svar(int wp1,int wp2)
 
   return(0);
 }
+
 int bw_link::w_read_link(char *p_fn,int p_fn_size,int p_wptr,int num)  //read link file
 {
   FILE *fp1;
@@ -524,18 +614,6 @@ int bw_link::w_read_link(char *p_fn,int p_fn_size,int p_wptr,int num)  //read li
 
   fp1=fopen(p_fn,"r");
   if (fp1==NULL) return(1);
-
-  for (i=1+1;i<=num;i++)
-  {
-    while (1)
-    {
-      for (j=0;j<SMG_SIZE;j++) s_tmps1[j]=0;
-      fgets(s_tmps1,SMG_SIZE,fp1);
-      if (feof(fp1)) break;  
-      if (strncmp(s_tmps1,"&screenseg",10)==0) break;
-    }
-    if (feof(fp1)) break;
-  }
 
   if (feof(fp1))
   {
@@ -1090,9 +1168,6 @@ int bw_link::w_echo_winrec_lnk(int p_wptr) /* echo win rec where modified */
 
 	    if (s_seri[k]!=bw_win1.get_t_fldseri(m))
 	    {
-
-//	      win_tst1=0;
-
 	      while (1)
 	      {
 		s_recno[k]=bw_mbase1.w_down_rec(k,p_wptr,s_recno[k]);

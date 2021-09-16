@@ -26,9 +26,9 @@ extern class bw_mbase        bw_mbase1;
 extern class bw_xbase        bw_xbase1;
 extern class bw_getread      bw_getread1;
 extern class bw_dialog       bw_dialog1;
-extern class bw_switch       bw_switch1;
-extern class bw_choose       bw_choose1;
-extern class bw_menuvar      bw_menuvar1;
+extern class bw_rabox       bw_rabox1;
+extern class bw_chkbox       bw_chkbox1;
+extern class bw_buttonvar      bw_buttonvar1;
 extern class bw_inkey        bw_inkey1;
 extern class bw_win          bw_win1;
 extern class bw_fldstru      bw_fldstru1;
@@ -46,7 +46,7 @@ HWND bw_win::get_ci_mhnd(HWND hwnd)
   {
     if (win_hnd[i]==hwnd)
     {
-      j=win_h_ci_ptr[i][4];
+      j=get_win_h_ci_ptr(i,4);  //parent hwnd ptr
       return(win_hnd[j]);
     }
   }
@@ -89,11 +89,8 @@ int bw_win::w_ini_win(void)
     set_win_ptr_fld_in_win(i,1,0);
     set_win_ptr_fld_in_win(i,2,0);
     set_win_ptr_fld_in_win(i,3,0);
-    set_win_ptr_win_mark(i,0);
+
     set_win_ptr_grp_id(i,0);
-    set_win_ptr_grp_ptr(i,0,0);
-    set_win_ptr_grp_ptr(i,1,0);
-    set_win_ptr_grp_ptr(i,2,0);
 
     set_win_msgboxlock(i,0);
   }
@@ -101,6 +98,7 @@ int bw_win::w_ini_win(void)
   return(0);
 }
 
+/* notice */
 int bw_win::w_login_win(int p1,int p2,char *p_win_name,int p_win_name_size,char *p_find_name,int p_find_name_size)
 {
   int i,j,k;
@@ -110,7 +108,7 @@ int bw_win::w_login_win(int p1,int p2,char *p_win_name,int p_win_name_size,char 
 
   for (i=1;i<WIN_NUM;i++)
   {
-    if (get_win_ptr_grp_ptr(i,0)==0)
+    if (get_win_ptr_grp_id(i)==0)
     {
       exist=1;
       break;
@@ -123,14 +121,14 @@ int bw_win::w_login_win(int p1,int p2,char *p_win_name,int p_win_name_size,char 
     return(1);
   }
 
-  set_win_ptr_grp_ptr(i,0,p1);
-  set_win_ptr_grp_ptr(i,1,p1);
-  set_win_ptr_grp_ptr(i,2,p2);
-
+/*
   for (j=p1;j<=p2;j++)
   {
+*/
+    j=p1;
+
     set_win_ptr_grp_id(j,i);
-    set_win_ptr_win_mark(j,j);
+    //set_win_ptr_win_mark(j,j);
     set_win_window_name(j,p_win_name ,p_win_name_size );
     set_win_find_name(  j,p_find_name,p_find_name_size);
 
@@ -142,30 +140,37 @@ int bw_win::w_login_win(int p1,int p2,char *p_win_name,int p_win_name_size,char 
       bw_xbase1.set_win_recno(k,j,2,0);
       bw_xbase1.set_win_state_in_srch(j,k,0);
     }
+/*
   }
-
+*/
   return(0);
 }
 
 int bw_win::w_dele_win_ptr(int p_wptr)
 {
   int i,j,k;
-
+/*
   i=get_win_ptr_grp_id(p_wptr);
+*/
 
+  i=p_wptr;
+
+/*
   for (j=get_win_ptr_grp_ptr(i,0);j<=get_win_ptr_grp_ptr(i,2);j++)
   {
-    set_win_ptr_grp_id(j,0);
-    set_win_ptr_win_mark(j,0);
+*/
+
+    set_win_ptr_grp_id(i,0);
+    //set_win_ptr_win_mark(i,0);
+
     for (k=0;k<STRU_NUM;k++)
     {
-      set_win_ptr_wins_dbf(k,j,0);
+      set_win_ptr_wins_dbf(k,i,0);
     }
-  }
 
-  set_win_ptr_grp_ptr(i,0,0);
-  set_win_ptr_grp_ptr(i,1,0);
-  set_win_ptr_grp_ptr(i,2,0);
+/*
+  }
+*/
 
   return(0);
 }
@@ -173,11 +178,14 @@ int bw_win::w_dele_win_ptr(int p_wptr)
 int bw_win::w_dele_win_ptr_wins_dbf(int p_wptr)
 {
   int i,j;
-
+/*
   for (j=get_win_ptr_grp_ptr(get_win_ptr_grp_id(p_wptr),0)
       ;j<=get_win_ptr_grp_ptr(get_win_ptr_grp_id(p_wptr),2)
       ;j++)
   {
+*/
+  j=p_wptr;
+
     for (i=0;i<STRU_NUM;i++)
     {
       if (get_win_ptr_wins_dbf(i,j)==1)
@@ -185,29 +193,22 @@ int bw_win::w_dele_win_ptr_wins_dbf(int p_wptr)
 	set_win_tabname(0,i,"",0);
 	set_win_tabname(1,i,"",0);
       }
+
       set_win_ptr_wins_dbf(i,j,0);
     }
+/*
   }
-
+*/
   return(0);
 }
 
 int bw_win::w_login_wwin(int p_pagecnt)
 {
-  win_h_ptr=get_win_ptr_grp_ptr(get_win_ptr_grp_id(p_pagecnt),2)-get_win_ptr_grp_ptr(get_win_ptr_grp_id(p_pagecnt),0);
+  set_win_h_w_ptr(p_pagecnt/*get_win_ptr_grp_id(p_pagecnt)*/,0,win_h_ci_total_ptr);
 
-  set_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),0,win_h_w_total_ptr);
-  set_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),1,win_h_w_total_ptr+win_h_ptr);
-  set_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),2,win_h_w_total_ptr);
-  set_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),3,get_win_ptr_grp_id(p_pagecnt)-1);
+  set_win_h_w_ptr(p_pagecnt/*get_win_ptr_grp_id(p_pagecnt)*/,5,0);
 
-  set_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),4,win_h_w_total_ptr+win_h_ptr+1);
-  set_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),5,0);
-  set_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),6,win_h_w_total_ptr+win_h_ptr+1);
-  set_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),7,get_win_ptr_grp_id(p_pagecnt));
-
-  win_h_ci_total_ptr=win_h_w_total_ptr+win_h_ptr+1;
-  win_h_w_total_ptr=win_h_ci_total_ptr;
+  win_h_ci_total_ptr++;
 
   return(0);
 }
@@ -317,6 +318,60 @@ int bw_win::tst_win1()
   return(0);
 }
 
+int bw_win::tst_win1_fld()
+{
+  //HDC  hdc;
+  int  i,j,k,l,m;
+  char str1[SMG_SIZE];
+  char str2[FLD_NAME_SIZE];
+
+  bw_getread1.deb_record("bw_win::tst_win1_fld()");
+
+  for (i=1;i<240;i++)
+  {
+    get_t_fldname(i,str2,FLD_NAME_SIZE);
+
+    sprintf(str1,"ptr=%d,fldname=%s,type=%d,base=%d,seri=%d,len=%d,dec=%d,edit=%d,"
+                                       ,i
+                       ,str2
+				       ,get_t_fldtype(i)
+				       ,get_t_fldbase(i)
+				       ,get_t_fldseri(i)
+				       ,get_t_fldlen(i)
+				       ,get_t_flddec(i)
+				       ,get_t_fldedt(i)
+					   );
+
+    bw_getread1.deb_record(str1);
+  }
+
+  k=0;
+
+  for (l=1;l<WIN_NUM;l++)
+  {
+    for (i=1;i<LIN_NUM;i++)
+    {
+      for (j=1;j<COL_NUM;j++)
+      {
+	if (bw_buff1.get_t3_linecol(l,i,j)!=0)
+	{
+	  m=bw_buff1.get_t3_linecol(l,i,j);
+	  get_t_fldname(m,str2,FLD_NAME_SIZE);
+
+	  sprintf(str1,"win=%d,line=%d,col=%d,linecol_fldid=%d,seri=%d,base=%d,name=%s,",l,i,j,m,get_t_fldseri(m),get_t_fldbase(m),str2);
+          bw_getread1.deb_record(str1);
+	  k++;
+	  //if (k>=60) break;
+        }
+      }
+      //if (k>=60) break;
+    }
+    //if (k>=60) break;
+  }
+
+  return(0);
+}
+
 int bw_win::tst_win2()
 {
   //HDC  hdc;
@@ -330,13 +385,14 @@ int bw_win::tst_win2()
   for (i=0;i<WIN_NUM;i++)
   {
     sprintf(str1,"win_ptr=%d,20=%d,21=%d,4=%d,5=%d,60=%d,61=%d,62=%d,90=%d,91=%d,92=%d,93=%d,ptr1=%d,subwub=%d,"
-                                       ,i,get_win_ptr_fld_in_win(i,0)
+                                       ,i
+                                       ,get_win_ptr_fld_in_win(i,0)
 				       ,get_win_ptr_fld_in_win(i,1)
-				       ,get_win_ptr_win_mark(i)   
+				       ,0//get_win_ptr_win_mark(i)   
 				       ,get_win_ptr_grp_id(i)
-				       ,get_win_ptr_grp_ptr(i,0)
-				       ,get_win_ptr_grp_ptr(i,1)
-				       ,get_win_ptr_grp_ptr(i,2)
+				       ,0//get_win_ptr_grp_ptr(i,0)
+				       ,0//get_win_ptr_grp_ptr(i,1)
+				       ,0//get_win_ptr_grp_ptr(i,2)
 				       ,get_win_ptr_wins_dbf(0,i)
 				       ,get_win_ptr_wins_dbf(1,i)
 				       ,get_win_ptr_wins_dbf(2,i)
@@ -353,6 +409,65 @@ int bw_win::tst_win2()
     get_win_tabname(1,i,stn2,FN_SIZE);
 
     sprintf(str1,"ptr=%d,tabn=%s,stru=%s,",i,stn1,stn2);
+    bw_getread1.deb_record(str1);
+  }
+
+  return(0);
+}
+
+int bw_win::tst_win2_fld_in_win()
+{
+  //HDC  hdc;
+  int  i;
+  char str1[SMG_SIZE];
+  char stn1[FN_SIZE];
+  char stn2[FN_SIZE];
+  char stn3[FN_SIZE];
+  char stn4[FN_SIZE];
+
+  bw_getread1.deb_record("bw_win::tst_win2_fld_in_win()");
+
+  for (i=0;i<WIN_NUM;i++)
+  {
+    sprintf(str1,"win_ptr=%d,fldinwin0=%d,fldinwin1=%d,mark=%d,id=%d,0=%d,0=%d,0=%d,windbf0=%d,windbf1=%d,windbf2=%d,windbf3=%d,ptr_new_win=%d,0=%d,h_w_p0=%d,h_w_p5=%d,ci_total_ptr=%d,"
+                                       ,i
+                                       ,get_win_ptr_fld_in_win(i,0)
+				       ,get_win_ptr_fld_in_win(i,1)
+				       ,0//get_win_ptr_win_mark(i)   
+				       ,get_win_ptr_grp_id(i)
+				       ,0//get_win_ptr_grp_ptr(i,0)
+				       ,0//get_win_ptr_grp_ptr(i,1)
+				       ,0//get_win_ptr_grp_ptr(i,2)
+				       ,get_win_ptr_wins_dbf(0,i)
+				       ,get_win_ptr_wins_dbf(1,i)
+				       ,get_win_ptr_wins_dbf(2,i)
+				       ,get_win_ptr_wins_dbf(3,i)
+				       ,win_ptr_new_win
+				       ,0/*get_win_subhndptr(i)*/
+                       ,get_win_h_w_ptr(i,0)
+					   ,get_win_h_w_ptr(i,5)
+					   ,win_h_ci_total_ptr
+					   );
+
+    bw_getread1.deb_record(str1);
+  }
+
+  bw_getread1.deb_record("bw_win::tst_win2...()  window name...");
+
+  for (i=0;i<STRU_NUM;i++)
+  {
+    get_win_tabname(    0,i,stn1,FN_SIZE);
+    get_win_tabname(    1,i,stn2,FN_SIZE);
+    get_win_window_name(  i,stn3,FN_SIZE);
+    get_win_find_name(    i,stn4,FN_SIZE);
+
+    sprintf(str1,"stru_ptr=%d,winname=%s,findname=%s,stru_name=%s,base_name=%s,"
+                                       ,i
+                                       ,stn3
+				       ,stn4
+				       ,stn1
+				       ,stn2);
+
     bw_getread1.deb_record(str1);
   }
 
@@ -464,6 +579,43 @@ int bw_win::tst_win6()
   return(0);
 }
 */
+
+int bw_win::tst_win6_ci_ptr()
+{
+  //HDC  hdc;
+  int  i,j,k,l,m,n;
+  char str1[SMG_SIZE];
+  char stn1[FN_SIZE];
+  char stn2[FN_SIZE];
+
+  bw_getread1.deb_record("bw_win::tst_win6_ci_ptr()");
+
+  for (i=0;i<WIN_NUM;i++)
+  {
+    j=get_win_h_w_ptr(i,0);
+    k=get_win_h_w_ptr(i,5);
+
+    sprintf(str1,"win_id=%d,h_w_ptr0=%d,h_w_ptr5=%d,",i,j,k);
+
+    bw_getread1.deb_record(str1);
+  }
+
+  for (i=0;i<300;i++)
+  {
+    j=get_win_h_ci_ptr(i,0);
+    k=get_win_h_ci_ptr(i,1);
+    l=get_win_h_ci_ptr(i,2);
+    m=get_win_h_ci_ptr(i,3);
+    n=get_win_h_ci_ptr(i,4);
+
+    sprintf(str1,"HND_NUM=%d,hnd_id=%d,ci_ptr0=%d,ci_ptr1=%d,ci_ptr2=%d,ci_ptr3=%d,ci_ptr4=%d,",HND_NUM,i,j,k,l,m,n);
+
+    bw_getread1.deb_record(str1);
+  }
+
+  return(0);
+}
+
 int bw_win::w_close_win(int p1)
 {
   HWND edit_hnd;
@@ -472,43 +624,24 @@ int bw_win::w_close_win(int p1)
   int  id[WIN_NUM];
   char str1[SMG_SIZE];
 
-  for (i=1;i<WIN_NUM;i++)
+  i=p1;
+
+  for (m=0;m<STRU_NUM;m++)
   {
-    id[i]=0;
-  }
-
-  ptr5=get_win_ptr_grp_id(p1);
-
-  id[ptr5]=1;
-
-  for (i=WIN_NUM-1;i>=1;i--)
-  {
-    if (id[i]==1)
+    if ((get_win_ptr_wins_dbf(m,i)==1)&&(bw_xbase1.get_win_mem_inuse(m)==1))
     {
-      for (m=0;m<STRU_NUM;m++)
+      for (n=0;n<EDIT_NUM;n++)
       {
-	if ((get_win_ptr_wins_dbf(m,i)==1)&&(bw_xbase1.get_win_mem_inuse(m)==1))
+        if (bw_edit1.get_win_edit_wptr(n)==i)
 	{
-	  for (n=0;n<EDIT_NUM;n++)
-	  {
-	    if (bw_edit1.get_win_edit_wptr(n)==i)
-	    {
-	      edit_hnd=bw_edit1.get_win_edit_hnd1(n);
-	      SendMessage(edit_hnd,WM_COMMAND,1803,(LPARAM)0);
-	    }
-          }
+	  edit_hnd=bw_edit1.get_win_edit_hnd1(n);
+	  SendMessage(edit_hnd,WM_COMMAND,1803,(LPARAM)0);
 	}
       }
-
-//      sprintf(str1,"%d,%d,",i,win_ptr_grp_ptr[i][0]);
-//      MessageBox(bw_main1.win_hwnd1,str1,"aa",MB_OK);
-
-      w_close_subwin(get_win_ptr_grp_ptr(i,0));
-
-//      bw_dialog1.tst_mem();
-
     }
   }
+
+  w_close_subwin(p1);
 
   return(0);
 }
@@ -516,11 +649,14 @@ int bw_win::w_close_win(int p1)
 int bw_win::w_close_subwin(int p1)
 {
   int  exist;
-  int  i,j,k,l,m,n,o,p,q,r,s,t;
-  int  p10;
+  int  i,j,j2,k,l,m,n,o,p,q,r,s,t,u;
+  int  p10,p11,p12;
   char sfn1[FLD_NAME_SIZE];
   char stn1[FN_SIZE];
   char smv1[SMG_SIZE];
+  char str1[300];
+
+  //bw_getread1.deb_record("******new operate");
 
   // must answer
   if (bw_xbase1.win_answer!=0)
@@ -531,16 +667,18 @@ int bw_win::w_close_subwin(int p1)
 
   bw_xbase1.win_answer=1;
 
-  i=get_win_ptr_grp_id(p1);
+  i=p1;
 
 
 
   /* close database */  
   // lock msg
-  for (k=get_win_ptr_grp_ptr(i,0);k<=get_win_ptr_grp_ptr(i,2);k++)
-  {
-	  set_win_msgboxlock(k,1);
-  }
+  set_win_msgboxlock(i,1);
+
+
+
+  //bw_getread1.deb_record("------before close");
+  //bw_fldstru1.tst_stru2();
 
 
 
@@ -555,269 +693,278 @@ int bw_win::w_close_subwin(int p1)
   }
 
 
+
+  //bw_getread1.deb_record("======after close");
+  //bw_fldstru1.tst_stru2();
+
+
+
   // unlock msg
-  for (k=get_win_ptr_grp_ptr(i,0);k<=get_win_ptr_grp_ptr(i,2);k++)
-  {
-	  set_win_msgboxlock(k,0);
-  }
+  set_win_msgboxlock(i,0);
 
 
 
-  /* remove mem var */
+  //bw_getread1.deb_record("------before close");
+  //bw_buttonvar1.tst_button2();
+  //bw_link1.tst_link1_lkchar();
+  //bw_link1.tst_link5_svar();
 
-  bw_menuvar1.w_dele_menu(get_win_ptr_grp_ptr(i,0),get_win_ptr_grp_ptr(i,2));
 
-  //bw_choose1.w_dele_choose(get_win_ptr_grp_ptr(i,0),get_win_ptr_grp_ptr(i,2));
-  //bw_switch1.w_dele_switch(get_win_ptr_grp_ptr(i,0),get_win_ptr_grp_ptr(i,2));
+
+  /* remove memory var */
+  // notice
+  bw_buttonvar1.w_dele_button(i);
+
+  //bw_chkbox1.w_dele_chkbox(get_win_ptr_grp_ptr(i,0),get_win_ptr_grp_ptr(i,2));
+  //bw_rabox1.w_dele_rabox(get_win_ptr_grp_ptr(i,0),get_win_ptr_grp_ptr(i,2));
   //bw_dialog1.w_dele_dialog(get_win_ptr_grp_ptr(i,0),get_win_ptr_grp_ptr(i,2));
 
-  bw_choose1.w_clr_recvar_chs(get_win_ptr_grp_ptr(i,0));
-  bw_switch1.w_clr_recvar_radio(get_win_ptr_grp_ptr(i,0));
-  //bw_dialog1.w_clr_recvar_dialog(get_win_ptr_grp_ptr(i,0));
+  bw_chkbox1.w_clr_recvar_chkbox(i);
+  bw_rabox1.w_clr_recvar_rabox(i);
+  //bw_dialog1.w_clr_recvar_dialog(i);
 
-  bw_link1.w_dele_svar(get_win_ptr_grp_ptr(i,0),get_win_ptr_grp_ptr(i,2));
+  // notice 
+  bw_link1.w_dele_svar(i);
+  bw_link1.w_dele_link(i);
 
-  bw_link1.w_dele_link(get_win_ptr_grp_ptr(i,0),get_win_ptr_grp_ptr(i,2));
 
+
+  //bw_getread1.deb_record("======after close");
+  //bw_buttonvar1.tst_button2();
+  //bw_link1.tst_link1_lkchar();
+  //bw_link1.tst_link5_svar();
+
+
+
+/*
   for (k=get_win_ptr_grp_ptr(i,0);k<=get_win_ptr_grp_ptr(i,2);k++)
   {
-    j=get_win_ptr_get_rd(k);
-    bw_getread1.get_read_logout(j);
+*/
+    //k=i;
+    //j=get_win_ptr_get_rd(k);
+    //bw_getread1.get_read_logout(j);
+/*
   }
+*/
 
   w_dele_win_ptr_wins_dbf(p1);
 
-  for (j=get_win_ptr_grp_ptr(i,0);j<=get_win_ptr_grp_ptr(i,2);j++)
+  /* notice */
+/*
+  for (j=get_win_ptr_grp_ptr(i,0);j<=get_win_ptr_grp_ptr(i,5);j++)
   {
+*/
+    j=i;
     SetFocus(bw_main1.win_main_hnd);
+    k=get_win_h_w_ptr(j,0);
 
-    k=get_win_h_w_ptr(i,0)+j-get_win_ptr_grp_ptr(i,0);
     DestroyWindow(get_win_hnd(k));
+/*
   }
+*/
+  //SetFocus(bw_main1.win_main_hnd);
 
-  SetFocus(bw_main1.win_main_hnd);
 
-  exist=0;
 
-  for (j=WIN_NUM-1;j>=1;j--)
+  //bw_getread1.deb_record("------before close");
+  //tst_win1_fld();
+
+
+
+  q=get_win_ptr_fld_in_win(i,1)-get_win_ptr_fld_in_win(i,0)+1;
+  if (q<0) q=0;
+
+  p12=get_win_ptr_fld_in_win(i,1);  // last fld ptr
+
+  n=1/*get_win_ptr_grp_ptr(i,2)-get_win_ptr_grp_ptr(i,0)+1*/;
+
+  if (q>0)
   {
-    if (get_win_ptr_win_mark(j)!=0)
+    for (j=i+1;j<WIN_NUM;j++)
     {
-      exist=1;
-      break;
+      if (get_win_ptr_grp_id(j)!=0)
+      {
+        //l=j/*get_win_ptr_grp_id(j)*/;
+
+        s=get_win_ptr_fld_in_win(j/*get_win_ptr_grp_ptr(i,2)*/,0);
+        r=get_win_ptr_fld_in_win(j/*get_win_ptr_grp_ptr(l,2)*/,1);
+
+        if (p12<r) p12=r;
+
+        for (k=s;k<=r;k++)
+        {
+          get_t_fldname(k,sfn1,FLD_NAME_SIZE);
+          set_t_fldname(k-q,sfn1,FLD_NAME_SIZE);
+          set_t_fldtype(k-q,get_t_fldtype(k));
+          set_t_fldbase(k-q,get_t_fldbase(k));
+          set_t_fldseri(k-q,get_t_fldseri(k));
+          set_t_fldlen( k-q,get_t_fldlen(k));
+          set_t_flddec( k-q,get_t_flddec(k));
+          set_t_fldedt( k-q,get_t_fldedt(k));
+        }
+      }
+    }
+
+    for (k=p12-q+1;k<=p12;k++)
+    {
+      set_c_t_fldname(k,0,0);
+      set_t_fldtype(k,0);
+      set_t_fldbase(k,0);
+      set_t_fldseri(k,0);
+      set_t_fldlen( k,0);
+      set_t_flddec( k,0);
+      set_t_fldedt( k,0);
     }
   }
 
-  if (exist==0)
+
+
+  //bw_getread1.deb_record("======after close");
+  //tst_win1_fld();
+
+
+
+  //bw_getread1.deb_record("------before close");
+  //tst_win2_fld_in_win();
+
+
+
+  t=1/*get_win_h_w_ptr(i,1)-get_win_h_w_ptr(i,0)+*/;
+
+
+  // notice
+  p10=i/*get_win_ptr_grp_ptr(l,2)*/; // last window ptr
+  p11=get_win_h_w_ptr(i,5);          // last ci ptr
+
+  for (k=i+1;k<WIN_NUM;k++)
   {
-    bw_xbase1.win_answer=0;
-    return(1);
-  }
-
-  l=get_win_ptr_grp_id(j);
-
-  n=get_win_ptr_grp_ptr(i,2)-get_win_ptr_grp_ptr(i,0)+1;
-
-  q=0;
-
-  for (k=get_win_ptr_grp_ptr(i,0);k<=get_win_ptr_grp_ptr(i,2);k++)
-  {
-    q=q+get_win_ptr_fld_in_win(k,1)-get_win_ptr_fld_in_win(k,0)+1;
-  }
-
-  r=get_win_ptr_fld_in_win(get_win_ptr_grp_ptr(l,2),1);
-
-  s=get_win_ptr_fld_in_win(get_win_ptr_grp_ptr(i,2),1)+1;
-
-  for (k=s;k<=r;k++)
-  {
-    get_t_fldname(k,sfn1,FLD_NAME_SIZE);
-    set_t_fldname(k-q,sfn1,FLD_NAME_SIZE);
-    set_t_fldtype(k-q,get_t_fldtype(k));
-    set_t_fldbase(k-q,get_t_fldbase(k));
-    set_t_fldseri(k-q,get_t_fldseri(k));
-    set_t_fldlen(k-q,get_t_fldlen(k));
-    set_t_flddec(k-q,get_t_flddec(k));
-    set_t_fldedt(k-q,get_t_fldedt(k));
-  }
-
-  for (k=r-q+1;k<=r;k++)
-  {
-    set_c_t_fldname(k,0,0);
-    set_t_fldbase(k,0);
-    set_t_fldseri(k,0);
-    set_t_fldlen(k,0);
-    set_t_flddec(k,0);
-    set_t_fldedt(k,0);
-    set_t_fldtype(k,0);
-  }
-
-  t=get_win_h_w_ptr(i,1)-get_win_h_w_ptr(i,0)+1;
-  if (get_win_h_w_ptr(i,5)==0)
-     t=t;
-  else
-     t=t+get_win_h_w_ptr(i,5)-get_win_h_w_ptr(i,4)+1;
-
-  p10=get_win_ptr_grp_ptr(l,2);
-
-  for (k=i+1;k<=l;k++)
-  {
-    for (m=get_win_ptr_grp_ptr(k,0);m<=get_win_ptr_grp_ptr(k,2);m++)
+    if (get_win_ptr_grp_id(k)!=0)
     {
-      set_win_ptr_fld_in_win(m-n,0,get_win_ptr_fld_in_win(m,0)-q);
-      set_win_ptr_fld_in_win(m-n,1,get_win_ptr_fld_in_win(m,1)-q);
-      set_win_ptr_grp_id(m-n,get_win_ptr_grp_id(m)-1);
-      set_win_ptr_win_mark(m-n,m-n);
+      if (p10<k) p10=k;
+      if (p11<get_win_h_w_ptr(k,5)) p11=get_win_h_w_ptr(k,5);
+
+      set_win_ptr_fld_in_win(k-1,0,get_win_ptr_fld_in_win(k,0)-q);
+      set_win_ptr_fld_in_win(k-1,1,get_win_ptr_fld_in_win(k,1)-q);
 
       for (o=0;o<STRU_NUM;o++)
       {
-	set_win_ptr_wins_dbf(o,m-n,get_win_ptr_wins_dbf(o,m));
+	set_win_ptr_wins_dbf(o,k-1,get_win_ptr_wins_dbf(o,k));
+
+        bw_xbase1.set_win_recno(o,k-1,0,bw_xbase1.get_win_recno(o,k,0));
+        bw_xbase1.set_win_recno(o,k-1,1,bw_xbase1.get_win_recno(o,k,1));
       }
 
-      set_win_ptr_get_rd(m-n,get_win_ptr_get_rd(m));
+      //set_win_ptr_get_rd(k-1,get_win_ptr_get_rd(k));
 
-      set_win_linep(m-n,0,get_win_linep(m,0));
-      set_win_linep(m-n,1,get_win_linep(m,1));
+      set_win_linep(k-1,0,get_win_linep(k,0));
+      set_win_linep(k-1,1,get_win_linep(k,1));
 
-      set_win_con(m-n,0,get_win_con(m,0));
-      set_win_con(m-n,1,get_win_con(m,1));
+      set_win_con(k-1,0,get_win_con(k,0));
+      set_win_con(k-1,1,get_win_con(k,1));
 
-      bw_dialog1.set_c_win_mv_getv(m,SMG_SIZE-1,0);
+      bw_dialog1.set_c_win_mv_getv(k,SMG_SIZE-1,0);
 
-      bw_dialog1.get_win_mv_getv(m,smv1,SMG_SIZE);
-      bw_dialog1.set_win_mv_getv(m-n,smv1,SMG_SIZE);
+      bw_dialog1.get_win_mv_getv(k,smv1,SMG_SIZE);
+      bw_dialog1.set_win_mv_getv(k-1,smv1,SMG_SIZE);
 
-      bw_dialog1.set_win_mv_getp(m-n,bw_dialog1.getv_win_mv_getp(m));
+      bw_dialog1.set_win_mv_getp(k-1,bw_dialog1.getv_win_mv_getp(k));
 
-      set_win_h_up_ptr(m-n,0,get_win_h_up_ptr(m,0)-t);
-      set_win_h_up_ptr(m-n,1,get_win_h_up_ptr(m,1)-t);
+      set_win_phh(k-1,get_win_phh(k));
 
-      set_win_phh(m-n,get_win_phh(m));
-
-      get_win_window_name(m,stn1,FN_SIZE);
-      set_win_window_name(m-n,stn1,FN_SIZE);
-      get_win_find_name(m,stn1,FN_SIZE);
-      set_win_find_name(m-n,stn1,FN_SIZE);
+      get_win_window_name(  k,stn1,FN_SIZE);
+      set_win_window_name(k-1,stn1,FN_SIZE);
+      get_win_find_name(    k,stn1,FN_SIZE);
+      set_win_find_name(  k-1,stn1,FN_SIZE);
 
       for (o=1;o<LIN_NUM;o++)
       {
 	for (p=1;p<COL_NUM;p++)
 	{
-	  bw_buff1.set_t3_winfile(m-n,o,p,bw_buff1.get_t3_winfile(m,o,p));
-	  if (bw_buff1.get_t3_linecol(m,o,p)!=0)
-	    bw_buff1.set_t3_linecol(m-n,o,p,bw_buff1.get_t3_linecol(m,o,p)-q);
+	  bw_buff1.set_t3_winfile(k-1,o,p,bw_buff1.get_t3_winfile(k,o,p));
+	  if (bw_buff1.get_t3_linecol(k,o,p)!=0)
+	    bw_buff1.set_t3_linecol(k-1,o,p,bw_buff1.get_t3_linecol(k,o,p)-q);
 	  else
-	    bw_buff1.set_t3_linecol(m-n,o,p,0);
+	    bw_buff1.set_t3_linecol(k-1,o,p,0);
 	}
       }
     }
 
-    set_win_ptr_grp_ptr(k-1,0,get_win_ptr_grp_ptr(k,0)-n);
-    set_win_ptr_grp_ptr(k-1,1,get_win_ptr_grp_ptr(k,1)-n);
-    set_win_ptr_grp_ptr(k-1,2,get_win_ptr_grp_ptr(k,2)-n);
-
-    if (k==l)
-    {
-      set_win_ptr_grp_ptr(l,0,0);
-      set_win_ptr_grp_ptr(l,1,0);
-      set_win_ptr_grp_ptr(l,2,0);
-    }
   }
 
-  for (k=p10-n+1;k<=p10;k++)
+/*
+  for (k=p10;k<=p10;k++)
   {
+*/
+    k=p10;
+
+    set_win_phh(k,0);
+
     set_win_ptr_fld_in_win(k,0,0);
     set_win_ptr_fld_in_win(k,1,0);
-    set_win_ptr_win_mark(k,0);
-    set_win_ptr_grp_id(k,0);
+    //set_win_ptr_win_mark(k,0);
+    //set_win_ptr_grp_id(k,0);
 
     for (o=0;o<STRU_NUM;o++)
     {
       set_win_ptr_wins_dbf(o,k,0);
+
+      bw_xbase1.set_win_recno(o,k,0,0);
+      bw_xbase1.set_win_recno(o,k,1,0);
     }
 
-    set_win_ptr_get_rd(k,0);
-  }
-
-  if (i==l)
-  {
-    set_win_ptr_grp_ptr(l,0,0);
-    set_win_ptr_grp_ptr(l,1,0);
-    set_win_ptr_grp_ptr(l,2,0);
-  }
-
-  /* segment */
-
-  j=get_win_h_w_ptr(i,1)-get_win_h_w_ptr(i,0)+1;
-  if (get_win_h_w_ptr(i,5)==0)
-    j=j;
-  else
-    j=j+get_win_h_w_ptr(i,5)-get_win_h_w_ptr(i,4)+1;
-
-  if (get_win_h_w_ptr(i,5)==0) m=get_win_h_w_ptr(i,4);
-  else m=get_win_h_w_ptr(i,5)+1;
-
-  if (get_win_h_w_ptr(l,5)==0) o=get_win_h_w_ptr(l,1);
-  else o=get_win_h_w_ptr(l,5);
+    //set_win_ptr_get_rd(k,0);
 /*
-  sprintf(str,"j=%d,hptr30=%d,hptr31=%d,i=%d,l=%d,m=%d,o=%d,"
-				       ,j
-				       ,win_h_w_ptr[i][0]
-				       ,win_h_w_ptr[i][1]
-				       ,i,l,m,o);
-  MessageBox(bw_main1.win_hwnd1,str,"aa",MB_OK);
+  }
 */
-  for (k=i+1;k<=l;k++)
-  {
-    if (get_win_h_w_ptr(k,0)>=j) set_win_h_w_ptr(k-1,0,get_win_h_w_ptr(k,0)-j);
-    else                  set_win_h_w_ptr(k-1,0,0);
-    if (get_win_h_w_ptr(k,1)>=j) set_win_h_w_ptr(k-1,1,get_win_h_w_ptr(k,1)-j);
-    else                  set_win_h_w_ptr(k-1,1,0);
-    if (get_win_h_w_ptr(k,2)>=j) set_win_h_w_ptr(k-1,2,get_win_h_w_ptr(k,2)-j);
-    else                  set_win_h_w_ptr(k-1,2,0);
-    if (get_win_h_w_ptr(k,4)>=j) set_win_h_w_ptr(k-1,4,get_win_h_w_ptr(k,4)-j);
-    else                  set_win_h_w_ptr(k-1,4,0);
-    if (get_win_h_w_ptr(k,5)>=j) set_win_h_w_ptr(k-1,5,get_win_h_w_ptr(k,5)-j);
-    else                  set_win_h_w_ptr(k-1,5,0);
-    if (get_win_h_w_ptr(k,6)>=j) set_win_h_w_ptr(k-1,6,get_win_h_w_ptr(k,6)-j);
-    else                  set_win_h_w_ptr(k-1,6,0);
 
-    if (k==l)
+
+
+  //bw_getread1.deb_record("======after close");
+  //tst_win2_fld_in_win();
+
+
+
+  //bw_getread1.deb_record("------before close");
+  //tst_win6_ci_ptr();
+
+
+
+  if (i<=1) j2=get_win_h_w_ptr(i,5)-0+1;                    // how many ci in current window
+  else      j2=get_win_h_w_ptr(i,5)-get_win_h_w_ptr(i,0)+1;
+
+  for (u=i+1;u<WIN_NUM;u++)
+  {
+    if (get_win_ptr_grp_id(u)!=0)
     {
-      set_win_h_w_ptr(k,0,0);
-      set_win_h_w_ptr(k,1,0);
-      set_win_h_w_ptr(k,2,0);
-      set_win_h_w_ptr(k,3,0);
-      set_win_h_w_ptr(k,4,0);
-      set_win_h_w_ptr(k,5,0);
-      set_win_h_w_ptr(k,6,0);
+      m=get_win_h_w_ptr(u,0);
+      o=get_win_h_w_ptr(u,5);
+
+      for (k=m;k<=o;k++)
+      {
+        /* notice */
+        if (get_win_h_ci_ptr(k,4)!=0)
+        {
+          //SetWindowLong(get_win_hnd(k),GWL_ID,k-j2);
+        }
+
+        if (get_win_h_ci_ptr(k,0)>=1) set_win_h_ci_ptr(k-j2,0,get_win_h_ci_ptr(k,0)-1);  /* ci's win num,x,y,hnd num,main hnd */
+        set_win_h_ci_ptr(k-j2,1,get_win_h_ci_ptr(k,1));
+        set_win_h_ci_ptr(k-j2,2,get_win_h_ci_ptr(k,2));
+        set_win_h_ci_ptr(k-j2,3,k-j2);
+
+        if (get_win_h_ci_ptr(k,4)<=0) set_win_h_ci_ptr(k-j2,4,0);
+        else set_win_h_ci_ptr(k-j2,4,get_win_h_ci_ptr(k,4)-j2);
+
+        set_win_hnd(k-j2,get_win_hnd(k));
+
+        set_win_proc(k-j2,get_win_proc(k));
+      }
     }
   }
 
-  for (k=m;k<=o;k++)
+  for (k=p11-j2+1;k<=p11;k++)
   {
-    if (get_win_h_ci_ptr(k,4)!=0)
-    {
-      //SetWindowLong(get_win_hnd(k),GWL_ID,k-j);
-    }
-
-    if (get_win_h_ci_ptr(k,0)>=n) set_win_h_ci_ptr(k-j,0,get_win_h_ci_ptr(k,0)-n);  /* win num,x,y,hnd num,main hnd */
-    set_win_h_ci_ptr(k-j,1,get_win_h_ci_ptr(k,1));
-    set_win_h_ci_ptr(k-j,2,get_win_h_ci_ptr(k,2));
-    set_win_h_ci_ptr(k-j,3,k-j);
-
-    if (get_win_h_ci_ptr(k,4)==0) set_win_h_ci_ptr(k-j,4,0);
-    else set_win_h_ci_ptr(k-j,4,get_win_h_ci_ptr(k,4)-j);
-
-    set_win_hnd(k-j,get_win_hnd(k));
-
-    set_win_proc(k-j,get_win_proc(k));
-
-  }
-
-  for (k=o-j+1;k<=o;k++)
-  {
-    set_win_h_ci_ptr(k,0,0);  /* win num,x,y,hnd num,main hnd */
+    set_win_h_ci_ptr(k,0,0);  /* ci's win num,x,y,hnd num,main hnd */
     set_win_h_ci_ptr(k,1,0);
     set_win_h_ci_ptr(k,2,0);
     set_win_h_ci_ptr(k,3,0);
@@ -826,22 +973,85 @@ int bw_win::w_close_subwin(int p1)
     set_win_hnd(k,0);
   }
 
-  if (i==l)
+
+
+  for (k=i+1;k<WIN_NUM;k++)
   {
-    set_win_h_w_ptr(i,0,0);
-    set_win_h_w_ptr(i,1,0);
-    set_win_h_w_ptr(i,2,0);
-    set_win_h_w_ptr(i,3,0);
-    set_win_h_w_ptr(i,4,0);
-    set_win_h_w_ptr(i,5,0);
-    set_win_h_w_ptr(i,6,0);
+    if (get_win_ptr_grp_id(k)!=0)
+    {
+      if (get_win_h_w_ptr(k,0)>=j2) set_win_h_w_ptr(k-1,0,get_win_h_w_ptr(k,0)-j2);
+      else                         set_win_h_w_ptr(k-1,0,0);
+      if (get_win_h_w_ptr(k,5)>=j2) set_win_h_w_ptr(k-1,5,get_win_h_w_ptr(k,5)-j2);
+      else                         set_win_h_w_ptr(k-1,5,0);
+    }
   }
 
-  /* end mem var move */
+  set_win_h_w_ptr(p10,0,0);
+  set_win_h_w_ptr(p10,5,0);
 
-  win_ptr_new_win=win_ptr_new_win-n;
 
-  win_h_w_total_ptr=win_h_w_total_ptr-j;
+
+  //bw_getread1.deb_record("======after close");
+  //tst_win6_ci_ptr();
+
+
+
+  k=get_win_ptr_get_rd(i);  // first ptr
+  o=k;
+
+  for (m=k+1;m<GET_NUM;m++)
+  {
+    if (bw_getread1.get_smg_read_id(i)!=0) o=m; // last ptr
+    else break;
+  }
+
+  if (o<=k) bw_getread1.get_read_logout(o);
+  else
+  {
+    for (j=k+1;j<=o;j++)
+    {
+      bw_getread1.set_smg_line(j-1,bw_getread1.get_smg_line(j));
+      bw_getread1.set_smg_colu(j-1,bw_getread1.get_smg_colu(j));
+      bw_getread1.set_smg_type(j-1,bw_getread1.get_smg_type(j));
+      bw_getread1.set_smg_dlen(j-1,bw_getread1.get_smg_dlen(j));
+      bw_getread1.set_smg_dlen2(j-1,bw_getread1.get_smg_dlen2(j));
+      bw_getread1.set_smg_ddec(j-1,bw_getread1.get_smg_ddec(j));
+      bw_getread1.set_smg_link(j-1,bw_getread1.get_smg_link(j));
+      bw_getread1.set_smg_color(j-1,bw_getread1.get_smg_color(j));
+      bw_getread1.set_smg_posi(j-1,bw_getread1.get_smg_posi(j));
+      bw_getread1.set_smg_modi(j-1,bw_getread1.get_smg_modi(j));
+
+      bw_getread1.get_smg_atte(j  ,str1,300);
+      bw_getread1.set_smg_atte(j-1,str1,300);
+
+      bw_getread1.get_smg_string(j  ,str1,300);
+      bw_getread1.set_smg_string(j-1,str1,300);
+    }
+
+    bw_getread1.get_read_logout(o);
+  }
+
+  for (j=i+1;j<WIN_NUM;j++)
+  {
+    o=get_win_ptr_get_rd(j);
+    if (o>0) set_win_ptr_get_rd(j-1,o-1);
+  }
+
+  set_win_ptr_get_rd(WIN_NUM-1,0);
+
+
+
+  set_win_ptr_grp_id(p10,0);
+
+
+
+  /* end of memory var move */
+
+  win_ptr_new_win--;
+
+  if (win_ptr_new_win-1>0) SetFocus(get_win_phh(win_ptr_new_win-1));
+
+  win_h_ci_total_ptr=win_h_ci_total_ptr-j2;
 
   bw_xbase1.win_answer=0;
 
@@ -1172,7 +1382,11 @@ int bw_win::w_read_winfile(char *p_fn,int p_fn_size)
         li=bw_inkey1.str2long(tmps9,FN_SIZE);
 	set_win_timer(k,li);
       }
-      if (state3==1) break; /* screenseg */
+      if (state3==1)        /* screenseg */
+      {
+        ends=1;
+        break; 
+      }
       if (state4==1)        /* endscreen */
       {
 	ends=1;
@@ -1768,7 +1982,7 @@ int bw_win::w_field_info1(int p_pagecnt,int mark) // get field info
   }
   else ptr1=get_win_ptr_fld_in_win(p_pagecnt,0)-1;
 
-  win_h_ci_total_ptr=win_h_w_total_ptr;
+  //win_h_ci_total_ptr=win_h_w_total_ptr;
 
   ptr3=win_h_ci_total_ptr;
 
@@ -1972,18 +2186,6 @@ int bw_win::w_field_info1(int p_pagecnt,int mark) // get field info
       set_t_fldlen(ptr1,j-1-p6);
     }
   }
-/*
-  win_tproc=(FARPROC)MakeProcInstance((FARPROC)w_menu_ci_wp,bw_main1.win_ins);
-  for (i=ptr3;i<=get_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),5);i++)
-  {
-    set_win_proc(i,(FARPROC)GetWindowLong(get_win_hnd(i),GWL_WNDPROC));
-    SetWindowLong(get_win_hnd(i),GWL_WNDPROC,(LPARAM)win_tproc);
-  }
-*/
-  set_win_h_up_ptr(p_pagecnt,0,get_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),6));
-  set_win_h_up_ptr(p_pagecnt,1,get_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),5));
-
-  win_h_w_total_ptr=win_h_ci_total_ptr;
 
   set_win_ptr_fld_in_win(p_pagecnt,1,ptr1);
 
@@ -2031,10 +2233,10 @@ int bw_win::w_cre_ci_button(int p_pagecnt,char *p_s1,int p_s1_size,int p6,int p7
   }
   else
   {
-    hnd=CreateWindow("button",s3
+    hnd=CreateWindow("button",p_s1
 		      ,BS_PUSHBUTTON|WS_CHILD|WS_VISIBLE
 		      ,(int)((p6-p8)*bw_main1.win_xchar)
-		      ,(int)((p9-p7)*bw_main1.win_ychar)
+		      ,(int)((p9-p7)*bw_main1.win_ychar-3)
 		      ,(int)((3+strlen(p_s1))*bw_main1.win_xchar)
 		      ,(int)(bw_main1.win_ychar+6)
 		      ,bw_main1.win_hwnd,(HMENU)win_h_ci_total_ptr
@@ -2044,12 +2246,13 @@ int bw_win::w_cre_ci_button(int p_pagecnt,char *p_s1,int p_s1_size,int p6,int p7
   set_win_hnd(win_h_ci_total_ptr,hnd);
   if (get_win_hnd(win_h_ci_total_ptr)==NULL) bw_main1.win_cre_ok=0;
 
-  set_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),5,win_h_ci_total_ptr);
+  set_win_h_w_ptr(p_pagecnt/*get_win_ptr_grp_id(p_pagecnt)*/,5,win_h_ci_total_ptr);
+
   set_win_h_ci_ptr(win_h_ci_total_ptr,0,p_pagecnt);
   set_win_h_ci_ptr(win_h_ci_total_ptr,1,p6);
   set_win_h_ci_ptr(win_h_ci_total_ptr,2,p9);
   set_win_h_ci_ptr(win_h_ci_total_ptr,3,win_h_ci_total_ptr);
-  set_win_h_ci_ptr(win_h_ci_total_ptr,4,p_pagecnt-get_win_ptr_grp_ptr(get_win_ptr_grp_id(p_pagecnt),0)+get_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),0));
+  set_win_h_ci_ptr(win_h_ci_total_ptr,4,/*p_pagecnt-get_win_ptr_grp_ptr(get_win_ptr_grp_id(p_pagecnt),0)+*/get_win_h_w_ptr(p_pagecnt/*get_win_ptr_grp_id(p_pagecnt)*/,0));
 
   win_h_ci_total_ptr++;
 
@@ -2087,12 +2290,13 @@ int bw_win::w_cre_ci_edit(int p_pagecnt,int p6,int p7,int p8,int p9)
   set_win_hnd(win_h_ci_total_ptr,hnd);
   if (get_win_hnd(win_h_ci_total_ptr)==NULL) bw_main1.win_cre_ok=0;
 
-  set_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),5,win_h_ci_total_ptr);
+  set_win_h_w_ptr(p_pagecnt/*get_win_ptr_grp_id(p_pagecnt)*/,5,win_h_ci_total_ptr);
+
   set_win_h_ci_ptr(win_h_ci_total_ptr,0,p_pagecnt);
   set_win_h_ci_ptr(win_h_ci_total_ptr,1,p6);
   set_win_h_ci_ptr(win_h_ci_total_ptr,2,p9);
   set_win_h_ci_ptr(win_h_ci_total_ptr,3,win_h_ci_total_ptr);
-  set_win_h_ci_ptr(win_h_ci_total_ptr,4,p_pagecnt-get_win_ptr_grp_ptr(get_win_ptr_grp_id(p_pagecnt),0)+get_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),0));
+  set_win_h_ci_ptr(win_h_ci_total_ptr,4,/*p_pagecnt-get_win_ptr_grp_ptr(get_win_ptr_grp_id(p_pagecnt),0)+*/get_win_h_w_ptr(p_pagecnt/*get_win_ptr_grp_id(p_pagecnt)*/,0));
 
   win_h_ci_total_ptr++;
 
@@ -2134,12 +2338,13 @@ int bw_win::w_cre_ci_radio(int p_pagecnt,int p6,int p7,int p8,int p9,char *p_s1,
   set_win_hnd(win_h_ci_total_ptr,hnd);
   if (get_win_hnd(win_h_ci_total_ptr)==NULL) bw_main1.win_cre_ok=0;
 
-  set_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),5,win_h_ci_total_ptr);
+  set_win_h_w_ptr(p_pagecnt/*get_win_ptr_grp_id(p_pagecnt)*/,5,win_h_ci_total_ptr);
+
   set_win_h_ci_ptr(win_h_ci_total_ptr,0,p_pagecnt);
   set_win_h_ci_ptr(win_h_ci_total_ptr,1,p6);
   set_win_h_ci_ptr(win_h_ci_total_ptr,2,p9);
   set_win_h_ci_ptr(win_h_ci_total_ptr,3,win_h_ci_total_ptr);
-  set_win_h_ci_ptr(win_h_ci_total_ptr,4,p_pagecnt-get_win_ptr_grp_ptr(get_win_ptr_grp_id(p_pagecnt),0)+get_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),0));
+  set_win_h_ci_ptr(win_h_ci_total_ptr,4,/*p_pagecnt-get_win_ptr_grp_ptr(get_win_ptr_grp_id(p_pagecnt),0)+*/get_win_h_w_ptr(p_pagecnt/*get_win_ptr_grp_id(p_pagecnt)*/,0));
 
   win_h_ci_total_ptr++;
 
@@ -2181,12 +2386,13 @@ int bw_win::w_cre_ci_check(int p_pagecnt,int p6,int p7,int p8,int p9,char *p_s1,
   set_win_hnd(win_h_ci_total_ptr,hnd);
   if (get_win_hnd(win_h_ci_total_ptr)==NULL) bw_main1.win_cre_ok=0;
 
-  set_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),5,win_h_ci_total_ptr);
+  set_win_h_w_ptr(p_pagecnt/*get_win_ptr_grp_id(p_pagecnt)*/,5,win_h_ci_total_ptr);
+
   set_win_h_ci_ptr(win_h_ci_total_ptr,0,p_pagecnt);
   set_win_h_ci_ptr(win_h_ci_total_ptr,1,p6);
   set_win_h_ci_ptr(win_h_ci_total_ptr,2,p9);
   set_win_h_ci_ptr(win_h_ci_total_ptr,3,win_h_ci_total_ptr);
-  set_win_h_ci_ptr(win_h_ci_total_ptr,4,p_pagecnt-get_win_ptr_grp_ptr(get_win_ptr_grp_id(p_pagecnt),0)+get_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),0));
+  set_win_h_ci_ptr(win_h_ci_total_ptr,4,/*p_pagecnt-get_win_ptr_grp_ptr(get_win_ptr_grp_id(p_pagecnt),0)+*/get_win_h_w_ptr(p_pagecnt/*get_win_ptr_grp_id(p_pagecnt)*/,0));
 
   win_h_ci_total_ptr++;
 
@@ -2218,7 +2424,7 @@ int bw_win::w_cre_win_button(int p_pagecnt,int mark) // create button ci
   }
   else ptr1=get_win_ptr_fld_in_win(p_pagecnt,0)-1;
 
-  win_h_ci_total_ptr=win_h_w_total_ptr;
+  //win_h_ci_total_ptr=win_h_w_total_ptr;
 
   ptr3=win_h_ci_total_ptr;
 
@@ -2421,19 +2627,15 @@ int bw_win::w_cre_win_button(int p_pagecnt,int mark) // create button ci
       }
     }
   }
+/*
+  win_tproc=(FARPROC)MakeProcInstance((FARPROC)w_menu_ci_wp,bw_main1.win_ins);
 
-  //win_tproc=(FARPROC)MakeProcInstance((FARPROC)w_menu_ci_wp,bw_main1.win_ins);
-  for (i=ptr3;i<=get_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),5);i++)
+  for (i=ptr3;i<=get_win_h_w_ptr(p_pagecnt*//*get_win_ptr_grp_id(p_pagecnt)*//*,5);i++)
   {
-    //set_win_proc(i,(FARPROC)GetWindowLong(get_win_hnd(i),GWL_WNDPROC));
-    //SetWindowLong(get_win_hnd(i),GWL_WNDPROC,(LPARAM)win_tproc);
+    set_win_proc(i,(FARPROC)GetWindowLong(get_win_hnd(i),GWL_WNDPROC));
+    SetWindowLong(get_win_hnd(i),GWL_WNDPROC,(LPARAM)win_tproc);
   }
-
-  //set_win_h_up_ptr(p_pagecnt,0,get_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),6));
-  set_win_h_up_ptr(p_pagecnt,1,get_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),5));
-
-  win_h_w_total_ptr=win_h_ci_total_ptr;
-
+*/
   return(0);
 }
 
@@ -2600,15 +2802,12 @@ int bw_win::w_cre_win_edit(int p_pagecnt,int mark) // create edit ci
   }
 
   //win_tproc=(FARPROC)MakeProcInstance((FARPROC)w_tab_ci_wp,bw_main1.win_ins);
-  for (i=hptr1;i<=get_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),5);i++)
+
+  for (i=hptr1;i<=get_win_h_w_ptr(p_pagecnt/*get_win_ptr_grp_id(p_pagecnt)*/,5);i++)
   {
     //set_win_proc(i,(FARPROC)GetWindowLong(get_win_hnd(i),GWL_WNDPROC));
     //SetWindowLong(get_win_hnd(i),GWL_WNDPROC,(LPARAM)win_tproc);
   }
-
-  set_win_h_up_ptr(p_pagecnt,1,get_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),5));
-
-  win_h_w_total_ptr=win_h_ci_total_ptr;
 
   return(0);
 }
@@ -2756,20 +2955,17 @@ int bw_win::w_cre_win_radio(int p_pagecnt,int mark) // create radio ci
   }
 
   //win_tproc=(FARPROC)MakeProcInstance((FARPROC)w_menu_ci_wp,bw_main1.win_ins);
-  for (i=hptr1;i<=get_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),5);i++)
+
+  for (i=hptr1;i<=get_win_h_w_ptr(p_pagecnt/*get_win_ptr_grp_id(p_pagecnt)*/,5);i++)
   {
     //set_win_proc(i,(FARPROC)GetWindowLong(get_win_hnd(i),GWL_WNDPROC));
     //SetWindowLong(get_win_hnd(i),GWL_WNDPROC,(LPARAM)win_tproc);
   }
 
-  set_win_h_up_ptr(p_pagecnt,1,get_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),5));
-
-  win_h_w_total_ptr=win_h_ci_total_ptr;
-
   return(0);
 }
 
-int bw_win::w_cre_win_check(int p_pagecnt,int mark) // create choose ci
+int bw_win::w_cre_win_check(int p_pagecnt,int mark) // create chkbox ci
 { 
   int  p1,p2,p4,p5,p6,p7,p8;
   int  state1;
@@ -2912,15 +3108,12 @@ int bw_win::w_cre_win_check(int p_pagecnt,int mark) // create choose ci
   }
 
   //win_tproc=(FARPROC)MakeProcInstance((FARPROC)w_menu_ci_wp,bw_main1.win_ins);
-  for (i=hptr1;i<=get_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),5);i++)
+
+  for (i=hptr1;i<=get_win_h_w_ptr(p_pagecnt/*get_win_ptr_grp_id(p_pagecnt)*/,5);i++)
   {
     //set_win_proc(i,(FARPROC)GetWindowLong(get_win_hnd(i),GWL_WNDPROC));
     //SetWindowLong(get_win_hnd(i),GWL_WNDPROC,(LPARAM)win_tproc);
   }
-
-  set_win_h_up_ptr(p_pagecnt,1,get_win_h_w_ptr(get_win_ptr_grp_id(p_pagecnt),5));
-
-  win_h_w_total_ptr=win_h_ci_total_ptr;
 
   return(0);
 }
@@ -2931,7 +3124,7 @@ int bw_win::w_find_hnd(int p1,int p2,int p3)
 
   j=0;
 
-  for (i=0;i<=win_h_w_total_ptr-1;i++)
+  for (i=0;i<=win_h_ci_total_ptr-1;i++)
   {
     if ((get_win_h_ci_ptr(i,0)==p1)&&
 	(get_win_h_ci_ptr(i,1)==p2)&&
@@ -3938,7 +4131,8 @@ int bw_win::tst_hptr3()
   for (i=0;i<WIN_NUM;i++)
   {
     sprintf(str,"ptr=%d,hptr30123456=%d,%d,%d,%d,%d,%d,%d,"
-			      ,i,get_win_h_w_ptr(i,0)
+			      ,i
+                              ,get_win_h_w_ptr(i,0)
 			      ,get_win_h_w_ptr(i,1)
 			      ,get_win_h_w_ptr(i,2)
 			      ,get_win_h_w_ptr(i,3)
@@ -3964,7 +4158,8 @@ int bw_win::tst_hptr4()
   for (i=0;i<60;i++)
   {
     sprintf(str,"ptr=%d,hptr401234=%d,%d,%d,%d,%d,"
-			      ,i,get_win_h_ci_ptr(i,0)
+			      ,i
+                              ,get_win_h_ci_ptr(i,0)
 			      ,get_win_h_ci_ptr(i,1)
 			      ,get_win_h_ci_ptr(i,2)
 			      ,get_win_h_ci_ptr(i,3)
@@ -5042,58 +5237,7 @@ int bw_win::set_c_t_field_tmp(int p1,int p2,char c1)
   t_field_tmp[p1][p2]=c1;
   return(0);
 }
-/*
-int bw_win::get_base_tmp(int p1)
-{
-  if ((p1<0)||(p1>=FLD_IN_SCRN)) return(0);
-  return(t_base_tmp[p1]);
-}
-int bw_win::set_base_tmp(int p1,int val)
-{
-  if ((p1<0)||(p1>=FLD_IN_SCRN)) return(0);
-  t_base_tmp[p1]=val;
-  return(0);
-}
-*/
-/*
-int bw_win::get_recno_tmp(int p1)
-{
-  if ((p1<0)||(p1>=FLD_IN_SCRN)) return(0);
-  return(t_recno_tmp[p1]);
-}
-int bw_win::set_recno_tmp(int p1,int val)
-{
-  if ((p1<0)||(p1>=FLD_IN_SCRN)) return(0);
-  t_recno_tmp[p1]=val;
-  return(0);
-}
-*/
-/*
-int bw_win::get_win_subhndid(int p_wptr,int ptr)
-{
-  if ((p_wptr<0)||(p_wptr>=WIN_NUM)) return(0);
-  if ((ptr<0)||(ptr>9)) return(0);
-  return(win_subhndid[p_wptr][ptr]);
-}
-int bw_win::set_win_subhndid(int p_wptr,int ptr,int val)
-{
-  if ((p_wptr<0)||(p_wptr>=WIN_NUM)) return(0);
-  if ((ptr<0)||(ptr>9)) return(0);
-  win_subhndid[p_wptr][ptr]=val;
-  return(0);
-}
-int bw_win::get_win_subhndptr(int p_wptr)
-{
-  if ((p_wptr<0)||(p_wptr>=WIN_NUM)) return(0);
-  return(win_subhndptr[p_wptr]);
-}
-int bw_win::set_win_subhndptr(int p_wptr,int val)
-{
-  if ((p_wptr<0)||(p_wptr>=WIN_NUM)) return(0);
-  win_subhndptr[p_wptr]=val;
-  return(0);
-}
-*/
+
 int bw_win::get_win_state_link_modi(int p_wptr)
 {
   if ((p_wptr<0)||(p_wptr>=WIN_NUM)) return(0);
@@ -5154,20 +5298,6 @@ int bw_win::set_win_h_w_ptr(int p_wptr,int ptr,int val)
   win_h_w_ptr[p_wptr][ptr]=val;
   return(0);
 }
-int bw_win::get_win_h_up_ptr(int p_wptr,int ptr)
-{
-  if ((p_wptr<0)||(p_wptr>=WIN_NUM)) return(0);
-  if ((ptr<0)||(ptr>1)) return(0);
-  return(win_h_up_ptr[p_wptr][ptr]);
-}
-int bw_win::set_win_h_up_ptr(int p_wptr,int ptr,int val)
-{
-  if ((p_wptr<0)||(p_wptr>=WIN_NUM)) return(0);
-  if ((ptr<0)||(ptr>1)) return(0);
-  win_h_up_ptr[p_wptr][ptr]=val;
-  return(0);
-}
-
 HWND bw_win::get_win_phh(int p_wptr)
 {
   if ((p_wptr<0)||(p_wptr>=WIN_NUM)) return(0);
@@ -5221,17 +5351,7 @@ int bw_win::set_win_tabname(int p1,int p_dbptr,char *p_s1,int p_s1_size)
 
   return(0);
 }
-int bw_win::get_win_ptr_win_mark(int p_wptr)
-{
-  if ((p_wptr<0)||(p_wptr>=WIN_NUM)) return(0);
-  return(win_ptr_win_mark[p_wptr]);
-}
-int bw_win::set_win_ptr_win_mark(int p_wptr,int val)
-{
-  if ((p_wptr<0)||(p_wptr>=WIN_NUM)) return(0);
-  win_ptr_win_mark[p_wptr]=val;
-  return(0);
-}
+
 int bw_win::get_win_ptr_grp_id(int p_wptr)
 {
   if ((p_wptr<0)||(p_wptr>=WIN_NUM)) return(0);
@@ -5257,20 +5377,6 @@ int bw_win::set_win_msgboxlock(int p_wptr,int val)
   return(0);
 }
 
-
-int bw_win::get_win_ptr_grp_ptr(int p_wptr,int p04)
-{
-  if ((p_wptr<0)||(p_wptr>=WIN_NUM)) return(0);
-  if ((p04<0)||(p04>=5)) return(0);
-  return(win_ptr_grp_ptr[p_wptr][p04]);
-}
-int bw_win::set_win_ptr_grp_ptr(int p_wptr,int p04,int val)
-{
-  if ((p_wptr<0)||(p_wptr>=WIN_NUM)) return(0);
-  if ((p04<0)||(p04>=5)) return(0);
-  win_ptr_grp_ptr[p_wptr][p04]=val;
-  return(0);
-}
 int bw_win::get_win_ptr_wins_dbf(int p_dbptr,int p_wptr)
 {
   if ((p_wptr<0)||(p_wptr>=WIN_NUM)) return(0);

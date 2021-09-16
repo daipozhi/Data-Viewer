@@ -569,4 +569,120 @@ add xbase module pack_dbf fuction
 --- bowo-5.0-src-win-b40 ---
 tested,ok
 
+--- bowo-5.2-src-win-b1 ---
+--- bowo-5.2-src-win-b2 ---
+--- bowo-5.2-src-win-b3 ---
+remove var win_ptr_grp_ptr
+simpler source code
+t5_m... change to t5_btn...
+
+--- bowo-5.2-src-win-b4 ---
+menu_num_ra  change to button_num_ra
+menu_num_chs change to button_num_chs
+menu_num_mn  change to button_num_btn
+class name bw_menuvar change to bw_buttonvar
+w_read_mdc() change to w_read_btndc()
+menu... change to button...
+
+--- bowo-5.2-src-win-b5 ---
+bw_choose change to bw_chkbox
+bw_menuvar change to bw_buttonvar
+choose change to chkbox
+
+--- bowo-5.2-src-win-b6 ---
+bw_switch change to bw_rabox
+switch change to rabox
+
+--- bowo-5.2-src-win-b7 ---
+better w_close_win()
+better int bw_buttonvar::w_dele_button(int wptr)
+better int bw_link::w_dele_svar(int wptr)
+better int bw_link::w_dele_link(int wptr)
+2 bugs ok
+
+--- bowo-5.2-src-win-b8 ---
+add tst_button2()
+add tst_link1_...()
+add tst_link5_...()
+
+--- bowo-5.2-src-win-b9 ---
+better bw_fldstru::w_dele_stru()
+add tst_stru2()
+1 bug ok
+
+--- bowo-5.2-src-win-b10 ---
+better w_close_win()
+add tst_win1_fld()
+
+--- bowo-5.2-src-win-b11 ---
+better w_close_win()
+add tst_win2_fld_in_win()
+
+--- bowo-5.2-src-win-b12 ---
+better w_close_win()
+1 bug ok
+
+--- bowo-5.2-src-win-b13 ---
+all win_h_w_total_ptr change to win_h_ci_total_ptr
+
+--- bowo-5.2-src-win-b14 ---
+test
+
+--- bowo-5.2-src-win-b15 ---
+w_echo_winrec_radio change to w_echo_winrec_rabox
+w_echo_winrec_chs   change to w_echo_winrec_chkbox
+
+--- bowo-5.2-src-win-b16 ---
+better bw_link::w_dele_link(int wptr)
+
+--- bowo-5.2-src-win-b17 ---
+test
+
+--- bowo-5.2-src-win-b18 ---
+remove var win_ptr_win_mark
+
+--- bowo-5.2-src-win-b19 ---
+better w_close_win()
+move win_recno[] when w_close_win()
+1 bug ok
+tested
+
+  mutiple windows can operate database in same time,(search operate still allow only one window)
+
+--- bowo-5.2-src-win-b20 ---
+better w_close_win()
+better vc_fldstru.cpp
+
+--- bowo-5.2-src-win-b21 ---
+add licence
+
+--- bowo-5.2-src-win-b22 ---
+w_read_cdc() change to w_read_chkdc()...
+w_echo_chs_change() change to w_echo_chk_change()...
+
+--- bowo-5.2-src-win-b23 ---
+better get_read() for multiple windows
+  not tested !!!
+
+--- bowo-5.2-src-win-b24 ---
+better get_read()
+
+--- bowo-5.2-src-win-b25 ---
+  tested,ok !!!
+2 bug ok
+
+--- bowo-5.2-src-win-b26 ---
+better test log
+
+--- bowo-5.2-src-win-b27 ---
+  tested,ok
+
+--- bowo-5.2-src-win-b28 ---
+windows focus control is better
+
+
+
+
+
+
 

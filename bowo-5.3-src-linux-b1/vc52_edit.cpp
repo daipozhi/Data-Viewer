@@ -438,7 +438,7 @@ long w_edit_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
       }
 
       // if linux
-       /*
+       
       if (wp==1821)
       {
 	if (bw_main1.win_lang==1) SendMessage(bw_edit1.get_win_edit_hnd2(i),EM_REPLACESEL,0,(LPARAM)0);
@@ -504,11 +504,11 @@ long w_edit_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 	if (bw_main1.win_lang==1) SendMessage(bw_edit1.get_win_edit_hnd2(i),EM_REPLACESEL,0,(LPARAM)10);
 	else SendMessage(bw_edit1.get_win_edit_hnd2(i),EM_REPLACESEL,0,(LPARAM)10);
       }
-       */ 
+        
       // end if linux
 
       // if windows
-      /*
+      // 
       if (wp==1821)
       {
 	if (bw_main1.win_lang==1) SendMessage(bw_edit1.get_win_edit_hnd2(i),EM_REPLACESEL,0,(LPARAM)tl1[0]);
@@ -574,7 +574,7 @@ long w_edit_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 	if (bw_main1.win_lang==1) SendMessage(bw_edit1.get_win_edit_hnd2(i),EM_REPLACESEL,0,(LPARAM)tl1[10]);
 	else SendMessage(bw_edit1.get_win_edit_hnd2(i),EM_REPLACESEL,0,(LPARAM)tl2[10]);
       }
-      // *//*
+      // 
       // end if windows
 
       break;
@@ -639,7 +639,8 @@ long w_edit_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
     }
   }
 
-  return DefWindowProc(hwnd,msg,wp,lp);*/
+  return DefWindowProc(hwnd,msg,wp,lp);
+*/
   return(0);
 }
 

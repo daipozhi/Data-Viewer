@@ -1,17 +1,13 @@
-/* 
+ 
 #define  STRICT
-*/
-#include "windows.h"
-/*
+#include <windows.h>
 #include <commdlg.h>
-*/
+
 #include <stdio.h>
-/*
 #include <math.h>
 #include <dos.h>
 #include <conio.h>
 #include <process.h>
-*/
 #include <string.h>
 
 #include "vc_bowo.h"
@@ -51,30 +47,29 @@ int bw_getread::get_read_login()
   }
 
   if (exist==0) return(0);
-  else
-  {
-    set_smg_read_id(i,1);
-    return(i);
-  }
+
+  set_smg_read_id(i,1);
+
+  return(i);
 }
 
 int bw_getread::get_read_logout(int ptr)
 {
-  if ((ptr<0)||(ptr>=GET_NUM)) return(-1);
-  else
-  {
-    set_smg_line(ptr,0);
-    set_smg_colu(ptr,0);
-    set_c_smg_string(ptr,0,0);
-    set_smg_type(ptr,0);
-    set_smg_dlen(ptr,0);
-    set_smg_dlen2(ptr,0);
-    set_smg_ddec(ptr,0);
-    set_smg_link(ptr,0);
-    set_smg_color(ptr,0);
-    set_smg_read_id(ptr,0);
-    return(0);
-  }
+  if ((ptr<0)||(ptr>=GET_NUM)) return(1);
+
+  set_smg_line(ptr,0);
+  set_smg_colu(ptr,0);
+  set_c_smg_string(ptr,0,0);
+  set_smg_type(ptr,0);
+  set_smg_dlen(ptr,0);
+  set_smg_dlen2(ptr,0);
+  set_smg_ddec(ptr,0);
+  set_smg_link(ptr,0);
+  set_smg_color(ptr,0);
+  set_smg_read_id(ptr,0);
+  set_smg_modi(ptr,0);
+  
+  return(0);
 }
 
 int bw_getread::tst_getread()
@@ -110,7 +105,6 @@ int bw_getread::get_read(int scrn_l,int scrn_c,char *atten,
 {  
   HDC   hdc;
   HFONT hfont,holdfont;
-
   char  s_tmps1[SMG_SIZE];
   int   key;
   int   i,j,k,w,u;
@@ -136,6 +130,7 @@ int bw_getread::get_read(int scrn_l,int scrn_c,char *atten,
     set_smg_color(smg_ptr,color);
     set_smg_posi(smg_ptr,posi);
     set_smg_string(smg_ptr,string,strlen(string)+1);
+    //set_smg_modi(smg_ptr,0);
 
     if (datatype=='n')
     {
@@ -296,6 +291,7 @@ smg_ptr2,get_smg_color(smg_ptr2),get_smg_ddec(smg_ptr2),get_smg_posi(smg_ptr2));
       }
     }
   }
+
   return(0);
 }
 
@@ -318,9 +314,9 @@ int bw_getread::get_txt(int scrn_l,int scrn_c,char *atten,
   int  pos[300];
 
 /* --- display attention and data --- */
-  win_get_ptr=ptr;
-  win_get_link=link;
-  win_color=color;
+  //win_get_ptr=ptr;
+  //win_get_link=link;
+  //win_color=color;
 
   n1=strlen(atten);
 
@@ -356,8 +352,10 @@ int bw_getread::get_txt(int scrn_l,int scrn_c,char *atten,
     sprintf(str1,"win_key=%d,",bw_main1.win_key);
     deb_record(str1);
 */
-    if (((key>=32)&&(key<=126))||(key<0))
+    if ( ((key>=32)&&(key<=126)) || (key<0) )
     {
+      set_smg_modi(ptr,1);
+
       if ((key>=0)&&(win_chns_char==0))
       {
         c1=key;
@@ -608,6 +606,7 @@ int bw_getread::get_txt(int scrn_l,int scrn_c,char *atten,
           *posi=n2;
           win_p1=0;
           //win_chns_char=0;
+          set_smg_modi(ptr,0);
           return(RET_KEY);
 	}
 	if (n2>datalen)
@@ -940,6 +939,7 @@ int bw_getread::get_txt(int scrn_l,int scrn_c,char *atten,
 	  ReleaseDC(bw_main1.win_hwnd,hdc);
           *posi=n2;
           win_p1=0;
+          set_smg_modi(ptr,0);
           return(key);
 	}
       }
@@ -950,7 +950,7 @@ int bw_getread::get_txt(int scrn_l,int scrn_c,char *atten,
     }
     if (key==RIGHT_ROW)
     {
-/*
+
 
 
   // get char , if chiness w=2 if ascii w=1 ,w2=1(half chiness)
@@ -962,7 +962,7 @@ int bw_getread::get_txt(int scrn_l,int scrn_c,char *atten,
   j=0;
   pos[0]=0;
 
-  while(*//*(k<l1)&&*//*(k<strlen(str1)))
+  while(/*(k<l1)&&*/(k<strlen(str1)))
   {
     if (str1[k]<0) k=k+2;
     else k=k+1;
@@ -1046,6 +1046,7 @@ int bw_getread::get_txt(int scrn_l,int scrn_c,char *atten,
 	  ReleaseDC(bw_main1.win_hwnd,hdc);
           *posi=n2;
           win_p1=0;
+          set_smg_modi(ptr,0);
           return(key);
         }
       }
@@ -1126,7 +1127,7 @@ int bw_getread::get_txt(int scrn_l,int scrn_c,char *atten,
 	  ShowCaret(bw_main1.win_hwnd);
 	}
 	else
-	{*/
+	{
 	  win_p_x=(int)((win_cur1-1)*bw_main1.win_edit_xchar);
 
       	  for (i=1;i<=datalen;i++)
@@ -1158,16 +1159,18 @@ int bw_getread::get_txt(int scrn_l,int scrn_c,char *atten,
 	  ReleaseDC(bw_main1.win_hwnd,hdc);
           *posi=n2;
           win_p1=0;
+          set_smg_modi(ptr,0);
           return(key);
-/*	}
+	}
       }
       SelectObject(hdc,holdfont);
       ReleaseDC(bw_main1.win_hwnd,hdc);
       *posi=n2;
-      return(0);*/
+      return(0);
     }
     if (key==UP_ROW)
     {
+      set_smg_modi(ptr,0);
 
       win_p_x=(int)((win_cur1-1)*bw_main1.win_edit_xchar);
 
@@ -1204,6 +1207,7 @@ int bw_getread::get_txt(int scrn_l,int scrn_c,char *atten,
     }
     if (key==DOWN_ROW)
     {
+      set_smg_modi(ptr,0);
 
       win_p_x=(int)((win_cur1-1)*bw_main1.win_edit_xchar);
 
@@ -1240,6 +1244,7 @@ int bw_getread::get_txt(int scrn_l,int scrn_c,char *atten,
     }
     if (key==BACKSP)
     {
+      set_smg_modi(ptr,1);
 
 
 
@@ -1460,6 +1465,7 @@ int bw_getread::get_txt(int scrn_l,int scrn_c,char *atten,
 	  ReleaseDC(bw_main1.win_hwnd,hdc);
           *posi=n2;
           win_p1=0;
+          set_smg_modi(ptr,0);
           return(key);
 	}
       }
@@ -1470,6 +1476,7 @@ int bw_getread::get_txt(int scrn_l,int scrn_c,char *atten,
     }
     if (key==RET_KEY)
     {
+      set_smg_modi(ptr,0);
 
       win_p_x=(int)((win_cur1-1)*bw_main1.win_edit_xchar);
 
@@ -1523,6 +1530,7 @@ int bw_getread::get_txt(int scrn_l,int scrn_c,char *atten,
 */
     if (key==DEL_KEY)
     {
+      set_smg_modi(ptr,1);
 
 
 
@@ -1647,8 +1655,9 @@ int bw_getread::get_txt(int scrn_l,int scrn_c,char *atten,
       *posi=n2;
       return(0);
     }
-    if ((key<32)||(key==PG_UP)||(key==PG_DOWN)||(key>200))
+    if ( ((key>=0)&&(key<32)) ||(key==PG_UP)||(key==PG_DOWN)||(key>200))
     {
+      set_smg_modi(ptr,0);
 
       win_p_x=(int)((win_cur1-1)*bw_main1.win_edit_xchar);
 
@@ -1706,9 +1715,9 @@ int bw_getread::get_num(int scrn_l,int scrn_c,char *atten,
   int  p2,p3;
 
 /* --- display attention and data --- */
-  win_get_ptr=ptr;
-  win_get_link=link;
-  win_color=color;
+  //win_get_ptr=ptr;
+  //win_get_link=link;
+  //win_color=color;
 
   n1=strlen(atten);
 
@@ -1738,6 +1747,7 @@ int bw_getread::get_num(int scrn_l,int scrn_c,char *atten,
 
     if ( (key=='+')||(key=='-')||(key=='.')||(key==' ')||((key>='0')&&(key<='9')) )    //(((key>=32)&&(key<=126))/*||(key<0)*/)
     {
+      set_smg_modi(ptr,1);
 /*
       if ((key>=0)&&(win_chns_char==0))
       {
@@ -1909,6 +1919,7 @@ int bw_getread::get_num(int scrn_l,int scrn_c,char *atten,
           *posi=n2;
           win_p1=0;
           //win_chns_char=0;
+          set_smg_modi(ptr,0);
           return(RET_KEY);
 	}
 	if (n2>datalen)
@@ -1933,6 +1944,7 @@ int bw_getread::get_num(int scrn_l,int scrn_c,char *atten,
             *posi=n2;
             win_p1=0;
             //win_chns_char=0;
+            set_smg_modi(ptr,0);
             return(key);
 	  }
 	  get_s_smg_data(str1,SMG_SIZE);
@@ -2057,6 +2069,7 @@ int bw_getread::get_num(int scrn_l,int scrn_c,char *atten,
 	  ReleaseDC(bw_main1.win_hwnd,hdc);
           *posi=n2;
           win_p1=0;
+          set_smg_modi(ptr,0);
           return(key);
 	}
       }
@@ -2067,7 +2080,6 @@ int bw_getread::get_num(int scrn_l,int scrn_c,char *atten,
     }
     if (key==RIGHT_ROW)
     {
-/*
       if (n2<datalen)
       {
         if (n2+win_p1<datalen_real)
@@ -2148,7 +2160,7 @@ int bw_getread::get_num(int scrn_l,int scrn_c,char *atten,
 	  ShowCaret(bw_main1.win_hwnd);
 	}
 	else
-	{*/
+	{
 	  get_num_conv(datalen_real,dec);
 
 	  win_p_x=(int)((win_cur1-1)*bw_main1.win_edit_xchar);
@@ -2166,16 +2178,19 @@ int bw_getread::get_num(int scrn_l,int scrn_c,char *atten,
 	  ReleaseDC(bw_main1.win_hwnd,hdc);
           *posi=n2;
           win_p1=0;
+          set_smg_modi(ptr,0);
           return(key);
-/*	}
+	}
       }
       SelectObject(hdc,holdfont);
       ReleaseDC(bw_main1.win_hwnd,hdc);
       *posi=n2;
-      return(0);*/
+      return(0);
     }
     if (key==UP_ROW)
     {
+      set_smg_modi(ptr,0);
+
       get_num_conv(datalen_real,dec);
 
       win_p_x=(int)((win_cur1-1)*bw_main1.win_edit_xchar);
@@ -2197,6 +2212,8 @@ int bw_getread::get_num(int scrn_l,int scrn_c,char *atten,
     }
     if (key==DOWN_ROW)
     {
+      set_smg_modi(ptr,0);
+
       get_num_conv(datalen_real,dec);
 
       win_p_x=(int)((win_cur1-1)*bw_main1.win_edit_xchar);
@@ -2218,6 +2235,8 @@ int bw_getread::get_num(int scrn_l,int scrn_c,char *atten,
     }
     if (key==BACKSP)
     {
+      set_smg_modi(ptr,1);
+
       if (n2>1)
       {
 	for (i=n2+win_p1;i<=datalen_real;i++)
@@ -2284,6 +2303,7 @@ int bw_getread::get_num(int scrn_l,int scrn_c,char *atten,
 	  ReleaseDC(bw_main1.win_hwnd,hdc);
           *posi=n2;
           win_p1=0;
+          set_smg_modi(ptr,0);
           return(key);
 	}
       }
@@ -2294,6 +2314,8 @@ int bw_getread::get_num(int scrn_l,int scrn_c,char *atten,
     }
     if (key==RET_KEY)
     {
+      set_smg_modi(ptr,0);
+
       get_num_conv(datalen_real,dec);
 
       win_p_x=(int)((win_cur1-1)*bw_main1.win_edit_xchar);
@@ -2332,6 +2354,8 @@ int bw_getread::get_num(int scrn_l,int scrn_c,char *atten,
 */
     if (key==DEL_KEY)
     {
+      set_smg_modi(ptr,1);
+
       if (win_p1+n2<datalen_real)
       {
 	for (i=win_p1+n2+1;i<=datalen_real;i++)
@@ -2369,8 +2393,10 @@ int bw_getread::get_num(int scrn_l,int scrn_c,char *atten,
       *posi=n2;
       return(0);
     }
-    if ((key<32)||(key==PG_UP)||(key==PG_DOWN)||(key>200))
+    if ( ((key>=0)&&(key<32)) ||(key==PG_UP)||(key==PG_DOWN)||(key>200))
     {
+      set_smg_modi(ptr,0);
+
       get_num_conv(datalen_real,dec);
 
       win_p_x=(int)((win_cur1-1)*bw_main1.win_edit_xchar);
@@ -2958,5 +2984,18 @@ int bw_getread::set_smg_atte(int gptr,char *p_s1,int p_s1_size)
   }
 
   return(0);
+}
+
+int bw_getread::set_smg_modi(int gptr,int val)
+{
+  if ((gptr<0)||(gptr>=GET_NUM)) return(0);
+  smg_modi[gptr]=val;
+  return(0);
+}
+
+int bw_getread::get_smg_modi(int gptr)
+{
+  if ((gptr<0)||(gptr>=GET_NUM)) return(0);
+  return(smg_modi[gptr]);
 }
 

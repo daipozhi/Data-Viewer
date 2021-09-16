@@ -1,26 +1,30 @@
-
+/*
 #define STRICT     
-#include <windows.h>
+*/
+#include "windows.h"
+/*
 #include <commdlg.h>
-  
+*/
 #include <stdio.h>
+/*
 #include <math.h>
 #include <direct.h>
 #include <dos.h>
 #include <io.h>
 #include <conio.h>
 #include <process.h>
+*/
 #include <string.h>
-
+/*
 #include <fcntl.h>
 #include <sys\stat.h>
 #include <share.h>
 #include <io.h>
-
+*/
 #include "vc_bowo.h"
 
 extern class bw_win          bw_win1;
-extern class bw_menuvar      bw_menuvar1;
+extern class bw_buttonvar      bw_buttonvar1;
 extern class bw_bmp          bw_bmp1;
 extern class bw_mbase        bw_mbase1;
 extern class bw_xbase        bw_xbase1;
@@ -30,6 +34,7 @@ extern class bw_inkey        bw_inkey1;
 
 int  bw_bmp::DIB(char *p_bfn,int p_bfn_size)
 {
+/*
   int                fh;
   LPBITMAPINFOHEADER lpbi;
   BITMAPINFOHEADER   bi;
@@ -71,12 +76,13 @@ int  bw_bmp::DIB(char *p_bfn,int p_bfn_size)
   else fPalColors=FALSE;
 
   GlobalUnlock(hbiCurrent);
-
+*/
   return(0);
 }
 
 HGLOBAL bw_bmp::ReadDibBitmapInfo(int fh)
 {
+/*
   WORD               nnumcolors;
   RGBQUAD FAR        *prgb;
   BITMAPINFOHEADER   bi;
@@ -120,10 +126,13 @@ HGLOBAL bw_bmp::ReadDibBitmapInfo(int fh)
   GlobalUnlock(hbi);
 
   return(hbi);
+*/
+  return(0);
 }
 
 WORD bw_bmp::DibNumColors(LPBITMAPINFOHEADER lpbi)
 {
+/*
   if (lpbi->biClrUsed!=0) return((WORD)lpbi->biClrUsed);
   else
   {
@@ -139,10 +148,13 @@ WORD bw_bmp::DibNumColors(LPBITMAPINFOHEADER lpbi)
 	return(0);
     }
   }
+*/
+  return(0);
 }
 
 HPALETTE bw_bmp::CreateDIBPalette(LPBITMAPINFOHEADER lpbi)
 {
+/*
   LOGPALETTE  *ppal;
   HPALETTE     hpal=NULL;
   WORD         nnumbercolors;
@@ -215,10 +227,13 @@ HPALETTE bw_bmp::CreateDIBPalette(LPBITMAPINFOHEADER lpbi)
   }
 
   return(hpal);
+*/
+  return(0);
 }
 
 BOOL bw_bmp::DibInfo(HGLOBAL hbi,LPBITMAPINFOHEADER lpbi)
 {
+/*
   *lpbi=*(LPBITMAPINFOHEADER)GlobalLock(hbi);
 
   if (lpbi->biSizeImage==0L)
@@ -228,12 +243,13 @@ BOOL bw_bmp::DibInfo(HGLOBAL hbi,LPBITMAPINFOHEADER lpbi)
     lpbi->biClrUsed=DibNumColors(lpbi);
 
   GlobalUnlock(hbi);
-
+*/
   return(TRUE);
 }
 
 BOOL bw_bmp::DisplayDIB(HWND hwnd,int x,int y,LPSTR szFile)
 {
+/*
   LPBITMAPINFOHEADER lpbi;
   WORD               wread;
   WORD               wscansleft;
@@ -289,7 +305,7 @@ BOOL bw_bmp::DisplayDIB(HWND hwnd,int x,int y,LPSTR szFile)
 
     dwmapsize=(DWORD)wread*dwscans;
 
-    /*i=*/read(fh,(LPSTR)pbuf,dwmapsize);
+    *//*i=*//*read(fh,(LPSTR)pbuf,dwmapsize);
 
 //	sprintf(str,"%d,",i);
 //	MessageBox(bw_main1.win_hwnd1,str,"22",MB_OK);
@@ -371,10 +387,13 @@ BOOL bw_bmp::DisplayDIB(HWND hwnd,int x,int y,LPSTR szFile)
   close(fh);
 
   return(ok);
+*/
+  return(0);
 }
 
 BOOL bw_bmp::PaintDIB(HWND hwnd,int mx,int my,int mh,LPSTR szFile)
 {
+/*
   LPBITMAPINFOHEADER lpbi;
   WORD               wread;
   WORD               wscansleft;
@@ -512,10 +531,13 @@ BOOL bw_bmp::PaintDIB(HWND hwnd,int mx,int my,int mh,LPSTR szFile)
   close(fh);
 
   return(ok);
+*/
+  return(0);
 }
 
 int bw_bmp::tst_b1()
 {
+/*
   int  i,j,k;
   char str1[SMG_SIZE];
   char s_ts0[FN_SIZE];
@@ -574,12 +596,13 @@ int bw_bmp::tst_b1()
   i=DIB(str1,SMG_SIZE);
   if (i==0) DisplayDIB(bw_main1.win_hwnd1,0,0,(LPSTR)str1);
   else GlobalFree(hbiCurrent);
-
+*/
   return(0);
 }
 
 int bw_bmp::echo_bmp(HWND hwnd,char *comm,int comm_size,int mcnt,int p_wptr)
 {
+/*
   FILE *s_fp;
   int  i,j,k,l,m;
   int  exist;
@@ -680,9 +703,9 @@ int bw_bmp::echo_bmp(HWND hwnd,char *comm,int comm_size,int mcnt,int p_wptr)
       li++;
     }
 
-    lk=bw_menuvar1.get_t5_m_mcnt(bw_menuvar1.t5_m_ptr3);
+    lk=bw_buttonvar1.get_t5_btn_mcnt(bw_buttonvar1.t5_btn_ptr3);
     if (lk>lj) lk=lk-lj;
-    bw_menuvar1.set_t5_m_mcnt(bw_menuvar1.t5_m_ptr3,lk);
+    bw_buttonvar1.set_t5_btn_mcnt(bw_buttonvar1.t5_btn_ptr3,lk);
 
     fgets(str3,SMG_SIZE,s_fp);
     bw_inkey1.strtrim(str3,FN_SIZE);
@@ -701,12 +724,13 @@ int bw_bmp::echo_bmp(HWND hwnd,char *comm,int comm_size,int mcnt,int p_wptr)
       return(1);
     }
   }
-
+*/
   return(1);
 }
 
 int bw_bmp::w_bmp_add(int p_dbptr,int p_wptr,char *p_fldname,int p_fldname_size)
 {
+/*
   int  i,j,k;
   char str[SMG_SIZE];
   char sfld[SMG_SIZE];
@@ -769,12 +793,13 @@ int bw_bmp::w_bmp_add(int p_dbptr,int p_wptr,char *p_fldname,int p_fldname_size)
   bw_fldstru1.w_sav_tab_var(sfld,SMG_SIZE,p_dbptr,str,SMG_SIZE);
   bw_mbase1.w_save_rec(p_dbptr,p_wptr,bw_xbase1.get_win_recno(p_dbptr,p_wptr,0));
   bw_xbase1.set_win_state_dbf_modi(p_dbptr,1);
-
+*/
   return(0);
 }
 
 int bw_bmp::w_bmp_paint(HWND hwnd)
 {
+/*
   mx=0;
   my=0;
 
@@ -792,14 +817,14 @@ int bw_bmp::w_bmp_paint(HWND hwnd)
 		(HMENU)NULL,
 		bw_main1.win_ins,
 		NULL);
-
+*/
   return(0);
-
 }
 
 // _export
-long PASCAL w_bmp_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
+long w_bmp_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
 {
+/*
   LPBITMAPINFOHEADER lpbi;
   RECT               rect;
   int                i;
@@ -931,5 +956,7 @@ long PASCAL w_bmp_wp(HWND hwnd,UINT msg,WPARAM wp,LPARAM lp)
    }
 
   return DefWindowProc(hwnd,msg,wp,lp);
+*/
+  return(0);
 }
 

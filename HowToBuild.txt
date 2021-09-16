@@ -10,9 +10,9 @@ exe文件拷贝到app目录中,在app目录中运行即可.
 
 Linux version:
 
-  On Ubuntu 18.04.5 ,Open terminal , at bowo-5.1-src-linux directory , run make.bat 
+  On Ubuntu 18.04.5 ,Open terminal , at bowo-5.3-src-linux directory , run make.bat 
   (need g++).  and then , copy gcc_bowo.exe to app directory , at app directory , 
   in Terminal window, run gcc_bowo.exe .
 
-  在 Ubuntu 18.04.5 上,打开命令行窗口,在 bowo-5.1-src-linux 目录下,运行 make.bat 
+  在 Ubuntu 18.04.5 上,打开命令行窗口,在 bowo-5.3-src-linux 目录下,运行 make.bat 
   (需要事先安装g++),然后拷贝gcc_bowo.exe到app目录,在app目录,在命令行窗口运行 gcc_bowo.exe .

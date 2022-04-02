@@ -1,0 +1,368 @@
+TAB_MENU MENU
+BEGIN
+MENUITEM "Page &Up",       1011
+MENUITEM "Page D&own",     1012
+MENUITEM "&Dele Record",   1013
+MENUITEM "&Ins  Record",   1014
+MENUITEM "&Commit",        1015
+MENUITEM "&Rollback",      1016
+MENUITEM "&Print Table",   1603
+MENUITEM "&Search Option", 1501
+MENUITEM "&Start Search",  1502
+MENUITEM "&End  Search",   1503
+MENUITEM "C&loseDatabase", 1099
+TAB_MENU END
+
+CTAB_MENU MENU
+BEGIN
+MENUITEM "(&U)翻上页",   1011
+MENUITEM "(&O)翻下页",   1012
+MENUITEM "(&D)删除记录", 1013
+MENUITEM "(&I)插入记录", 1014
+MENUITEM "(&I)追加记录", 1021
+MENUITEM "(&C)提交数据", 1015
+MENUITEM "(&R)滚回数据", 1016
+MENUITEM "(&P)打印",     1603
+MENUITEM "(&F)查询条件", 1501
+MENUITEM "(&B)开始查询", 1502
+MENUITEM "(&E)结束查询", 1503
+MENUITEM "(&L)关闭",     1099
+CTAB_MENU END
+
+VAR_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "&Control Item"
+    BEGIN
+        MENUITEM "&Clear Var",                  1401
+        MENUITEM "Close &Window",               1499
+    END
+END
+
+CVAR_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "(&C)控制项"
+    BEGIN
+        MENUITEM "(&C)清除变量",                1401
+        MENUITEM "(&W)关闭窗口",                1499
+    END
+END
+
+MTAB_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "&Base Operate"
+    BEGIN
+        MENUITEM "Page &Up",                    1011
+        MENUITEM "Page D&own",                  1012
+        MENUITEM "&Dele Record",                1013
+        MENUITEM "&Ins  Record",                1014
+        MENUITEM "&Commit",                     1015
+        MENUITEM "&Rollback",                   1016
+        MENUITEM "&Window Link",                1017
+        MENUITEM "&Print Table",                1603
+        MENUITEM "C&lose Base",                 1099
+    END
+    POPUP "&Search Operate"
+    BEGIN
+        MENUITEM "&Find Condition",             1501
+        MENUITEM "&Begin Find",                 1502
+        MENUITEM "&Exit  Find",                 1503
+    END
+    POPUP "Special &Field"
+    BEGIN
+        MENUITEM "&Edit Memo Field",            1601
+        MENUITEM "&Add text To MField",         1602
+        MENUITEM "MField &Copy To File",        1604
+        MENUITEM "Add &Bitmap to BField",       1605
+        MENUITEM "&Look Bitmap",                1606
+    END
+    POPUP "&Control Item"
+    BEGIN
+        MENUITEM "&Clear Var",                  1401
+        MENUITEM "Close &Window",               1499
+    END
+END
+
+CMTAB_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "(&B)库操做"
+    BEGIN
+        MENUITEM "(&U)翻上页",                  1011
+        MENUITEM "(&O)翻下页",                  1012
+        MENUITEM "(&D)删除记录",                1013
+        MENUITEM "(&I)插入记录",                1014
+        MENUITEM "(&C)提交",                    1015
+        MENUITEM "(&R)滚回",                    1016
+        MENUITEM "(&W)窗口连接",                1017
+        MENUITEM "(&P)打印",                    1603
+        MENUITEM "(&L)关闭",                    1099
+    END
+    POPUP "(&S)查询操作"
+    BEGIN
+        MENUITEM "(&F)查询窗口",                1501
+        MENUITEM "(&B)开始查询",                1502
+        MENUITEM "(&E)结束查询",                1503
+    END
+    POPUP "(&F)特殊字段"
+    BEGIN
+        MENUITEM "(&E)浏览文章",                1601
+        MENUITEM "(&A)加载文章",                1602
+        MENUITEM "(&C)取出文章",                1604
+        MENUITEM "(&M)加载图像",                1605
+        MENUITEM "(&L)浏览图像",                1606
+    END
+    POPUP "(&C)控制项"
+    BEGIN
+        MENUITEM "(&C)清除变量",                1401
+        MENUITEM "(&W)关闭窗口",                1499
+    END
+END
+
+SAVEPRINT_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "&Function"
+    BEGIN
+        MENUITEM "&Cancel Print",               1901
+    END
+END
+
+OUTPRINT_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "&Function"
+    BEGIN
+        MENUITEM "&Cancel Print",               1751
+        MENUITEM "&Next Page Print",            1752
+        MENUITEM "&Prev Page Print",            1753
+    END
+END
+
+COUTPRINT_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "(&F)功能"
+    BEGIN
+        MENUITEM "(&C)中断打印",                1751
+        MENUITEM "(&N)打印下页",                1752
+        MENUITEM "(&P)打印上页",                1753
+    END
+END
+
+CSAVEPRINT_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "(&F)功能"
+    BEGIN
+        MENUITEM "(&C)中断打印",                1901
+    END
+END
+
+EDIT_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Save",                       1801
+        MENUITEM "&Rollback",                   1802
+        MENUITEM "E&xit",                       1803
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo",                       1811
+        MENUITEM "Cu&t",                        1812
+        MENUITEM "C&opy",                       1813
+        MENUITEM "&Paste",                      1814
+    END
+    POPUP "&Table Line"
+    BEGIN
+        MENUITEM "Line &7",                     1821
+        MENUITEM "Line &8",                     1822
+        MENUITEM "Line &9",                     1823
+        MENUITEM "Line &4",                     1824
+        MENUITEM "Line &5",                     1825
+        MENUITEM "Line &6",                     1826
+        MENUITEM "Line &1",                     1827
+        MENUITEM "Line &2",                     1828
+        MENUITEM "Line &3",                     1829
+        MENUITEM "Line &0",                     1830
+        MENUITEM "Line &-",                     1831
+    END
+END
+
+CEDIT_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "(&F)资料"
+    BEGIN
+        MENUITEM "(&S)保存",                    1801
+        MENUITEM "(&R)复原",                    1802
+        MENUITEM "(&X)结束",                    1803
+    END
+    POPUP "(&E)编辑"
+    BEGIN
+        MENUITEM "(&U)恢复",                    1811
+        MENUITEM "(&T)切割",                    1812
+        MENUITEM "(&C)拷备",                    1813
+        MENUITEM "(&P)拈贴",                    1814
+    END
+    POPUP "(&T)表格线"
+    BEGIN
+        MENUITEM "(&7)号线",                    1821
+        MENUITEM "(&8)号线",                    1822
+        MENUITEM "(&9)号线",                    1823
+        MENUITEM "(&4)号线",                    1824
+        MENUITEM "(&5)号线",                    1825
+        MENUITEM "(&6)号线",                    1826
+        MENUITEM "(&1)号线",                    1827
+        MENUITEM "(&2)号线",                    1828
+        MENUITEM "(&3)号线",                    1829
+        MENUITEM "(&0)号线",                    1830
+        MENUITEM "(&-)号线",                    1831
+    END
+END
+
+BOWO_MAIN MENU
+BEGIN
+MENUITEM "E&xit",       1107
+MENUITEM "Run &Table",  1127
+BOWO_MAIN END
+
+BOWO_CMAIN MENU
+MENUITEM "(&X)结束退出", 1107
+MENUITEM "(&T)运行表格", 1127
+BOWO_CMAIN END
+
+SDSC_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Open Function",              2007
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       2009
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "Edit &Data",                  2013
+    END
+    POPUP "&Make Switch"
+    BEGIN
+        MENUITEM "&Add    Switch",              2021
+        MENUITEM "&Delete Switch",              2022
+    END
+    POPUP "SDP &Run"
+    BEGIN
+        MENUITEM "&Run SDP Function",           2041
+    END
+END
+
+ACM_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Open Function",              2007
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       2009
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "AC&M Base Data",              2016
+        MENUITEM SEPARATOR
+        MENUITEM "ACM Sub &Function Number",    2020
+    END
+    POPUP "&Make Switch"
+    BEGIN
+        MENUITEM "&Add    ACM Switch",          2021
+        MENUITEM "&Delete ACM Switch",          2022
+    END
+    POPUP "ACM &Run"
+    BEGIN
+        MENUITEM "&Run ACM Table",              3001
+    END
+END
+
+ASM_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Open Function",              2007
+        MENUITEM "C&lose Function",             2008
+        MENUITEM SEPARATOR
+        MENUITEM "&Set Buffer Number",          2031
+        MENUITEM SEPARATOR
+        MENUITEM "Make Windows Form",           2039
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       2009
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "AS&M Base Data",              2016
+        MENUITEM "Aotomatic Base &Data",        2019
+        MENUITEM SEPARATOR
+        MENUITEM "ASM Sub &Function Number",    2020
+    END
+    POPUP "&Make Switch"
+    BEGIN
+        MENUITEM "&Add    ASM Switch",          2021
+        MENUITEM "&Delete ASM Switch",          2022
+    END
+    POPUP "ASM &Run"
+    BEGIN
+        MENUITEM "&Run ASM Table",              3001
+        MENUITEM "&Calc ASM Table",             3002
+        MENUITEM "Run &Think",                  3003
+    END
+    POPUP "&Debug"
+    BEGIN
+        MENUITEM "&Display",                    2051
+        MENUITEM "&No Display",                 2055
+    END
+END
+
+ASM_PY_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "&文件"
+    BEGIN
+        MENUITEM "运行拼音输入",                2007
+        MENUITEM "退出",                        2009
+    END
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
+
+

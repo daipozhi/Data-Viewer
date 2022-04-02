@@ -2,17 +2,18 @@ Windows version:
   
   On Windows 7, open Visual studio 2008, open BOWO2.sln solution file in
   bowo2 directory , build exe file , and copy this exe file (vc_bowo2.exe) to app dir .
-  (you also can use Windows 10 + VS 2015/2017/2019 to build it)
+  (you also can use Windows 10 + VS 2015/2017/2019/2022 to build it)
 
 在 Windows 7 下,打开Visual studio 2008,打开BOWO2.sln 文件(在bowo2目录中),生成exe文件,把这个
 exe文件拷贝到app目录中,在app目录中运行即可.
-(你也可以使用 Windows10 + VS 2015/2017/2019 这样的组合)
+(你也可以使用 Windows10 + VS 2015/2017/2019/2022 这样的组合)
 
 Linux version:
 
-  On Ubuntu 18.04.5 ,Open terminal , at bowo-5.3-src-linux directory , run make.bat 
+  On Ubuntu 20.04 ,Open terminal window, at bowo-5.5-src-linux directory , run make.bat 
   (need g++).  and then , copy gcc_bowo.exe to app directory , at app directory , 
   in Terminal window, run gcc_bowo.exe .
 
-  在 Ubuntu 18.04.5 上,打开命令行窗口,在 bowo-5.3-src-linux 目录下,运行 make.bat 
+  在 Ubuntu 20.04 上,打开命令行窗口,在 bowo-5.5-src-linux 目录下,运行 make.bat 
   (需要事先安装g++),然后拷贝gcc_bowo.exe到app目录,在app目录,在命令行窗口运行 gcc_bowo.exe .
+  

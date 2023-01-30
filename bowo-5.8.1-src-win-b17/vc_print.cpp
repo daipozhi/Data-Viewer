@@ -1388,7 +1388,7 @@ int bw_print::w_print_page(int p_wptr)
   {
     if ((bw_win1.get_win_ptr_wins_dbf(k,p_wptr)!=1)||(bw_xbase1.get_win_lnktab(k)!=0)) continue;
 
-    for (l=0;l<w_cnt_pageline(k,PAGE_LINE);l++)
+    for (l=0;l<=w_cnt_pageline(k,PAGE_LINE);l++)
     {
       for (m=0;m<=t6_ptr1;m++)
       {
@@ -1627,7 +1627,7 @@ int bw_print::w_print_lnk(int p_wptr) /* echo win rec where modified */
 
     bw_link1.w_link_modi_mark(p_wptr,k,-1,-1);
 
-    for (l=0;l<w_cnt_pageline(k,PAGE_LINE);l++)
+    for (l=0;l<=w_cnt_pageline(k,PAGE_LINE);l++)
     {
       for (v=0;v<=t6_ptr1;v++)
       {

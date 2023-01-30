@@ -15,5 +15,5 @@ Linux version:
   in Terminal window, run gcc_bowo.exe .
 
   在 Ubuntu 20.04 上,打开命令行窗口,在 bowo-5.7-src-linux 目录下,运行 make.bat 
-  (需要事先安装g++),然后拷贝gcc_bowo.exe到app目录,在app目录,在命令行窗口运行 gcc_bowo.exe .
+  (需要事先安装g++),然后拷贝gcc_bowo.exe到app目录,在app目录,在命令行窗口运行 ./gcc_bowo.exe .
   

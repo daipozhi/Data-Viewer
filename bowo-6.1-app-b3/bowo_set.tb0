@@ -1,0 +1,21 @@
+lang=chiness
+color=0
+confirm=0
+printer=STAR
+//Windows A4 paper
+page=60
+//Windows A5 paper
+//page=30
+//Linux A4 paper
+//page=67
+//Linux A5 paper
+//page=40
+password=0
+dir=.\.
+well=c:\bowo2wel
+display1=800*600
+display2=vga
+size=        850,        522
+50,   50
+
+

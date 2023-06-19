@@ -10,10 +10,10 @@ exe文件拷贝到app目录中,在app目录中运行即可.
 
 Linux version:
 
-  On Ubuntu 20.04 ,Open terminal window, at bowo-5.7-src-linux directory , run make.bat 
-  (need g++).  and then , copy gcc_bowo.exe to app directory , at app directory , 
+  On Ubuntu 22.04 ,Open terminal window, at bowo-6.1-src-linux directory , run make.bat 
+  (need install g++).  and then , copy gcc_bowo.exe to app directory , at app directory , 
   in Terminal window, run gcc_bowo.exe .
 
-  在 Ubuntu 20.04 上,打开命令行窗口,在 bowo-5.7-src-linux 目录下,运行 make.bat 
+  在 Ubuntu 22.04 上,打开命令行窗口,在 bowo-6.1-src-linux 目录下,运行 make.bat 
   (需要事先安装g++),然后拷贝gcc_bowo.exe到app目录,在app目录,在命令行窗口运行 ./gcc_bowo.exe .
   

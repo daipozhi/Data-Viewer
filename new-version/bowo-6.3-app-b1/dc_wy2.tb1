@@ -1,0 +1,13 @@
+@a  button="[]"  com=exit
+@b  button="[]"  com=page_down
+@c  button="[]"  com=page_up
+@d  button="[]"  com=insert_rec
+@e  button="[]"  com=cancel
+@f  button="[]"  com=delete_rec
+@g  button="[]"  com=rollback
+@h  button="[]"  com=commit
+@i  button="[]"  com=findcondition
+@j  button="[]"  com=beginfind
+@k  button="[]"  com=endfind
+@n  button="[]"  com=page_down
+@o  button="[]"  com=page_up

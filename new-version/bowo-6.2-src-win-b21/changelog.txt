@@ -1,0 +1,1338 @@
+
+proccess before space in find condition, 
+
+when create table ,add one empty record,
+
+init smg_insert,
+
+support to new chiness encode,
+
+add 'add record' function,
+
+bigger table : 299x79, 
+
+lbutton win_p1 set to 0
+
+get_read() posi adjust
+
+set get_num from 100 to 2000
+
+button no respond 
+
+--- bowo-3.2-src-win-b1-4 ---
+
+better looking source code :
+
+p_s1 p_s1_len
+int2str
+far
+
+better function :
+
+  int2str
+ long2str
+float2str
+
+str2int
+str2long
+str2float
+...
+
+
+--- bowo-3.2-src-win-b5 ---
+'sval' change to 'p_val'...
+
+better function : strlocc(...
+
+
+--- bowo-3.2-src-win-b6 ---
+w_find_fldname(int j,int i,char *p_str,int p_str_len) 'j' to 'p1' , 'i' to 'p2'
+...
+
+
+--- bowo-3.2-src-win-b7 ---
+4 bugs ok
+w_mv_add_name(    if (win_mv_pp1<=0)// ---bug ok---
+w_mv_move_aft(    for (j=bw_dialog_bua1.get_win_mv_posi(i,0)+bw
+w_mv_fet_val(     p_s2[0]=0;
+w_mv_fet_val(     if (j<p_s2_len-1)
+
+--- bowo-3.2-src-win-b8 ---
+better function : long2str(        *(p_string+i)
+...
+
+--- bowo-3.2-src-win-b9 ---
+better fuction : when insert empty rec,clear rec ,1 bug
+
+
+--- bowo-3.2-src-win-b10 ---
+new open-xbase close-xbase commit rollback ,3 bug
+
+--- bowo-3.2-src-win-b11 ---
+--- bowo-3.2-src-win-b12 ---
+
+function check
+
+--- bowo-3.2-src-win-b13 ---
+--- bowo-3.2-src-win-b14 ---
+
+class names are better
+
+--- bowo-3.2-src-win-b15 ---
+
+cpp file names are better
+
+--- bowo-3.2-src-win-b16 ---
+added function w_up_line() w_down_line()
+
+--- bowo-3.2-src-win-b17 ---
+added function w_up_line2() w_down_line2()
+
+--- bowo-3.2-src-win-b18 ---
+hide caret ,menu file proccess error , end of line is null,  2 bugs
+
+--- bowo-3.2-src-win-b19 ---
+bowo_main hide caret ,focus rect error,   2 bugs
+
+--- bowo-3.2-src-win-b20 ---
+deb_record ,dialog var manage,   2 bugs
+
+--- bowo-3.2-src-win-b21 ---
+lbutton in no field,field=="",hide caret,not show caret again,   1 bug
+
+--- bowo-3.4-src-win-b1 ---
+lbutton in tab field,link or not, to old field,link or not, 4 possible case,  1 bug
+
+read_winfile backup=1, not allow after spacs,    1 bug
+
+--- bowo-3.4-src-win-b2 ---
+error in page_down(),page_up(),  1 bug
+
+--- bowo-3.4-src-win-b3 ---
+echo_winrec() set recno,  1 bug
+
+--- bowo-3.4-src-win-b4 ---
+better looking source code
+
+--- bowo-3.4-src-win-b5 ---
+1 bug in vc_link.cpp w_echo_winrec_lnk(int wpp)
+
+better looking source code 
+
+--- bowo-3.4-src-win-b6 ---
+'p_fn_len' to 'p_fn_size'
+2 bugs
+
+--- bowo-3.4-src-win-b7 ---
+SMG_LEN to SMG_SIZE
+win_state3 to win_state_dbf_err
+
+--- bowo-3.4-src-win-b8 ---
+win_pp1 to win_pp_new_win
+
+--- bowo-3.4-src-win-b9 ---
+win_pp2 4 5 6...  to win_pp_abc...
+
+--- bowo-3.4-src-win-b10 ---
+tmpc1    to t_winfile
+t6_tmpc1 to t6_pagefile
+
+--- bowo-3.4-src-win-b11 ---
+s_bs1 to win_m_bs1...
+
+--- bowo-3.4-src-win-b12 ---
+bw_inkey tmpc4 to tmp_buff
+
+--- bowo-3.4-src-win-b13 ---
+1 bug ,vc_xbase.cpp,w_read_recno(),'char' to 'unsigned char' str[SMG_SIZE];
+
+add comment
+
+modified 'cancel' to return 
+
+		s_state1=bw_win1.w_atten9a(s_fn1); // dbf file not exist , create ? yes no cancel
+		if (s_state1==0) return(1); // cancel
+		else
+
+--- bowo-3.4-src-win-b14 ---
+w_just_edit() to w_adjust_edit()
+
+
+--- bowo-3.4-src-win-b15 ---
+8 bugs,vc_mbase.cpp,w_ins_rec(),'char' to 'unsigned char' str[FN_SIZE];
+
+--- bowo-3.4-src-win-b16 ---
+win_hpp1 to win_h_w_total_pp...
+
+--- bowo-3.4-src-win-b17 ---
+search and delete is ok
+
+--- bowo-3.4-src-win-b18 ---
+search and delete , adjust cursor
+
+--- bowo-3.4-src-win-b19 ---
+better looking codes -- xbase
+
+--- bowo-3.4-src-win-b20 ---
+better looking codes -- xbase
+                        win
+                        user
+                        print
+                        ...
+                        vc_make1.cpp
+                        vc_main.cpp
+                        link
+                        inkey
+                        getread
+                        font
+                        ...
+                        bmp
+
+--- bowo-3.4-src-win-b21 ---
+better looking codes -- xbase  
+                                w_open_xbase(
+				w_commit_xbase(
+				w_rollback_xbase(
+				w_close_xbase(
+                                w_append_xbase_rec(
+                                w_insert_xbase_rec(
+                                w_insert_xbase_rec2(
+                                backup
+
+--- bowo-3.4-src-win-b22 ---
+better looking codes -- win  
+                        ...
+                        menuvar
+
+--- bowo-3.4-src-win-b23 ---
+better looking codes --   vc_mbase
+                          vc_make
+                          vc_main
+                          menuvar (need test)
+                          vc_link
+                          ...
+                          vc_font
+                          ...
+                          vc_bmp
+                                                                                                                                                                                             
+--- bowo-3.4-src-win-b24 ---
+better looking codes --   xbase
+                          win
+                          ...
+                          print
+                          ...
+                          mbase
+                          make1
+                          main
+                          ...
+                          font
+                          ...
+
+--- bowo-3.4-src-win-b25 ---
+better looking codes --   bmp
+                          ...
+                          fldstru
+                          ...
+                          xbase
+
+--- bowo-3.4-src-win-b26 ---
+better looking codes --   vc_win  w_echo_win_cr(  state7=0;
+                                  1 bug 
+
+
+--- bowo-3.6-src-win-b1 ---
+1 bug ,r4.sc4(3 table in one window),click mouse , display error in some places (ok now in b6 version)
+
+pent pc win7 test ok
+pent pc win10 test ok
+pent pc ubuntu 12.04.5 test ok
+atom pc win xp test ok
+atom pc ubuntu 12.04.5 test ok
+
+--- bowo-3.6-src-win-b2 ---
+1 bug in vc_print.c  w_print( i=
+1 bug in vc_print.c  w_print_page(   s_recno[i]=get_t6_recno(i,form); form...wpp...
+
+
+--- bowo-3.6-src-win-b3 ---
+1 bug ,int bw_link::w_get_sv(i
+      ,int bw_link::w_link_cond_ok(int       bw_inkey1.strltrim(sv
+1 bug ,int bw_link::w_link_cond_ok(int  , 2 wpp
+
+--- bowo-3.6-src-win-b4-b9 ---
+rewrite print function
+
+--- bowo-3.6-src-win-b10 ---
+better looking source codes
+
+--- bowo-3.6-src-win-b11 ---
+better looking source codes
+
+--- bowo-3.6-src-win-b12 ---
+better looking source codes
+
+--- bowo-3.6-src-win-b13 ---
+".lnk" to ".lin"
+
+--- bowo-3.6-src-win-b14 ---
+1 bug ,w_append_fox()
+
+--- bowo-3.6-src-win-b15 ---
+1 bug  ,get_read()   get_num()
+1 bug  ,get_read()   get_txt()   
+
+--- bowo-3.6-src-win-b16 ---
+1 bug , w_append_fox()
+
+--- bowo-3.6-src-win-b17 ---
+better looking source codes
+
+--- bowo-3.6-src-win-b18 ---
+better looking source codes
+
+--- bowo-3.6-src-win-b19 ---
+better looking source codes
+
+--- bowo-3.6-src-win-b20 ---
+better looking source codes
+
+--- bowo-3.6-src-win-b21 ---
+
+--- bowo-3.6-src-win-b22 ---
+better looking source codes
+
+--- bowo-3.6-src-win-b23 ---
+1 bug , w_fetch_rec()
+
+--- bowo-3.6-src-win-b24 ---
+better looking source code
+
+--- bowo-3.6-src-win-b25 ---
+better looking source code
+p_fcnt to p_fpp
+
+--- bowo-3.6-src-win-b26 ---
+better looking source code
+wpp to p_wpp
+
+--- bowo-3.6-src-win-b27 ---
+2 bugs ,
+w_menu_ci_wp()
+w_tab_ci_wp()
+                  add "break;"
+
+--- bowo-3.8-src-win-b1 ---
+6 bug ,w_get_ yy mm dd year mon time()
+
+--- bowo-3.8-src-win-b2 ---
+better looking table windows 
+
+--- bowo-3.8-src-win-b3 ---
+better insert_rec() ,add_rec()
+
+--- bowo-3.8-src-win-b4 ---
+add new field &*date   
+
+--- bowo-3.8-src-win-b5 ---
+1 bug , insert record at begining, ok now .
+
+--- bowo-3.8-src-win-b6 ---
+better looking source codes
+
+--- bowo-3.8-src-win-b7 ---
+better looking source codes
+
+--- bowo-3.8-src-win-b8 ---
+better looking source codes
+
+--- bowo-3.8-src-win-b9 ---
+better looking source codes
+setc_... to set_c_...
+getc_... to get_c_...
+get_t6s_tmps2...     to get_s_t6_...
+get_t6s_pagefile...  to get_s_t6_...
+
+--- bowo-3.8-src-win-b10 ---
+better looking source codes
+
+vc_fldstru.cpp    set_t2_fldpoin(p_fpp,1,pp1+k-1);
+                  w_find_fldpoin1(p_fpp)
+
+vc_menuvar.cpp    t5_m_pp1=pp1-1;
+
+1 bug vc_menuvar.cpp   w_dele_menu(i...
+
+--- bowo-3.8-src-win-b11 ---
+better looking source codes
+
+vc_xbase.cpp  set_t4_recnumb(1,k);
+
+--- bowo-3.8-src-win-b12 ---
+better looking source codes
+
+set_string to cpy_string
+strpcut    to cut_string
+             (cat_string?)
+
+--- bowo-3.8-src-win-b13 ---
+_LEN to _SIZE
+better comment in .h
+
+--- bowo-3.8-src-win-b14 ---
+win_rcnt to win_rec_cnt
+
+--- bowo-3.8-src-win-b15 ---
+win_lcnt to win_len_cnt
+
+--- bowo-3.8-src-win-b16 ---
+win_cuseri to win_cur_seri
+
+--- bowo-3.8-src-win-b17 ---
+t7_field to t7_fldname
+t7_base  to t7_fldbase
+t7_recno to t7_fldrecn
+t5_m_como to t5_m_com_str
+
+--- bowo-3.8-src-win-b18 ---
+better comment in .h
+
+--- bowo-3.8-src-win-b19 ---
+len_cnt[0] to fld_cnt
+
+--- bowo-3.8-src-win-b20 ---
+table window Caret not show (key up row)
+field value changed (key up row)
+ok now
+5 bugs
+
+--- bowo-3.8-src-win-b21 ---
+test
+
+--- bowo-3.8-src-win-b22 ---
+better set_focus()
+better get_read()
+1 bug
+
+--- bowo-3.8-src-win-b23 ---
+
+--- bowo-3.8-src-win-b24 ---
+better get_read()
+1 bug
+
+--- bowo-3.8-src-win-b25 ---
+better eof()
+
+--- bowo-3.8-src-win-b26 ---
+p_fpp to p_fptr
+
+--- bowo-3.8-src-win-b27 ---
+p_wpp to p_wptr
+
+--- bowo-3.8-src-win-b28 ---
+pp to ptr
+
+--- bowo-3.8-src-win-b29 ---
+2 bugs ,close win save data(vc_main.cpp),(vc_print.cpp) :lost float
+
+
+--- bowo-5.0-src-win-b1 ---
+get_linecol to get_t_linecol
+set_linecol to set_t_linecol
+
+--- bowo-5.0-src-win-b2 ---
+t_linecol to t3_linecol
+t_winfile to t3_winfile
+
+--- bowo-5.0-src-win-b3 ---
+..._1fld to ..._t_fld
+
+--- bowo-5.0-src-win-b4 ---
+get/set_fldseri_tmp to get/set_t_fldseri_tmp
+get/set_field_tmp   to get/set_t_field_tmp
+
+comment:
+t_base_tmp
+t_recno_tmp
+
+--- bowo-5.0-src-win-b5 ---
+get/set_t6c_fldname to get/set_c_t6_fldname
+gets_smg_data to get_s_smg_data
+
+--- bowo-5.0-src-win-b6 ---
+better looking source
+
+--- bowo-5.0-src-win-b7 ---
+test on win10
+
+--- bowo-5.0-src-win-b8 ---
+1 bug ,get_read,input chiness in end of field
+
+--- bowo-5.0-src-win-b9 ---
+modified test code
+
+--- bowo-5.0-src-win-b10 ---
+test on win10
+
+--- bowo-5.0-src-win-b11 ---
+1 bug , read_winfile , findfile not init
+
+--- bowo-5.0-src-win-b12 ---
+test on win10
+
+--- bowo-5.0-src-win-b13 ---
+better looking source code
+
+--- bowo-5.0-src-win-b14 ---
+better bw_fldstru::w_read_stru()
+better bw_print::w_read_page()
+better bw_win::w_read_winfile()
+
+--- bowo-5.0-src-win-b15 ---
+test on win7
+
+--- bowo-5.0-src-win-b16 ---
+"fptr" to "dbptr","fldptr"
+
+tested on win10
+
+--- bowo-5.0-src-win-b17 ---
+sendmessage(...(LPARAM)str1 to (LPARAM)0 ...)
+
+tested on win10
+
+--- bowo-5.0-src-win-b18 ---
+
+--- bowo-5.0-src-win-b19 ---
+w_use_fox(c      to w_fox_use
+w_append_fox(    to w_fox_append
+w_close_fox(     to w_fox_close
+w_go_fox(        to w_fox_go
+w_set_fox_recno2 to w_fox_set_recno(
+
+--- bowo-5.0-src-win-b20 ---
+in vc_xbase.cpp , p_fp to p_fh
+
+--- bowo-5.0-src-win-b21 ---
+win_fp to win_fh
+
+--- bowo-5.0-src-win-b22 ---
+better w_insert_xbase_rec(
+
+--- bowo-5.0-src-win-b23 ---
+better looking source code :vc_xbase.cpp
+
+--- bowo-5.0-src-win-b24 ---
+better looking source code :vc_win.cpp
+
+--- bowo-5.0-src-win-b25 ---
+better looking source code :vc_print.cpp
+
+--- bowo-5.0-src-win-b26 ---
+better looking source code :vc_menuvar.cpp
+
+--- bowo-5.0-src-win-b27 ---
+better looking source code :vc_mbase.cpp
+
+--- bowo-5.0-src-win-b28 ---
+better looking source code :vc_main.cpp
+
+--- bowo-5.0-src-win-b29 ---
+better looking source code :vc_link.cpp
+
+--- bowo-5.0-src-win-b30 ---
+better looking source code :vc_inkey.cpp
+
+--- bowo-5.0-src-win-b31 ---
+w_name_t1_t2(char *p_str,...   to   w_name_in_tab(char *p_str,int p_str_size,...
+
+--- bowo-5.0-src-win-b32 ---
+better looking source code :vc_getread.cpp
+
+--- bowo-5.0-src-win-b33 ---
+better looking source code :vc_fldstru.cpp
+
+--- bowo-5.0-src-win-b34 ---
+better looking source code :vc_edit.cpp
+
+--- bowo-5.0-src-win-b35 ---
+--- bowo-5.0-src-win-b36 ---
+tested, ok
+
+--- bowo-5.0-src-win-b37 ---
+...fp to ...fh
+
+--- bowo-5.0-src-win-b38 ---
+better looking source code 
+
+tested, ok .
+
+--- bowo-5.0-src-win-b39 ---
+add xbase module pack_dbf function 
+
+--- bowo-5.0-src-win-b40 ---
+tested,ok
+
+--- bowo-5.2-src-win-b1 ---
+--- bowo-5.2-src-win-b2 ---
+--- bowo-5.2-src-win-b3 ---
+remove var win_ptr_grp_ptr
+simpler source code
+t5_m... change to t5_btn...
+
+--- bowo-5.2-src-win-b4 ---
+menu_num_ra  change to button_num_ra
+menu_num_chs change to button_num_chs
+menu_num_mn  change to button_num_btn
+class name bw_menuvar change to bw_buttonvar
+w_read_mdc() change to w_read_btndc()
+menu... change to button...
+
+--- bowo-5.2-src-win-b5 ---
+bw_choose change to bw_chkbox
+bw_menuvar change to bw_buttonvar
+choose change to chkbox
+
+--- bowo-5.2-src-win-b6 ---
+bw_switch change to bw_rabox
+switch change to rabox
+
+--- bowo-5.2-src-win-b7 ---
+better w_close_win()
+better bw_buttonvar::w_dele_button(int wptr)
+better bw_link::w_dele_svar(int wptr)
+better bw_link::w_dele_link(int wptr)
+2 bugs ok
+
+--- bowo-5.2-src-win-b8 ---
+add tst_button2()
+add tst_link1_...()
+add tst_link5_...()
+
+--- bowo-5.2-src-win-b9 ---
+better bw_fldstru::w_dele_stru()
+add tst_stru2()
+1 bug ok
+
+--- bowo-5.2-src-win-b10 ---
+better w_close_win()
+add tst_win1_fld()
+
+--- bowo-5.2-src-win-b11 ---
+better w_close_win()
+add tst_win2_fld_in_win()
+
+--- bowo-5.2-src-win-b12 ---
+better w_close_win()
+1 bug ok
+
+--- bowo-5.2-src-win-b13 ---
+all win_h_w_total_ptr change to win_h_ci_total_ptr
+
+--- bowo-5.2-src-win-b14 ---
+test
+
+--- bowo-5.2-src-win-b15 ---
+w_echo_winrec_radio change to w_echo_winrec_rabox
+w_echo_winrec_chs   change to w_echo_winrec_chkbox
+
+--- bowo-5.2-src-win-b16 ---
+better bw_link::w_dele_link(int wptr)
+
+--- bowo-5.2-src-win-b17 ---
+test
+
+--- bowo-5.2-src-win-b18 ---
+remove var win_ptr_win_mark
+
+--- bowo-5.2-src-win-b19 ---
+better w_close_win()
+move win_recno[] when w_close_win()
+1 bug ok
+tested
+
+  mutiple windows can operate database in same time,(search operate still allow only one window)
+
+--- bowo-5.2-src-win-b20 ---
+better w_close_win()
+better vc_fldstru.cpp
+
+--- bowo-5.2-src-win-b21 ---
+add licence
+
+--- bowo-5.2-src-win-b22 ---
+w_read_cdc() change to w_read_chkdc()...
+w_echo_chs_change() change to w_echo_chk_change()...
+
+--- bowo-5.2-src-win-b23 ---
+better get_read() for multiple windows
+  not tested
+
+--- bowo-5.2-src-win-b24 ---
+better get_read()
+
+--- bowo-5.2-src-win-b25 ---
+ get_read() tested,ok !!!
+2 bug ok
+
+--- bowo-5.2-src-win-b26 ---
+better test log
+
+--- bowo-5.2-src-win-b27 ---
+  tested,ok
+
+--- bowo-5.2-src-win-b28 ---
+windows focus control is better
+
+--- bowo-5.4-src-win-b1 ---
+--- bowo-5.4-src-win-b2 ---
+--- bowo-5.4-src-win-b3 ---
+better windows focus manage
+
+--- bowo-5.4-src-win-b4 ---
+linked table cursor movement is better
+
+--- bowo-5.4-src-win-b5 ---
+  1 bug ok ,vc_main.cpp call to w_find_fldnum()
+  w_find_fldnum() is better looking
+  w_find_fldlen() is better looking
+  w_find_fldtype() is better looking
+  w_find_flddec() is better looking
+  w_find_fldposi() is better looking
+
+--- bowo-5.4-src-win-b6 ---
+  better looking source code :vc_xbase.cpp
+  1 bug ok :vc_xbase.cpp :w_bsav_var()
+
+  better looking source code :vc_win.cpp
+
+  tested ok
+
+--- bowo-5.4-src-win-b7 ---
+  better looking source code :vc_win.cpp
+
+--- bowo-5.4-src-win-b8 ---
+--- bowo-5.4-src-win-b9 ---
+--- bowo-5.4-src-win-b10 ---
+  better button focus manage
+
+--- bowo-5.4-src-win-b11 ---
+--- bowo-5.4-src-win-b12 ---
+  better looking source code : vc_print.cpp
+    tested ok
+
+--- bowo-5.4-src-win-b13 ---
+  better looking source code : vc_menuvar.cpp
+
+--- bowo-5.4-src-win-b14 ---
+  better looking source code : vc_mbase.cpp
+
+--- bowo-5.4-src-win-b15 ---
+  better looking source code : vc_make1.cpp
+
+--- bowo-5.4-src-win-b16 ---
+  better looking source code : vc_main.cpp
+
+--- bowo-5.4-src-win-b17 ---
+  better looking source code : vc_link.cpp
+
+--- bowo-5.4-src-win-b18 ---
+  better looking source code : vc_inkey.cpp
+  better subfuction inkey()
+  
+--- bowo-5.4-src-win-b19 ---
+  better looking source code : vc_inkey.cpp
+
+--- bowo-5.4-src-win-b20 ---
+  better looking source code : vc_getread.cpp
+  1 bug ok 
+
+--- bowo-5.4-src-win-b21 ---
+  better looking source code : vc_fldstru.cpp
+
+--- bowo-5.4-src-win-b22 ---
+  better looking source code : vc_bmp.cpp
+
+--- bowo-5.4-src-win-b23 ---
+  better set focus
+
+--- bowo-5.4-src-win-b24 ---
+  better set focus
+
+--- bowo-5.4-src-win-b25 ---
+  better looking source code
+  to vc_make1.cpp
+  to end
+  need test !!!
+
+--- bowo-5.4-src-win-b26 ---
+  better looking source code
+    vc_xbase.cpp
+
+--- bowo-5.4-src-win-b27 ---
+  better looking source code
+    vc_win.cpp
+
+--- bowo-5.4-src-win-b28 ---
+  better looking source code
+    vc_print.cpp
+
+--- bowo-5.4-src-win-b29 ---
+  better looking source code
+    vc_menuvar.cpp
+
+--- bowo-5.4-src-win-b30 ---
+  better looking source code
+  tested ok !!!
+
+--- bowo-5.4-src-win-b32 ---
+  better set_focus
+
+--- bowo-5.4-src-win-b33 ---
+  better show_caret
+
+--- bowo-5.4-src-win-b34 ---
+  better focus manage
+
+
+--------------------------------------------------
+
+--- bowo-5.6-src-win-b1 ---
+  better page_up page_down
+
+--- bowo-5.6-src-win-b2 ---
+  better page_down
+
+--- bowo-5.6-src-win-b3 ---
+  better set_focus
+
+--- bowo-5.6-src-win-b4 ---
+  better set_focus ,1 bug ok 
+
+--- bowo-5.6-src-win-b5 ---
+  better pline,pfield
+
+--- bowo-5.6-src-win-b6 ---
+  better pline,pfield
+
+--- bowo-5.6-src-win-b7 ---
+  better win_hwnd
+
+--- bowo-5.6-src-win-b8 ---
+  better win_msg...wp...lp
+
+--- bowo-5.6-src-win-b9 ---
+  tested ok
+
+--- bowo-5.6-src-win-b10 ---
+  better set_caret
+
+--- bowo-5.6-src-win-b11 ---
+  better link table display, 1 bug ok
+
+--- bowo-5.6-src-win-b12 ---
+  xbase.cpp
+  better copy_to_sdf() append_from_sdf()
+  better looking source code
+
+--- bowo-5.6-src-win-b13 ---
+  win.cpp
+  better looking source code
+
+--- bowo-5.6-src-win-b14 ---
+  print.cpp
+  better looking source code
+  need test !!!
+
+
+tested ok !!!
+(print not tested)
+
+--- bowo-5.6-src-win-b18 ---
+  main.cpp
+  better looking source code
+
+--- bowo-5.6-src-win-b19 ---
+--- bowo-5.6-src-win-b20 ---
+  link.cpp
+  better looking source code
+  need test !!!
+
+  tested ok !!!
+
+--- bowo-5.6-src-win-b21 ---
+  better pfield() next_afield()
+  added fld_l fld_c
+  
+--- bowo-5.6-src-win-b22 ---
+--- bowo-5.6-src-win-b23 ---
+
+  tested ok !!!
+
+--- bowo-5.6-src-win-b24 ---
+  main.cpp
+  better looking source code
+
+--- bowo-5.6-src-win-b25 ---
+  better pcolu() 
+
+--- bowo-5.6-src-win-b26 ---
+  better inkey.cpp 
+
+--- bowo-5.6-src-win-b27 ---
+  better inkey.cpp 
+  'w_set_dir(char *s)' change to 'w_set_dir(char *s,int s_size)'
+  'strlocc' change to 'str_seek_char_first' 'str_seek_char_last' 
+
+--- bowo-5.6-src-win-b28 ---
+  better inkey.cpp 
+  'w_cpy_file(fn1,fn2)' change to 'w_cpy_file(fn1,fn1_size,fn2,fn2_size)'
+  'strfind(s1,s2)' change to 'strfind(s1,s1_size,s2,s2_size)'
+
+--- bowo-5.6-src-win-b29 ---
+--- bowo-5.6-src-win-b30 ---
+  better inkey.cpp 
+
+--- bowo-5.6-src-win-b31 ---
+  tested, ok!!! 
+
+--- bowo-5.6-src-win-b32 ---
+  better xbase.cpp 
+
+--- bowo-5.6-src-win-b33 ---
+  better win.cpp  print.cpp
+
+--- bowo-5.6-src-win-b34 ---
+  better using for bcpy_var(),bsav_var()
+  change to fld_cpy() , fld_sav()
+
+--- bowo-5.6-src-win-b35 ---
+  better using for fld_cpy(),fld_sav()
+
+
+    fuction()'s param
+    str_has_null()
+    better using of fld_cpy() ,fld_sav()
+
+--- bowo-5.6-src-win-b36 ---
+  better using for fld_cpy(),fld_sav()
+
+
+    fuction()'s param
+    str_has_null()
+    better using of fld_cpy() ,fld_sav()
+
+--- bowo-5.6-src-win-b37 ---
+--- bowo-5.6-src-win-b38 ---
+--- bowo-5.6-src-win-b39 ---
+--- bowo-5.6-src-win-b40 ---
+--- bowo-5.6-src-win-b41 ---
+
+1 bug ok,open window ,cursor is in first field's 3th char position
+1 bug ok,move window ,caret display error
+
+--- bowo-5.6-src-win-b42 ---
+--- bowo-5.6-src-win-b43 ---
+
+  better vc_print.cpp
+  better vc_menuvar.cpp
+
+--- bowo-5.6-src-win-b44 ---
+  better vc_print.cpp
+  better vc_win.cpp
+
+--- bowo-5.6-src-win-b45 ---
+  better vc_main.cpp
+
+--- bowo-5.6-src-win-b46 ---
+  better vc_link.cpp
+
+--- bowo-5.6-src-win-b47 ---
+  better vc_fldstru.cpp
+
+--- bowo-5.6-src-win-b48 ---
+  tested ok!!!
+
+--- bowo-5.6-src-win-b49 ---
+  better vc_xbase.cpp
+
+--- bowo-5.6-src-win-b50 ---
+  better vc_win.cpp
+
+--- bowo-5.6-src-win-b51 ---
+  better vc_print.cpp
+
+--- bowo-5.6-src-win-b52 ---
+  better vc_menuvar.cpp
+
+--- bowo-5.6-src-win-b53 ---
+  tested, ok!!!
+
+--- bowo-5.6-src-win-b56 ---
+  tested
+
+--- bowo-5.6-src-win-b57 ---
+  better vc_main.cpp vc_inkey.cpp vc_getread.cpp                                                               
+
+--- bowo-5.6-src-win-b58 ---
+  better vc_main.cpp vc_getread.cpp
+
+--- bowo-5.6-src-win-b59 ---
+  better vc_main.cpp
+
+
+
+
+
+
+
+--- bowo-5.8-src-win-b1 ---
+  better vc_fldstru.cpp vc_menuvar.cpp vc_win.cpp
+  
+--- bowo-5.8-src-win-b2 ---
+  'poin' change to 'pntr'
+  
+--- bowo-5.8-src-win-b3 ---
+  better vc_fldstru.cpp 
+    rename variant 
+    'str1' to 's_tabfld'
+    'str2' to 's_fldname'
+    'str3' to 's_fldval'
+    'str4'...
+
+--- bowo-5.8-src-win-b4 ---
+  better vc_main.cpp... vc_mbase.cpp
+    rename variant 
+    'str1' to 's_tabfld'
+    'str2' to 's_fldname'
+    'str3' to 's_fldval'
+    'str4'...
+
+--- bowo-5.8-src-win-b5 ---
+  better ...vc_print.cpp
+    rename variant 
+    'str1' to 's_tabfld'
+    'str2' to 's_fldname'
+    'str3' to 's_fldval'
+    'str4'...
+
+--- bowo-5.8-src-win-b6 ---
+  better vc_win.cpp  vc_xbase.cpp
+    rename variant 
+    'str1' to 's_tabfld'
+    'str2' to 's_fldname'
+    'str3' to 's_fldval'
+    'str4'...
+
+--- bowo-5.8-src-win-b7 ---
+  better cpy_string()  cut_string() 
+
+--- bowo-5.8-src-win-b8 ---
+--- bowo-5.8-src-win-b9 ---
+--- bowo-5.8-src-win-b10 ---
+  testing
+
+--- bowo-5.8-src-win-b11 ---
+--- bowo-5.8-src-win-b12 ---
+  support mouse wheel !!!
+
+--- bowo-5.8-src-win-b13 ---
+  testing
+  fix 1 bug , find condition window , cancel button .
+
+--- bowo-5.8-src-win-b14 ---
+  testing
+
+=================================
+
+--- bowo-6.0-src-win-b1 ---
+  better looking source code 
+    vc_win.cpp
+    vc_xbase.cpp
+    vc_print.cpp
+
+--- bowo-6.0-src-win-b2 ---
+  better looking source code 
+    vc_make1.cpp
+    vc_main.cpp
+    ...
+    vc_inkey.cpp
+    vc_bmp.cpp ...
+
+--- bowo-6.0-src-win-b3 ---
+  better looking source code 
+    tabfld to s_tabfld
+    fldname to s_fldname
+    fldval to s_fldval...
+
+--- bowo-6.0-src-win-b4 ---
+
+todo:
+
+    pack to 0 rec
+    pack to 1 rec
+
+    open 0 rec dbf
+
+    delete dbf to 0 rec
+    linked dbf has 0 rec
+    find 0 rec
+
+    0 rec dbf window table operate
+
+    ok now !!!
+
+--- bowo-6.0-src-win-b5 ---
+    tested , and ok !!!
+    
+--- bowo-6.0-src-win-b6 ---
+    better vc_win.cpp 
+           vc_print.cpp
+    
+--- bowo-6.0-src-win-b7 ---
+    better vc_menuvar.cpp
+    
+--- bowo-6.0-src-win-b8 ---
+    better vc_inkey.cpp
+    
+--- bowo-6.0-src-win-b9 ---
+    better vc_inkey.cpp
+           vc_fldstru.cpp
+
+--- bowo-6.0-src-win-b10 ---
+    better vc_bowo.h
+    tested,ok!!!
+
+--- bowo-6.0-src-win-b11 ---
+    better vc_xbase.cpp
+
+--- bowo-6.0-src-win-b12 ---
+    better vc_win.cpp
+
+--- bowo-6.0-src-win-b13 ---
+    better vc_print.cpp
+
+--- bowo-6.0-src-win-b14 ---
+    better vc_menuvar.cpp
+
+--- bowo-6.0-src-win-b15 ---
+
+    special check:
+
+int             i,j,k,l...      n_name...
+char            c1,c2,c3...     c_name...
+unsigned char   uc1,uc2...     uc_name...
+char *          str1,str2...    s_name...
+unsigned char * ustr1,ustr2... us_name...
+
+
+    special check: part 1
+
+int             i,j,k,l...    
+char            c1,c2,c3...   
+unsigned char   uc1,uc2...     
+char *          str1,str2...   
+unsigned char * ustr1,ustr2... 
+
+    better vc_xbase.cpp
+    better vc_win.cpp
+    better vc_print.cpp
+    better vc_menuvar.cpp
+    better vc_mbase.cpp
+
+--- bowo-6.0-src-win-b16 ---
+
+    special check:
+
+int             i,j,k,l...      n_name...
+char            c1,c2,c3...     c_name...
+unsigned char   uc1,uc2...     uc_name...
+char *          str1,str2...    s_name...
+unsigned char * ustr1,ustr2... us_name...
+
+
+    special check: part 2
+
+int             i,j,k,l...    
+char            c1,c2,c3...   
+unsigned char   uc1,uc2...     
+char *          str1,str2...   
+unsigned char * ustr1,ustr2... 
+
+    before "vc_mbase.cpp" ...
+
+    better vc_bmp.cpp
+        ...
+        ...
+    better vc_link.cpp
+    better vc_main.cpp
+    better vc_make1.cpp
+
+--- bowo-6.0-src-win-b17 ---
+
+    special check:
+
+int             i,j,k,l...      n_name...
+char            c1,c2,c3...     c_name...
+unsigned char   uc1,uc2...     uc_name...
+char *          str1,str2...    s_name...
+unsigned char * ustr1,ustr2... us_name...
+
+
+    special check: part 2
+
+int             i,j,k,l...    
+char            c1,c2,c3...   
+unsigned char   uc1,uc2...     
+char *          str1,str2...   
+unsigned char * ustr1,ustr2... 
+
+    better vc_bmp.cpp
+        ...
+        ...
+    better vc_getread.cpp
+
+--- docu modified !!!---
+
+--- app dir trimed !!! ---
+
+"zheng li" app dir
+trim app dir
+
+ok now , need test
+
+tested,ok!!!
+
+--- bowo-6.0-src-win-b18 ---
+    better vc_main.cpp
+
+--- bowo-6.2-src-win-b1 ---
+todo:
+    home dir
+    *vc_win.cpp
+        read_winfile()
+            str6 to n_base6
+    *vc_getread.cpp
+        get_num()
+            1...str2[0]=0;
+            2...str2[i+0]=...
+                str2[i+1]=0
+    *vc_getread.cpp
+        get_txt()
+        get_num()
+            for (i=1;i<datalen
+                or
+            for (i=n;i<datalen
+    *vc_getread.cpp
+        get_txt()
+        get_num()
+            for (i=1;i<datalen
+                first
+                    if (i<datalen
+                second
+                    else
+                        str2[i+1]=0;
+
+--- bowo-6.2-src-win-b2 ---
+  tested and ok !!!
+  
+--- bowo-6.2-src-win-b3 ---
+  remove comment: vc_getread.cpp
+  
+  todo: 
+      #define  PAGE_LIN   81   change to 300
+      #define  PAGE_COL   300
+
+--- bowo-6.2-src-win-b4 ---
+  
+      #define  PAGE_LIN   81   change to 300
+      #define  PAGE_COL   300
+
+      may support A3 paper
+        
+--- bowo-6.2-src-win-b5 ---
+    better looking source code: bw_inkey.cpp  
+    
+--- bowo-6.2-src-win-b6 ---
+    *todo:
+        get_num
+            empty field
+
+    int bw_getread::get_num_conv(int datalen_real,int dec)
+        not safe,modify it
+        
+    ok now !!!
+
+--- bowo-6.2-src-win-b7 ---
+    *todo: ...
+    really ok now !!!
+    
+    1 bug ok !!!
+    
+--- bowo-6.2-src-win-b8 ---
+    special check
+    
+--- bowo-6.2-src-win-b9 ---
+    better getread.cpp
+
+--- bowo-6.2-src-win-b10 ---
+    special check
+
+--- bowo-6.2-src-win-b11 ---
+    special check
+        define file
+            empty line
+
+--- bowo-6.2-src-win-b12 ---
+    better vc_win.cpp
+           vc_print.cpp
+
+--- bowo-6.2-src-win-b13 ---
+    special check
+        parameter rename
+        or bad code
+            better vc_win.cpp
+
+--- bowo-6.2-src-win-b14 ---
+    special check
+        parameter rename
+        or bad code
+            better vc_print.cpp
+            better vc_menuvar.cpp
+                ...
+            better vc_make1.cpp
+            better vc_main.cpp
+                ...
+            better vc_fldstru.cpp
+                ...
+            better vc_xbase.cpp
+
+    need test ???
+    tested ok !!!
+
+--- bowo-6.2-src-win-b15 ---
+    better getread.cpp
+    need test ???
+    tested ok !!!
+
+--- bowo-6.2-src-win-b16 ---
+    better getread.cpp
+
+--- bowo-6.2-src-win-b17 ---
+    getread.cpp
+        str2[0];
+            to
+                str2[0]=0;
+--- bowo-6.2-src-win-b18 ---
+    GET_NUM to SMG_GET_NUM...
+    RET_KEY to SMG_KEY_RET
+    ...
+
+--- bowo-6.2-src-win-b19 ---
+    better getread.cpp
+        simpler
+
+
+
+
+
+

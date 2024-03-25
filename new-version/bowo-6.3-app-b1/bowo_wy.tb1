@@ -1,0 +1,6 @@
+@a  button="[]"  com=get_tab("dc_wy1.sc4")  
+@b  button="[]"  com=get_tab("dc_wy2.sc4")  
+@c  button="[]"  com=get_tab("dc_wy3.sc4")  
+@d  button="[]"  com=get_tab("dc_wy4.sc4") 
+@e  button="[]"  com=get_tab("r4.sc4")  
+@f  button="[]"  com=exit
